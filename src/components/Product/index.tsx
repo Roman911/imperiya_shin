@@ -97,26 +97,27 @@ export const ProductComponent: FC<ProductComponentProps> = (
 						<ActionsBlock className='flex md:hidden'/>
 						<div className='flex-1 md:ml-6 xl:ml-20'>
 							<h1 className='text-2xl font-bold mt-8 md:mt-0'>{ full_name }</h1>
-							<div className='flex mt-5 items-center'>
-								<div className='text-[15px] text-gray-500 bg-blue-50 rounded-full py-1 md:py-2 px-3 mr-5'>Артикул: {id}</div>
-								<Rating commentsCount={ undefined } commentsAvgRate={ 0 }/>
-							</div>
-							<div className='flex justify-between mt-7 md:mt-11'>
-								<div>
-									<div className='flex items-end'>
-										<div className='mr-2.5 text-xl font-medium'>{t('from')}</div>
-										<div className='text-4xl font-bold mr-2.5'>{min_price} ₴</div>
-										<div className='text-xl font-medium'>/шт.</div>
-									</div>
-									<div className='mt-3 text-gray-500'>{t('from')} <span className='font-bold'>{min_price * 4}</span> за 4
-										шт.
-									</div>
+							<div className='flex justify-between items-center mt-5'>
+								<div className=''>
+									<div className='text-[15px] text-gray-500 mr-5 max-w-max mb-2'>Артикул: {id}</div>
+									<Rating commentsCount={undefined} commentsAvgRate={0}/>
 								</div>
 								<ActionsBlock className='hidden md:flex' />
 							</div>
+							<div className='mt-7 md:mt-11'>
+								<div className='flex items-end'>
+									<div className='mr-2.5 text-xl font-medium'>{t('from')}</div>
+									<div className='text-4xl font-bold mr-2.5'>{min_price} ₴</div>
+									<div className='text-xl font-medium'>/шт.</div>
+								</div>
+								<div className='mt-3 text-gray-500'>{t('from')} <span className='font-bold'>{min_price * 4}</span> за 4
+									шт.
+								</div>
+							</div>
 							<div className='offers mt-7'>
 								{offers.map(item => {
-									return <div key={item.offer_id} onClick={() => handleClick(item.offer_id)} className='offers__item cursor-pointer grid md:grid-cols-9 gap-4 mt-3 py-3.5 md:py-0 px-5 md:px-0 bg-white md:bg-transparent border md:border-0 rounded-full'>
+									return <div key={item.offer_id} onClick={() => handleClick(item.offer_id)}
+															className='offers__item cursor-pointer grid md:grid-cols-9 gap-4 mt-3 py-3.5 md:py-0 px-5 md:px-0 bg-white md:bg-transparent border md:border-0 rounded-full'>
 										<div className='input flex flex-row md:col-span-2 relative'>
 											<input type="checkbox" onChange={() => handleClick(item.offer_id)} checked={item.offer_id === offerId} className='appearance-none h-6 w-6 bg-white rounded-full border border-zinc-400 hover:border-blue-500 checked:border-blue-500 transition-all duration-200 peer'/>
 											<div
@@ -137,11 +138,11 @@ export const ProductComponent: FC<ProductComponentProps> = (
 				<Quantity id={ 0 } quantity={ quantity } offerQuantity={ (Number(offer?.quantity) || 0) } price={ offer?.price } onChange={ onChange } setQuantity={ onSetQuantity } />
 				<button
 					onClick={() => handleModalOpen('DeliveryCalculation')}
-					className='delivery-calculation btn secondary mt-6 text-sm font-medium border border-black w-full md:w-72'>
+					className='delivery-calculation btn white mt-6 text-sm font-medium w-full md:w-72'>
 					<img className='mr-2.5' src={truckIcon} alt=""/>
 					{t('delivery calculation', true)}
 				</button>
-				<div className='buttons-buy md:justify-self-end mt-8 md:0'>
+				<div className='buttons-buy md:justify-self-end'>
 					{cartItems.find(item => item.id === offerId) ?
 						<Link to={`/cart`} className='btn success uppercase w-full md:w-72'>
 							<span className='ml-2.5'>{ lang === Language.UA ? 'Перейти до кошика' : 'Перейти в корзину' }</span>
@@ -152,12 +153,8 @@ export const ProductComponent: FC<ProductComponentProps> = (
 						</button>
 					}
 					<button onClick={() => handleModalOpen('QuickOrder')}
-									className='btn secondary uppercase mt-2.5 w-full md:w-72'>
+									className='btn white uppercase mt-2.5 w-full md:w-72'>
 						<span className='ml-2.5'>{t('quick order')}</span>
-					</button>
-					<button onClick={() => handleModalOpen('OnlineInstallment')}
-									className='btn success uppercase mt-2.5 w-full md:w-72'>
-						<span className='ml-2.5'>{t('installment plan')}</span>
 					</button>
 				</div>
 			</div>

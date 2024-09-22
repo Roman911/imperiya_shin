@@ -31,7 +31,7 @@ export const SearchComponent: FC<SearchProps> = ({ data, placeholder, isOpen, va
 				className="w-full flex bg-transparent pl-4 text-[15px] text-gray-500 font-medium outline-0"
 				placeholder={placeholder}
 			/>
-			<button type="submit" className="btn primary rounded-l-none rounded-r-sm w-16 h-9 -my-px -mr-px">
+			<button type="submit" className="btn primary rounded-l-none rounded-r-sm w-16 h-9 -my-0.5 -mr-0.5">
 				<SearchIcon className='fill-white'/>
 			</button>
 		</div>

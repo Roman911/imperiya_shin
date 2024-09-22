@@ -66,7 +66,7 @@ export const SelectFromTo: FC<SelectFromTo> = ({ nameMin, nameMax,  from, to, ti
 				/>
 			</div>
 		</div>
-		<button onClick={() => handleClick()} className='btn primary max-w-full uppercase mt-4 mb-4'>
+		<button onClick={() => handleClick()} className='btn black max-w-full uppercase mt-4 mb-4'>
 			{ btnTitle }
 		</button>
 	</div>
