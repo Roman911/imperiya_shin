@@ -1,7 +1,7 @@
 import { Link } from '../../../lib';
 import { useAppSelector, useAppTranslation } from '../../../hooks';
 import { OurAdvantages } from '../../Home';
-import { Contacts } from '../../../containers/Contacts';
+//import { Contacts } from '../../../containers/Contacts';
 
 import { EmailIcon } from '../../Lib/Icons';
 
@@ -17,7 +17,7 @@ export const InfoBlock = () => {
 	return <div className='lg:w-64'>
 		<div className=' bg-white rounded-2xl px-5 py-7'>
 			<div className='font-bold'>{lang === 'ua' ? 'Замовляйте за номерами:' : 'Заказывайте по номерам:'}</div>
-			<Contacts isInfoBlock={ true } />
+			{/*<Contacts isInfoBlock={ true } />*/}
 			<div className='flex items-center gap-x-2.5 mt-5'>
 				<EmailIcon/>
 				<a href={`mailto:${settings.ua.config_email}`} className='ml-2.5 font-bold'>
