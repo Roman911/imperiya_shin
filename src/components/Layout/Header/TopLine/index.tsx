@@ -10,7 +10,7 @@ export const TopLine = () => {
 	return <div className='bg-black text-white'>
 		<div className='container mx-auto flex justify-between py-1 px-4'>
 			<Contacts className=''/>
-			<nav className='gap-2 2xl:gap-5 items-center hidden lg:flex'>
+			<nav className='gap-2 lg:gap-x-7 items-center hidden lg:flex'>
 				{links.map((item, index) => {
 					return <Link
 						key={index}

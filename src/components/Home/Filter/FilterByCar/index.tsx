@@ -41,7 +41,7 @@ export const FilterByCarComponents: FC<FilterByCarProps> = ({ disabled, filters,
 			<Link
 				to='/catalog/tires'
 				onClick={onClick}
-				className={classNames('btn md:h-[70px] mt-4 secondary w-full uppercase', { 'md:col-span-6': additionalFilter, 'md:mt-0': !additionalFilter, 'pointer-events-none opacity-60': disabled })}
+				className={classNames('btn md:h-[70px] mt-4 secondary w-full uppercase', { 'md:col-span-6': additionalFilter, 'md:mt-0': !additionalFilter, 'pointer-events-none': disabled })}
 			>
 				{t('choose')}
 			</Link>

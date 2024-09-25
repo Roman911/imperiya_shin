@@ -14,11 +14,11 @@ interface SelectProps {
 type IsMulti = false;
 
 const colourStyles: StylesConfig<Options | undefined, IsMulti> = {
-	control: (styles, { isDisabled}) => ({
+	control: (styles) => ({
 		...styles,
 		padding: '16px 4px 16px 16px',
 		borderColor: 'transparent',
-		backgroundColor: isDisabled ? 'rgba(255, 255, 255, 0.8)' : '#EDF1F5',
+		backgroundColor: '#EDF1F5',
 		':hover': {
 			borderColor: '#8CC9FF',
 			boxShadow: '0 0 0 1px #8CC9FF',
@@ -30,11 +30,11 @@ const colourStyles: StylesConfig<Options | undefined, IsMulti> = {
 		fontWeight: 500,
 		color: '#050505',
 	}),
-	placeholder: (styles, { isDisabled}) => ({
+	placeholder: (styles) => ({
 		...styles,
 		fontSize: 18,
 		fontWeight: 500,
-		color: isDisabled ? 'rgba(5,5,5,0.37)' : '#050505',
+		color: '#050505',
 	}),
 	indicatorSeparator: (styles) => ({
 		...styles,

@@ -24,7 +24,7 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
 	const cartStorage = useMemo(() => {
 		return localStorage.reducerCart ? JSON.parse(localStorage.reducerCart) : [];
 	}, []);
-
+	console.log(settings)
 	useEffect(() => {
 		if(settings) {
 			dispatch(setSettings(settings));

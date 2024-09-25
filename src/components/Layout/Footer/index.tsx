@@ -60,7 +60,7 @@ export const Footer = () => {
 					})}
 				</div>
 				<p className='text-gray-500 mt-7 leading-6 text-sm'>
-					© {settings[lang].config_name} {config.startYear}-{new Date().getFullYear()}.<br/>
+					© { new Date().getFullYear() + ' ' + settings[lang].config_owner }.<br/>
 					{lang === 'ua' ? 'Всі права захищені.' : 'Все права защищены.'}
 				</p>
 			</div>
