@@ -1,15 +1,17 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import Select, { SingleValue, StylesConfig } from 'react-select';
 
+import { useAppSelector } from '../../../hooks';
+import { Language } from '../../../models/language';
 import type { Options } from '../../../models/baseData';
 
 interface SelectProps {
 	name: string
 	label: string
 	isDisabled?: boolean
-	setCity?: Dispatch<SetStateAction<string | number | undefined>>
+	setState?: Dispatch<SetStateAction<string | undefined>>
 	options: Options[] | undefined
-	onChange: (name: string, value: number | string | undefined) => void
+	onChange: (name: string, value: number | string | undefined, label?: number | string | undefined) => void
 }
 
 type IsMulti = false;
@@ -79,23 +81,35 @@ const colourStyles: StylesConfig<Options | undefined, IsMulti> = {
 	},
 };
 
-export const MySelect: FC<SelectProps> = ({ name, label, options = [], isDisabled = false, onChange, setCity }) => {
+export const MySelect: FC<SelectProps> = (
+	{
+		name,
+		label,
+		options = [],
+		isDisabled = false,
+		onChange,
+		setState,
+	}) => {
+	const { lang } = useAppSelector(state => state.langReducer);
+
 	const handleChange = (value: SingleValue<Options | undefined>) => {
-		onChange(name, value?.value);
+		onChange(name, value?.value, value?.label);
 	}
 
 	const handleInputChange = (newValue: string) => {
 		const cleanedText = newValue.replace(/[^а-яА-ЯіїєґІЇЄҐ' ]/g, '');
-		setCity && setCity(cleanedText);
+		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+		setState && setState(cleanedText?.toString());
 	}
 
 	return <Select
-		options={options}
-		styles={colourStyles}
-		placeholder={label}
-		isClearable={true}
-		isDisabled={isDisabled}
-		onChange={handleChange}
-		onInputChange={handleInputChange}
+		options={ options }
+		styles={ colourStyles }
+		placeholder={ label }
+		isClearable={ true }
+		isDisabled={ isDisabled }
+		onChange={ handleChange }
+		noOptionsMessage={ () => lang === Language.UA ? 'Збігів не знайдено' : 'Совпадений не найдено' }
+		onInputChange={ handleInputChange }
 	/>
-}
+};
