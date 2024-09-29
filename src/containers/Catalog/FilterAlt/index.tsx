@@ -15,14 +15,14 @@ interface FilterAltProps {
 export const FilterAlt: FC<FilterAltProps> = ({ isOpenFilter, closeFilter }) => {
 	const [ element, setElement ] = useState<HTMLElement | null>(null);
 	const { filter, isSend } = useAppSelector(state => state.filterCarReducer);
-	const { section, filter: filterBrand } = useAppSelector(state => state.filterReducer);
+	const { filter: filterBrand } = useAppSelector(state => state.filterReducer);
 	const dispatch = useAppDispatch();
 	const { data } = baseDataAPI.useFetchBaseDataQuery('');
 	const { data: dataAkum } = baseDataAPI.useFetchDataAkumQuery('');
 	const { data: model, refetch: modelRefetch } = baseDataAPI.useFetchAutoModelQuery(`${filter.brand}`);
 	const { data: modelYear } = baseDataAPI.useFetchAutoYearQuery(`${filter.model}`);
 	const { data: modelKit, refetch: modelKitRefetch } = baseDataAPI.useFetchAutoModelKitQuery(`${filter.model}/${filter.year}`);
-	const { data: manufModels } = baseDataAPI.useFetchManufModelsQuery(`${section === Section.Tires ? filterBrand.brand : section === Section.Disks ? filterBrand.brand_disc : '0'}`);
+	const { data: manufModels } = baseDataAPI.useFetchManufModelsQuery(`${filterBrand.brand || '0'}`);
 
 	useEffect(() => {
 		if(isSend) {

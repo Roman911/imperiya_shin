@@ -54,6 +54,9 @@ export const FilterActiveComponent: FC<FilterActiveProps> = (
 				if(section === Section.Battery) {
 					const brand = dataAkum?.brand_akum?.find(i => i.value === +searchParams[item as keyof IFilter]);
 					label = brand ? brand.label : '';
+				} else if(section === Section.Disks) {
+					const brand = data?.brand_disc?.find(i => i.value === +searchParams[item as keyof IFilter]);
+					label = brand ? brand.label : '';
 				} else {
 					const brand = data?.brand?.find(i => i.value === +searchParams[item as keyof IFilter]);
 					label = brand ? brand.label : '';

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAppSelector } from './redux';
-import {Section} from "../models/filter.ts";
+import {Section} from '../models/filter';
 
 export const useAppSubmit = () => {
 	const [ params, setParams ] = useState<string[]>([]);
@@ -34,7 +34,6 @@ export const useAppSubmit = () => {
 		updateParamsList('krepeg', filter.krepeg ?? '');
 		updateParamsList('typedisk', filter.typedisk ?? '');
 		updateParamsList('colir', filter.colir ?? '');
-		updateParamsList('brand_disc', filter.brand_disc ?? '');
 		updateParamsList('jemnist', filter.jemnist ?? '');
 		updateParamsList('puskovii_strum', filter.puskovii_strum ?? '');
 		updateParamsList('tip_elektrolitu', filter.tip_elektrolitu ?? '');
@@ -42,6 +41,8 @@ export const useAppSubmit = () => {
 		updateParamsList('napruga', filter.napruga ?? '');
 		updateParamsList('poliarnist', filter.poliarnist ?? '');
 		updateParamsList('vehicle_type', filter.vehicle_type ?? '');
+		updateParamsList('li', filter.li ?? '');
+		updateParamsList('si', filter.si ?? '');
 	}, [
 		filter.width,
 		filter.height,
@@ -53,7 +54,6 @@ export const useAppSubmit = () => {
 		filter.only_studded,
 		filter.krepeg,
 		filter.typedisk,
-		filter.brand_disc,
 		filter.country,
 		filter.year,
 		filter.load,
@@ -66,7 +66,9 @@ export const useAppSubmit = () => {
 		filter.tip_korpusu,
 		filter.napruga,
 		filter.poliarnist,
-		filter.vehicle_type
+		filter.vehicle_type,
+		filter.li,
+		filter.si
 	]);
 
 	// Function to handle form submit (update URL)

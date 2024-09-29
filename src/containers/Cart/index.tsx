@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
+import { config } from '../../config';
 import { baseDataAPI } from '../../services/baseDataService';
 import { useAppDispatch, useAppSelector, useAppTranslation } from '../../hooks';
 import { removeCart, setQuantity } from '../../store/reducers/cartSlice';
@@ -32,7 +33,7 @@ export const Cart = () => {
 
 	return <LayoutWrapper>
 		<Helmet>
-			<title>{ t('cart', true) } | luxshina.ua</title>
+			<title>{ t('cart', true) } | { config.domain }</title>
 		</Helmet>
 		<Breadcrumbs path={ path } />
 		<Title title='cart' />

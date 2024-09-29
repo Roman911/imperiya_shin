@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Iframe from 'react-iframe';
 import { Helmet } from 'react-helmet-async';
 
+import { config } from '../../config';
 import { useAppTranslation } from '../../hooks';
 import { LayoutWrapper } from '../../components/Layout';
 import { Title } from '../../components/Lib';
@@ -38,7 +39,7 @@ export const CalculatorForTires = () => {
 
 	return <LayoutWrapper>
 		<Helmet>
-			<title>{ t('tire calculator', true) } | luxshina.ua</title>
+			<title>{ t('tire calculator', true) } | { config.domain }</title>
 		</Helmet>
 		<Title title='tire calculator'/>
 		<Iframe url="/calc/kalkulator.htm?background=2772E2"

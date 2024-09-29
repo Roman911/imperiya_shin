@@ -1,18 +1,29 @@
 import { FC, Dispatch, SetStateAction } from 'react';
-import './index.scss';
+import classNames from 'classnames';
 
+import './index.scss';
 import { useAppSelector, useAppTranslation } from '../../hooks';
 import { InfoBlock } from './InfoBlock';
-import { ActionsBlock } from './ActionsBlock';
+import { ActionsBlock } from '../../containers/Product/ActionsBlock';
 import { ImgGallery } from './ImageGallery';
 import { CharacteristicsBlock } from './CharacteristicsBlock';
-import { countryCodeTransform, Link } from '../../lib';
+import { countryCodeTransform, Link, SeasonTransform, VehicleTypeTransform } from '../../lib';
 import { CountryInfo, Quantity, Rating, Spinner } from '../Lib';
-import { CartIcon } from "../Lib/Icons";
+import { CartIcon, MarkerIcon, BusIcon, CargoIcon, CarIcon, MotorcyclesIcon, SpecialEquipmentIcon, SuvIcon } from "../Lib/Icons";
 import truckIcon from '../../assets/icons/truck-icon.svg';
 import { Language } from '../../models/language';
 import type { ProductProps } from '../../models/product';
 import noPhoto from '../../assets/no-photo.s400.jpg';
+import warningIcon from '../../assets/warning-icon.svg';
+
+const Icons = {
+	light: CarIcon,
+	bus: BusIcon,
+	cargo: CargoIcon,
+	motorcycle: MotorcyclesIcon,
+	special: SpecialEquipmentIcon,
+	suv: SuvIcon,
+};
 
 interface ProductComponentProps {
 	data: ProductProps | undefined
@@ -23,7 +34,7 @@ interface ProductComponentProps {
 	handleClick: (id: number) => void
 	onSubmit: () => void
 	setQuantity: Dispatch<SetStateAction<number>>
-	handleModalOpen: (type: 'QuickOrder' | 'OnlineInstallment' | 'DeliveryCalculation') => void
+	handleModalOpen: (type: 'QuickOrder' | 'OnlineInstallment' | 'DeliveryCalculation' | 'Callback' | 'AddAsk') => void
 }
 
 export const ProductComponent: FC<ProductComponentProps> = (
@@ -41,6 +52,9 @@ export const ProductComponent: FC<ProductComponentProps> = (
 	const { lang } = useAppSelector(state => state.langReducer);
 	const { cartItems } = useAppSelector(state => state.cartReducer);
 	const t = useAppTranslation();
+	const vehicleType = data?.data.offer_group.vehicle_type;
+	const vehicleTransform = vehicleType ? VehicleTypeTransform(vehicleType) : undefined;
+	const IconComponent = vehicleTransform ? Icons[vehicleTransform.icon] : undefined;
 
 	const { id = 0, full_name = '', offers = [], min_price = 0, photo, model, labels } = data?.data || {};
 	const offer = offers.find(item => item.offer_id === offerId);
@@ -57,21 +71,16 @@ export const ProductComponent: FC<ProductComponentProps> = (
 		thumbnail: photo?.url_part || '',
 	}, ...imgArr];
 
-	const icon = (season: string) => {
-		if(season === '1') {
-			return <img src="/images/sun-icon.svg" alt=""/>
-		} else if(season === '2') {
-			return <img src="/images/snow-icon.svg" alt=""/>
-		} else if(season === '3') {
-			return <img src="/images/cloud-icon.svg" alt=""/>
-		}
-
-		return null;
-	}
-
 	const onSetQuantity = (_: number,quan: number) => {
 		setQuantity(quan);
 	}
+
+	const review = data?.data.review;
+	const commentsAvgRateSum = review && review.length > 0
+		? review.reduce((sum, current) => sum + (current.score || 0), 0)
+		: 0;
+
+	const averageScore = review && review.length > 0 ? commentsAvgRateSum / review.length : undefined;
 
 	return <section className='product-page flex flex-col lg:flex-row justify-between gap-1 xl:gap-x-6 mt-10'>
 		<div className='max-w-[900px] flex-1 pr-3 xl:pr-5'>
@@ -88,21 +97,27 @@ export const ProductComponent: FC<ProductComponentProps> = (
 											{lang === Language.UA ? item.label.name : item.label.name_ru}
 										</div>
 									})}
-									{ model?.season && icon(model?.season) }
+									<div className='flex gap-x-2'>
+										{IconComponent && (<IconComponent className={classNames('fill-gray-500', { 'stroke-gray-500': vehicleType === '2' })} />)}
+										{model?.season && <img src={ SeasonTransform(model.season)?.icon } alt=""/> }
+									</div>
 								</div>
 								{ model?.brand_image && <img className='max-w-28 object-contain' src={ model?.brand_image } alt=""/> }
 							</div>
-							{ photo?.url_part === '' ? <img src={ noPhoto } alt="" /> : <ImgGallery images={images } /> }
+							{ photo?.url_part === '' ? <img src={ noPhoto } alt="" /> : <ImgGallery images={ images } /> }
 						</div>
-						<ActionsBlock className='flex md:hidden'/>
+						<ActionsBlock className='flex md:hidden' id={ id } handleModalOpen={ handleModalOpen } />
 						<div className='flex-1 md:ml-6 xl:ml-20'>
 							<h1 className='text-2xl font-bold mt-8 md:mt-0'>{ full_name }</h1>
 							<div className='flex justify-between items-center mt-5'>
-								<div className=''>
+								<div>
 									<div className='text-[15px] text-gray-500 mr-5 max-w-max mb-2'>Артикул: {id}</div>
-									<Rating commentsCount={undefined} commentsAvgRate={0}/>
+									<Rating
+										commentsCount={review ? (review.length > 0 ? review.length : undefined) : undefined}
+										commentsAvgRate={averageScore || 0}
+									/>
 								</div>
-								<ActionsBlock className='hidden md:flex' />
+								<ActionsBlock className='hidden md:flex' id={ id } handleModalOpen={ handleModalOpen } />
 							</div>
 							<div className='mt-7 md:mt-11'>
 								<div className='flex items-end'>
@@ -117,17 +132,22 @@ export const ProductComponent: FC<ProductComponentProps> = (
 							<div className='offers mt-7'>
 								{offers.map(item => {
 									return <div key={item.offer_id} onClick={() => handleClick(item.offer_id)}
-															className='offers__item cursor-pointer grid md:grid-cols-9 gap-4 mt-3 py-3.5 md:py-0 px-5 md:px-0 bg-white md:bg-transparent border md:border-0 rounded-full'>
+															className='offers__item cursor-pointer grid md:grid-cols-9 gap-1 md:gap-4 items-center mt-3 py-1.5 md:py-0 px-2 md:px-0 bg-white md:bg-transparent border md:border-0 rounded-full'>
 										<div className='input flex flex-row md:col-span-2 relative'>
 											<input type="checkbox" onChange={() => handleClick(item.offer_id)} checked={item.offer_id === offerId} className='appearance-none h-6 w-6 bg-white rounded-full border border-zinc-400 hover:border-blue-500 checked:border-blue-500 transition-all duration-200 peer'/>
-											<div
-												className='h-4 w-4 absolute inset-1 rounded-full peer-checked:border-blue-500 peer-checked:bg-blue-500'/>
-											<label className='flex ml-2.5 md:ml-7 flex-col justify-center text-sm font-medium cursor-pointer'>{item.quantity} шт.</label>
+											<div className='h-4 w-4 absolute inset-1 rounded-full peer-checked:border-blue-500 peer-checked:bg-blue-500'/>
+											<label className='flex ml-1.5 md:ml-7 flex-col justify-center text-sm font-medium cursor-pointer'>{item.quantity} шт.</label>
 										</div>
-										<div className='country md:col-span-4'>
-											<CountryInfo country={lang === Language.UA ? item.country : item.country_ru} countryCode={countryCodeTransform(item.country)} year={item.year}/>
+										<div className='country md:col-span-3'>
+											<CountryInfo country={ lang === Language.UA ? item.country : item.country_ru } countryCode={ countryCodeTransform(item.country) } year={ item.year } mobileHidden={ true } />
 										</div>
-										<div className='price md:col-span-2 text-lg md:text-sm font-bold content-center'>{item.price} грн</div>
+										<div className='storage md:col-span-2 text-sm content-center flex items-center gap-x-1 md:gap-x-2'>
+											<MarkerIcon className='fill-gray-400 w-3' />
+											{ lang === Language.UA ? item.posts.city : item.posts.city_ru }
+										</div>
+										<div className='price md:col-span-2 md:text-sm font-bold content-center'>
+											{ item.price } грн
+										</div>
 									</div>
 								})}
 							</div>
@@ -138,11 +158,11 @@ export const ProductComponent: FC<ProductComponentProps> = (
 				<Quantity id={ 0 } quantity={ quantity } offerQuantity={ (Number(offer?.quantity) || 0) } price={ offer?.price } onChange={ onChange } setQuantity={ onSetQuantity } />
 				<button
 					onClick={() => handleModalOpen('DeliveryCalculation')}
-					className='delivery-calculation btn white mt-6 text-sm font-medium w-full md:w-72'>
+					className='delivery-calculation btn white mt-2.5 md:mt-6 text-sm font-medium w-full md:w-72'>
 					<img className='mr-2.5' src={truckIcon} alt=""/>
 					{t('delivery calculation', true)}
 				</button>
-				<div className='buttons-buy md:justify-self-end'>
+				<div className='buttons-buy md:justify-self-end mt-6 md:mt-0'>
 					{cartItems.find(item => item.id === offerId) ?
 						<Link to={`/cart`} className='btn success uppercase w-full md:w-72'>
 							<span className='ml-2.5'>{ lang === Language.UA ? 'Перейти до кошика' : 'Перейти в корзину' }</span>
@@ -157,6 +177,17 @@ export const ProductComponent: FC<ProductComponentProps> = (
 						<span className='ml-2.5'>{t('quick order')}</span>
 					</button>
 				</div>
+			</div>
+			<div className='my-10 p-8 bg-[#FDFEFF] border border-gray-200 rounded-sm'>
+				<div className='flex items-center gap-2'>
+					<img src={warningIcon} alt=""/>
+					<h4 className='text-lg font-bold'>
+						{ lang === Language.UA ? 'Зверніть увагу!' : 'Обратите внимание!' }
+					</h4>
+				</div>
+				{ lang === Language.UA ?
+					<p className='text-sm mt-5'>При покупці <strong>менше 4-х одиниць</strong> товару вартість може бути вище зазначеної. Бувають випадки, коли у нас немає можливості продати менше 4-х одиниць товару.</p> :
+					<p className='text-sm mt-5'>При покупке <strong>менее 4-х единиц</strong> товара стоимость может быть выше указанной. Бывают случаи, когда у нас нет возможности продать менее 4 единиц товара.</p> }
 			</div>
 			<CharacteristicsBlock data={ data } />
 		</div>

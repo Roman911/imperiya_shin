@@ -15,10 +15,9 @@ import { NoResult, Spinner } from '../../../components/Lib';
 
 interface CatalogContentProps {
 	openFilter: () => void
-	onSubmit: () => void
 }
 
-export const CatalogContent: FC<CatalogContentProps> = ({ openFilter, onSubmit }) => {
+export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 	const [ paginateCount, setPaginateCount ] = useState(0);
 	const location = useLocation();
 	const dispatch = useAppDispatch();
@@ -40,7 +39,7 @@ export const CatalogContent: FC<CatalogContentProps> = ({ openFilter, onSubmit }
 
 	return (
 		<div className='flex-1'>
-			<FilterByCar openFilter={ openFilter } onSubmit={ onSubmit } handleClick={ handleClick } />
+			<FilterByCar openFilter={ openFilter } handleClick={ handleClick } />
 			<SelectionByCar />
 			<FilterActive className='hidden lg:flex'/>
 			<Spinner height='h-60' show={isLoading} size='large'>

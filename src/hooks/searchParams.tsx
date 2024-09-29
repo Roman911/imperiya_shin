@@ -21,13 +21,14 @@ const PARAM_KEYS = [
 	'krepeg',
 	'typedisk',
 	'colir',
-	'brand_disc',
 	'jemnist',
 	'puskovii_strum',
 	'tip_elektrolitu',
 	'tip_korpusu',
 	'napruga',
-	'poliarnist'
+	'poliarnist',
+	'li',
+	'si'
 ] as const;
 
 export const useAppSearchParams = () => {

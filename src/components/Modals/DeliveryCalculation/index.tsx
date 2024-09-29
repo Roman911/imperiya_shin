@@ -1,24 +1,34 @@
-import {Dispatch, FC, SetStateAction} from 'react';
+import { FC } from 'react';
 
-import { useAppSelector } from '../../../hooks';
-import npLogo from '../../../assets/nova-poshta-logo-white-bg.png';
+import { useAppSelector, useAppTranslation } from '../../../hooks';
+import { NpCitySearch, NpDocumentPrice } from '../../../containers/Lib';
 import { Language } from '../../../models/language';
-import { MySelect } from "../../Order/Select";
+import { Quantity } from '../../Lib';
+import npLogo from '../../../assets/nova-poshta-logo-white-bg.png';
 
 interface DeliveryCalculationProps {
-	cityOptions: {
-		value: string
-		label: string
-	}[]
+	offer_id: number | undefined
+	quantity: number
 	handleClick: () => void
+	onChange: (e: { target: HTMLInputElement }) => void
+	onSetQuantity: (id: number, quantity: number) => void
+	handleModalClose: () => void
 	showDescription: boolean
-	dataNpDocumentPrice: { AssessedCost: number, Cost: number } | undefined
-	onChange: (name: string, value: number | string | undefined) => void
-	setCity: Dispatch<SetStateAction<string | number | undefined>>
 }
 
-export const DeliveryCalculationComponent: FC<DeliveryCalculationProps> = ({ cityOptions, showDescription, dataNpDocumentPrice, handleClick, onChange, setCity }) => {
+export const DeliveryCalculationComponent: FC<DeliveryCalculationProps> = (
+	{
+		offer_id,
+		quantity,
+		showDescription,
+		handleClick,
+		onChange,
+		handleModalClose,
+		onSetQuantity
+	}) => {
 	const { lang } = useAppSelector(state => state.langReducer);
+	const { city } = useAppSelector(state => state.orderReducer);
+	const t = useAppTranslation();
 
 	return <>
 		<div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
@@ -29,23 +39,27 @@ export const DeliveryCalculationComponent: FC<DeliveryCalculationProps> = ({ cit
 						{ lang === Language.UA ? 'Розрахунок доставки' : 'Расчет доставки' }
 					</h3>
 				</div>
-				<div className='mt-6'>
-					<MySelect name='city' label='Місто' options={ cityOptions } onChange={ onChange } setCity={ setCity } />
+				<div className='mt-6 mb-4'>
+					{ !showDescription && <>
+						<p className='mt-4'>
+							{ lang === Language.UA ? 'Вкажіть місто' : 'Укажите город' }
+						</p>
+						<NpCitySearch title={t('city', true)}/>
+						<p className='mt-4 mb-2'>
+							{ lang === Language.UA ? 'Вкажіть кількість' : 'Укажите количество' }
+						</p>
+						<Quantity id={0} quantity={ quantity } offerQuantity={ 99 } onChange={ onChange } setQuantity={ onSetQuantity } />
+					</>}
+					{ showDescription && city.value.length > 0 && <NpDocumentPrice offer_id={ offer_id } quantity={ quantity } /> }
 				</div>
-				{showDescription && dataNpDocumentPrice && <div>
-					<p className='mt-4'>
-						{ lang === Language.UA ? 'Розрахункова вартість доставки вказана за 1 шт' : 'Расчетная стоимость доставки указана за 1 шт.' }
-					</p>
-					<h3 className="text-base font-semibold leading-6 text-gray-900 mt-3">
-						{ lang === Language.UA ? 'Вартість:' : 'Стоимость:' } { dataNpDocumentPrice.Cost } грн
-					</h3>
-				</div>}
 			</div>
 		</div>
 		<div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-			<button onClick={() => handleClick()} type="button" className='btn primary w-max px-5'>
+			{ showDescription ? <button onClick={() => handleModalClose()} type="button" className='btn primary w-max px-5'>
+				{ lang === Language.UA ? 'Закрити' : 'Закрыть' }
+			</button> : <button onClick={() => handleClick()} type="button" className='btn primary w-max px-5'>
 				{ lang === Language.UA ? 'Розрахувати' : 'Рассчитать' }
-			</button>
+			</button> }
 		</div>
 	</>
 };

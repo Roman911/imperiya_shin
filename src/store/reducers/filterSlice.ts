@@ -9,63 +9,37 @@ export interface FilterState {
 	filter: IFilter
 }
 
+const initialFilterState: IFilter = {
+	width: null,
+	height: null,
+	radius: null,
+	sezon: null,
+	brand: null,
+	model_id: null,
+	country: null,
+	year: null,
+	load: null,
+	speed: null,
+	omolog: null,
+	krepeg: null,
+	typedisk: null,
+	colir: null,
+	jemnist: null,
+	puskovii_strum: null,
+	tip_elektrolitu: null,
+	tip_korpusu: null,
+	napruga: null,
+	poliarnist: null,
+	vehicle_type: null,
+	li: null,
+	si: null,
+	only_studded: null,
+}
+
 const initialState: FilterState = {
 	section: Section.Tires,
 	subsection: Subsection.ByParams,
-	filter: {
-		width: null,
-		height: null,
-		radius: null,
-		sezon: null,
-		brand: null,
-		model_id: null,
-		country: null,
-		year: null,
-		load: null,
-		speed: null,
-		omolog: null,
-		krepeg: null,
-		typedisk: null,
-		colir: null,
-		brand_disc: null,
-		jemnist: null,
-		puskovii_strum: null,
-		tip_elektrolitu: null,
-		tip_korpusu: null,
-		napruga: null,
-		poliarnist: null,
-		vehicle_type: null,
-
-
-		pcd: null,
-
-		price_from: null,
-		price_to: null,
-		city: null,
-		model: null,
-		speed_index: null,
-		load_index: null,
-		ply_rating: null,
-		dia_from: null,
-		dia_to: null,
-		color: null,
-		et_from: null,
-		et_to: null,
-		bolt_count_pcd: null,
-		only_xl: false,
-		only_owl: false,
-		only_retread: false,
-		only_provider_with_tax: false,
-		homologation: null,
-		vehicle_type_alt: null,
-		only_run_flat: false,
-		only_flange_protector: false,
-		only_studded: null,
-		only_off_road: false,
-		only_c: false,
-		only_not_c: false,
-		only_reinforced: false,
-	}
+	filter: initialFilterState,
 }
 
 export const filterSlice = createSlice({
@@ -84,10 +58,13 @@ export const filterSlice = createSlice({
 		removeParam: (state, actions: PayloadAction<IFilter>) => {
 			state.filter = {...state.filter, ...actions.payload}
 		},
+		resetFilter: (state) => {
+			state.filter = initialFilterState;
+		},
 		reset: () => initialState,
 	},
 });
 
-export const { changeSubsection, changeSection, setParams, removeParam, reset } = filterSlice.actions;
+export const { changeSubsection, changeSection, setParams, removeParam, reset, resetFilter } = filterSlice.actions;
 
 export default filterSlice.reducer;

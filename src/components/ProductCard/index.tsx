@@ -55,7 +55,7 @@ export const ProductCardComponent: FC<ProductCardProps> = ({ item, isBookmarks, 
 
 	return (
 		<Link to={`/${page_url}`} className={classNames(style['product-card'], 'group')}>
-			<div className='relative'>
+			<div className='relative min-h-72 sm:min-h-52'>
 				<div className='absolute'>
 					{ seasonIcon && <img src={`/images/${seasonIcon}-icon.svg`} alt=""/> }
 					{ Icon && <Icon className={classNames('fill-[#575C66]', {'stroke-[#575C66]': vehicle_type === '2'}) }/> }

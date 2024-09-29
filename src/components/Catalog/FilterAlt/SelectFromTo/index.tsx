@@ -44,7 +44,7 @@ export const SelectFromTo: FC<SelectFromTo> = ({ nameMin, nameMax,  from, to, ti
 		<div className='text-sm font-bold text-gray-500 uppercase'>{ title }</div>
 		<div className='flex gap-2 mt-3'>
 			<div
-				className='flex h-10 rounded-full mx-auto bg-white p-0.5 mt-4 lg:mt-0 border border-gray-300 w-full lg:max-w-[600px]'>
+				className='flex h-10 rounded mx-auto bg-white p-0.5 mt-4 lg:mt-0 border border-gray-300 w-full lg:max-w-[600px]'>
 				<input
 					type="text"
 					value={ minMax.min }
@@ -55,7 +55,7 @@ export const SelectFromTo: FC<SelectFromTo> = ({ nameMin, nameMax,  from, to, ti
 				/>
 			</div>
 			<div
-				className='flex h-10 rounded-full mx-auto bg-white p-0.5 mt-4 lg:mt-0 border border-gray-300 w-full lg:max-w-[600px]'>
+				className='flex h-10 rounded mx-auto bg-white p-0.5 mt-4 lg:mt-0 border border-gray-300 w-full lg:max-w-[600px]'>
 				<input
 					type="text"
 					value={ minMax.max }

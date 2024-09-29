@@ -2,21 +2,34 @@ import { FC, useState, MouseEvent, ChangeEvent } from 'react';
 import classNames from 'classnames';
 
 import './index.scss';
-import {ChevronDownIcon, SearchIcon} from '../../../Lib/Icons';
+import { ChevronDownIcon } from '../../../Lib/Icons';
+import { SearchInput } from './SearchInput';
 import type { Options } from '../../../../models/baseData';
 
 interface SelectProps {
 	label: string
 	name: string
 	variant: 'white' | 'gray'
+	search?: boolean
 	options: Array<Options>
 	onChange: (name: string, value: number | string | undefined | null, element: HTMLElement) => void
 	filterValue?: null | number | string
 	valueStudded?: null | number | string
 }
 
-export const Select: FC<SelectProps> = ({ name, label, variant, options, onChange, filterValue, valueStudded }) => {
+export const Select: FC<SelectProps> = (
+	{
+		name,
+		label,
+		variant,
+		search,
+		options,
+		onChange,
+		filterValue,
+		valueStudded
+	}) => {
 	const [ open, setOpen ] = useState( false );
+	const [eventSearch, setEventSearch] = useState('');
 
 	const handleClick = (event: MouseEvent<HTMLElement> | ChangeEvent<HTMLElement>, value: number | string | undefined, isStudded?: boolean) => {
 		const newValue = filterValue === value ? null : value;
@@ -27,10 +40,14 @@ export const Select: FC<SelectProps> = ({ name, label, variant, options, onChang
 		onChange(isStudded ? 'only_studded' : name, isStudded ? newValueStudded : newValue, event.currentTarget);
 	}
 
-	return <div className={classNames('relative mt-2 rounded-sm', { 'bg-white': variant === 'white', 'bg-[#F0F2F5]': variant === 'gray' })} >
+	const handleChange = (value: string) => {
+		setEventSearch(value.toLowerCase());
+	}
+
+	return <div className={classNames('relative mt-2 rounded-sm', { 'bg-white': variant === 'white', 'bg-zinc-200': variant === 'gray' })} >
 		<button type="button"
 						onClick={() => setOpen(prev => !prev)}
-						className={classNames('relative w-full cursor-default py-2.5 pr-10 text-left font-semibold text-gray-500 text-[13px] uppercase focus:outline-none', {'font-bold pl-1.5': variant === 'white', 'pl-3.5': variant === 'gray'})}
+						className={classNames('relative w-full cursor-default py-3 pr-10 text-left focus:outline-none', {'font-bold pl-1.5': variant === 'white', 'pl-3.5': variant === 'gray'})}
 						aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
       <span className="flex items-center">
         <span className="block truncate">{ label }</span>
@@ -39,17 +56,12 @@ export const Select: FC<SelectProps> = ({ name, label, variant, options, onChang
         <ChevronDownIcon className={ classNames({ 'stroke-black': variant === 'white', 'stroke-gray-500': variant === 'gray' }) } />
       </span>
 		</button>
-
-		<ul
-			className={ classNames('item-list max-h-[480px] w-full overflow-auto py-1 text-base ring-black ring-opacity-5 focus:outline-none sm:text-sm', { 'hidden': !open }) }
-			tabIndex={-1} role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
-			<li className='py-1 pl-2.5 pr-4 text-gray-900'>
-				<label className='relative' htmlFor="">
-					<SearchIcon className='fill-gray-500 absolute left-2 top-1/2 -translate-y-1/2' />
-					<input className='py-2 pl-10 pr-2 w-full' type="text" placeholder='Пошук'/>
-				</label>
-			</li>
-			{options?.map(item => {
+		<ul className={
+			classNames('relative item-list max-h-[480px] w-full overflow-auto pb-1 text-base ring-black ring-opacity-5 focus:outline-none sm:text-sm',
+				{ 'hidden': !open, 'pt-12': search, 'pt-1': !search })}
+				tabIndex={-1} role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
+			{ search && <SearchInput value={ eventSearch } handleChange={ handleChange } /> }
+			{options?.filter(i => i.label.toString().toLowerCase().includes(eventSearch)).map(item => {
 				return <li key={ item.value } className="relative cursor-default select-none py-1 pl-2.5 pr-9 text-gray-900" id="listbox-option-0" role="option">
 					<div className="inline-flex items-center">
 						<label

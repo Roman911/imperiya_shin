@@ -30,5 +30,11 @@ export const config: Config = {
 	},
 	filterAlt: {
 		submitFloatShowTime: 7000
+	},
+	deliveryCalculation: {
+		postpaid: {
+			const: 20,
+			cof: 1.02
+		}
 	}
 }

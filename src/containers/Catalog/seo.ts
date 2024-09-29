@@ -25,16 +25,6 @@ const paramTrans: OriginalType = {
 	y: 'year',
 };
 
-// type SwappedType = {
-// 	[K in OriginalType[keyof OriginalType]]: keyof OriginalType;
-// };
-
-// const paramTransInvert = Object.keys(paramTrans).reduce((acc, key) => {
-// 	const value = paramTrans[key as keyof OriginalType];
-// 	acc[value] = key as keyof OriginalType;
-// 	return acc;
-// }, {} as SwappedType);
-
 const digitValueToUrl = (value: number) => {
 	return value.toString();
 }

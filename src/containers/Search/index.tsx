@@ -28,7 +28,7 @@ export const Search = () => {
 
 	return <LayoutWrapper>
 		<Helmet>
-			<title>{ t('search', true) } | luxshina.ua</title>
+			<title>{ t('search', true) } | { config.domain }</title>
 		</Helmet>
 		<Breadcrumbs path={ path }/>
 		<Title title='search' />

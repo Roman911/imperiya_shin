@@ -21,8 +21,8 @@ interface ContactsProps {
 	className?: string
 }
 
-export const Contacts: FC<ContactsProps> = ({ className }) => {
-	return <div className={classNames('py-1 text-white font-semibold', className)}>
+export const Contacts: FC<ContactsProps> = ({ className = 'text-white' }) => {
+	return <div className={classNames('py-1 font-semibold', className)}>
 		{config.contacts.phone.map(item => {
 			return <div key={item.value} className='flex items-center'>
 				<img src={phoneLogos[item.logo]} alt={item.logo + '-logo'}/>

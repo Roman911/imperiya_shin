@@ -43,6 +43,8 @@ interface OfferGroup {
 	homologation: boolean
 	studded: boolean
 	vehicle_type: string
+	krep_pcd1: string
+	id_typedisc: string
 	off_road: boolean
 	active: boolean
 	ply_rating: boolean
@@ -50,6 +52,8 @@ interface OfferGroup {
 	demo: boolean
 	seal: boolean
 	silent: boolean
+	et: string
+	dia: string
 }
 
 interface Model {
@@ -57,6 +61,7 @@ interface Model {
 	name: string
 	brand: number
 	brand_image: string
+	brand_name: string
 	alias: string
 	season: string
 	images: []

@@ -6,6 +6,7 @@ import comparisonReducer from './reducers/comparisonSlice';
 import filterCarReducer from './reducers/filterCarSlice';
 import filterReducer from './reducers/filterSlice';
 import langReducer from './reducers/langSlice';
+import orderReducer from './reducers/orderSlice';
 import settingsReducer from './reducers/settingsSlice';
 import searchReducer from './reducers/searchSlice';
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
 	filterCarReducer,
 	filterReducer,
 	langReducer,
+	orderReducer,
 	settingsReducer,
 	searchReducer,
 	[baseDataAPI.reducerPath]: baseDataAPI.reducer

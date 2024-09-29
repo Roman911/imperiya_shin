@@ -17,6 +17,7 @@ export { HomeIcon } from './HomeIcon';
 export { InfoIcon } from './InfoIcon';
 export { LibraIcon } from './LibraIcon';
 export { MailIcon } from './MailIcon';
+export { MarkerIcon } from './MarkerIcon';
 export { MenuIcon } from './MenuIcon';
 export { MotorcyclesIcon } from './MotorcyclesIcon';
 export { PhoneIcon } from './PhoneIcon';

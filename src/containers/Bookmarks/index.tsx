@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
+import { config } from '../../config';
 import { baseDataAPI } from '../../services/baseDataService';
 import { useAppSelector, useAppTranslation } from '../../hooks';
 import { ProductList } from '../ProductList';
@@ -24,7 +25,7 @@ export const Bookmarks = () => {
 
 	return <LayoutWrapper>
 		<Helmet>
-			<title>{ t('favorites', true) } | luxshina.ua</title>
+			<title>{ t('favorites', true) } | { config.domain }</title>
 		</Helmet>
 		<Breadcrumbs path={ path }/>
 		<Title title='favorites' />

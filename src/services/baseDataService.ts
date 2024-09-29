@@ -106,6 +106,11 @@ export const baseDataAPI = createApi({
 				}
 			}),
 		}),
+		fetchNpWarehouses: build.query({
+			query: (ref) => ({
+				url: `/api/np/warehouses/${ref}`,
+			}),
+		}),
 		fetchNpDocumentPrice: build.query({
 			query: (params) => ({
 				url: `/api/np/getDocumentPrice`,
@@ -114,10 +119,36 @@ export const baseDataAPI = createApi({
 			}),
 		}),
 		createOrder: build.mutation({
-			query: (order) => ({
+			query: (data) => ({
 				url: '/api/addOrder',
 				method: 'POST',
-				body: order,
+				body: data,
+				header: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'Accept': 'application/json',
+				}
+			}),
+		}),
+		createCallback: build.mutation({
+			query: (data) => ({
+				url: '/api/addCallback',
+				method: 'POST',
+				body: data,
+				header: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'Accept': 'application/json',
+				}
+			}),
+		}),
+		createAddAsk: build.mutation({
+			query: (data) => ({
+				url: '/api/addAsk',
+				method: 'POST',
+				body: data,
+				header: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'Accept': 'application/json',
+				}
 			}),
 		}),
 	}),

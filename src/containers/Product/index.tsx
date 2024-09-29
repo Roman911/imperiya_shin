@@ -5,17 +5,19 @@ import { baseDataAPI } from '../../services/baseDataService';
 import { useAppDispatch, useAppTranslation } from '../../hooks';
 import { addCart } from '../../store/reducers/cartSlice';
 import { changeSection } from '../../store/reducers/filterSlice';
-import { ProductList } from '../ProductList';
 import Modal from '../Modals';
+import { AddAskModal } from '../Modals/AddAsk';
 import { QuickOrder } from '../Modals/QuickOrder';
+import { Callback } from '../Modals/Callback';
 import { DeliveryCalculation } from '../Modals/DeliveryCalculation';
 import { OnlineInstallment } from '../../components/Modals';
 import { LayoutWrapper } from '../../components/Layout';
 import { ProductComponent } from '../../components/Product';
-import { TextSeo } from '../../components/Home';
-import { Spinner, Title } from '../../components/Lib';
+import { Support } from '../../components/Home';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Section } from '../../models/filter';
+import { SimilarProducts } from './SimilarProducts';
+import { RecentlyViewed } from './RecentlyViewed';
 
 type CartItem = {
 	id: number;
@@ -31,10 +33,36 @@ export const Product = () => {
 	const location = useLocation();
 	const match = location.pathname.match(/(\d+)$/);
 	const { data, isLoading } = baseDataAPI.useFetchProductQuery(match![1]);
-	const { data: dataProduct, isLoading: productIsLoading } = baseDataAPI.useFetchProductsQuery({ id: '', length: 4 });
 	const t = useAppTranslation();
-	const section = /dia/.test(location.pathname) ? 'disks' : 'tires';
+	const section = /dia/.test(location.pathname) ? Section.Disks : /ah/.test(location.pathname) ? Section.Battery : Section.Tires;
 	const offer = data?.data.offers.find(item => item.offer_id === offerId);
+	const id: string[] = [];
+	const pushIfExists = (key: string, value: string | number | undefined) => {
+		if (value) id.push(`${key}=${value}`);
+	};
+
+	if (section === Section.Disks) {
+		pushIfExists('width', data?.data.offer_group.width);
+		pushIfExists('radius', data?.data.offer_group.diameter);
+		pushIfExists('typedisk', data?.data.offer_group.id_typedisc);
+	} else if (section === Section.Tires) {
+		pushIfExists('width', data?.data.offer_group.width);
+		pushIfExists('height', data?.data.offer_group.height);
+		pushIfExists('radius', data?.data.offer_group.diameter);
+	}
+
+	useEffect(() => {
+		if(section === Section.Tires) {
+			const storage: number[] = localStorage.reducerRecentlyViewed ? JSON.parse(localStorage.reducerRecentlyViewed) : [];
+			const matchValue = match?.[0] ? Number(match[0]) : undefined;
+
+			if (typeof matchValue === 'number' && !isNaN(matchValue)) {
+				const updatedStorage = storage.filter((item) => item !== matchValue);
+				const deleteElement = updatedStorage.length === 4 ? updatedStorage.slice(1,3) : updatedStorage;
+				localStorage.setItem('reducerRecentlyViewed', JSON.stringify([...deleteElement, matchValue]));
+			}
+		}
+	}, [match, section]);
 
 	useEffect(() => {
 		if(data) {
@@ -43,12 +71,16 @@ export const Product = () => {
 	}, [data]);
 
 	useEffect(() => {
-		if(data && section === 'disks') {
-			dispatch(changeSection(Section.Disks));
+		if(data) {
+			if(section === 'disks') {
+				dispatch(changeSection(Section.Disks));
+			} else if(section === 'battery') {
+				dispatch(changeSection(Section.Battery));
+			}
 		}
 	}, [data, dispatch, section]);
 
-	const handleModalOpen = (type: 'QuickOrder' | 'OnlineInstallment' | 'DeliveryCalculation') => {
+	const handleModalOpen = (type: 'QuickOrder' | 'OnlineInstallment' | 'DeliveryCalculation' | 'Callback' | 'AddAsk') => {
 		setModalActive(true);
 		setModalType(type)
 	};
@@ -61,7 +93,7 @@ export const Product = () => {
 		{
 			id: 1,
 			title: t(section, true),
-			url: `/catalog/${section === 'disks' ? section + '?typeproduct=3' : section}`
+			url: `/catalog/${section === 'disks' ? section + '?typeproduct=3' : section === 'battery' ? '?typeproduct=4' : section}`
 		},
 		{
 			id: 2,
@@ -106,27 +138,19 @@ export const Product = () => {
 			/>
 		</LayoutWrapper>
 		<div className='container mx-auto'>
-			<Title title={ t('similar products', true) } />
-			<Spinner height='h-40' show={ productIsLoading } >
-				<ProductList
-					classnames='grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-3 md:px-0'
-					data={ dataProduct?.data }
-				/>
-			</Spinner>
-			<Title title='recently viewed' />
-			<Spinner height='h-40' show={ productIsLoading } >
-				<ProductList
-					classnames='grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-3 md:px-0'
-					data={ dataProduct?.data }
-				/>
-			</Spinner>
+			<SimilarProducts id={ id.join('&') } />
+			<RecentlyViewed />
 		</div>
-		<TextSeo />
+		<Support />
 		{isModalActive && (
 			<Modal onClose={ handleModalClose } size={modalType === 'OnlineInstallment' ? 'max-w-6xl' : 'sm:max-w-lg'}>
-				{ modalType === 'QuickOrder' && <QuickOrder /> }
+				{ modalType === 'QuickOrder' &&
+					<QuickOrder offerId={ offerId } quantity={ quantity } offerItem={ data?.data?.offers?.find(item => item.offer_id === offerId) } setModalActive={ setModalActive } />}
 				{ modalType === 'OnlineInstallment' && <OnlineInstallment /> }
-				{ modalType === 'DeliveryCalculation' && <DeliveryCalculation offer_id={ data?.data.id } /> }
+				{ modalType === 'DeliveryCalculation' && <DeliveryCalculation offer_id={ data?.data.id } handleModalClose={ handleModalClose } /> }
+				{ modalType === 'OnlineInstallment' && <OnlineInstallment /> }
+				{ modalType === 'Callback' && <Callback productId={ data?.data?.offers?.find(item => item.offer_id === offerId)?.product_id } quantity={ quantity } /> }
+				{ modalType === 'AddAsk' && <AddAskModal productId={ data?.data?.offers?.find(item => item.offer_id === offerId)?.product_id } name={ data?.data.full_name } /> }
 			</Modal>
 		)}
 	</div>

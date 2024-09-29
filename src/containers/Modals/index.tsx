@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useRef, useState, type MouseEventHandler } from 'react';
 
 import Portal, { createContainer } from '../Portal';
-import { useClickOutside } from '../../hooks';
+//import { useClickOutside } from '../../hooks';
 import { ModalLayout } from '../../components/Modals/ModalLayout';
 
 const MODAL_CONTAINER_ID = 'modal-container-id';
@@ -17,7 +17,7 @@ const Modal = (props: Props) => {
 	const rootRef = useRef<HTMLDivElement>(null);
 	const [ isMounted, setMounted ] = useState(false);
 
-	useClickOutside({ ref: rootRef, open: isMounted, onClose })
+	// useClickOutside({ ref: rootRef, open: isMounted, onClose })
 
 	useEffect(() => {
 		createContainer({ id: MODAL_CONTAINER_ID });

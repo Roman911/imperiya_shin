@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import Select, { SingleValue, StylesConfig } from 'react-select';
 
+import { useAppSelector } from '../../../../hooks';
+import { Language } from '../../../../models/language';
 import type { Options } from '../../../../models/baseData';
 
 interface SelectProps {
@@ -72,16 +74,19 @@ const colourStyles: StylesConfig<Options | undefined, IsMulti> = {
 };
 
 export const MySelect: FC<SelectProps> = ({ name, label, options = [], isDisabled = false, onChange }) => {
+	const { lang } = useAppSelector(state => state.langReducer);
+
 	const handleChange = (value: SingleValue<Options | undefined>) => {
 		onChange(name, value?.value);
 	}
 
 	return <Select
-		options={options}
-		styles={colourStyles}
-		placeholder={label}
-		isClearable={true}
-		isDisabled={isDisabled}
-		onChange={handleChange}
+		options={ options }
+		styles={ colourStyles }
+		placeholder={ label }
+		isClearable={ true }
+		isDisabled={ isDisabled }
+		onChange={ handleChange }
+		noOptionsMessage={ () => lang === Language.UA ? 'Збігів не знайдено' : 'Совпадений не найдено' }
 	/>
 }

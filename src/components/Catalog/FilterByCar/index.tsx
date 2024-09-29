@@ -5,11 +5,10 @@ import { useAppSelector, useAppTranslation } from '../../../hooks';
 
 import { TypeCarLinks } from '../../Lib/TypeCarLinks';
 import { ChevronDownIcon, FilterIcon } from '../../Lib/Icons';
-import {Section} from "../../../models/filter.ts";
+import { Section } from '../../../models/filter';
 
 interface FilterByCarProps {
 	openFilter: () => void
-	onSubmit: () => void
 	handleClick: (param1: string, param2: string) => void
 }
 

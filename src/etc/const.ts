@@ -12,6 +12,7 @@ export const ROUTES = {
 	comparison: 'ru?/comparison/',
 	cart: 'ru?/cart/',
 	order: 'ru?/order/',
+	successful: 'ru?/order/successful/',
 	tyreDiskSizeCalc: 'ru?/tyre-disk-size-calc/',
 	search: 'ru?/search/',
 };

@@ -1,32 +1,39 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 
-import { baseDataAPI } from '../../../services/baseDataService';
 import { DeliveryCalculationComponent } from '../../../components/Modals';
 
-export const DeliveryCalculation = ({ offer_id }: { offer_id: number | undefined }) => {
-	const [city, setCity] = useState<number | string | undefined>('');
-	const [cityRef, setCityRef] = useState<number | string | undefined>('');
-	const [showDescription, setShowDescription] = useState<boolean>(false);
-	const { data } = baseDataAPI.useFetchNpSearchQuery(city);
-	const { data: dataNpDocumentPrice } = baseDataAPI.useFetchNpDocumentPriceQuery({ offer_id, ref: cityRef, count: 1 });
-	const cityOptions = data?.[0].Addresses?.map((item: { MainDescription: string, Ref: string }) => {
-		return { value: item.Ref, label: item.MainDescription }
-	});
+interface DeliveryCalculationProps {
+	offer_id: number | undefined
+	handleModalClose: () => void
+}
 
-	const onChange = (_name: string, value: number | string | undefined) => {
-		setCityRef(value);
+export const DeliveryCalculation: FC<DeliveryCalculationProps> = ({ offer_id, handleModalClose }) => {
+	const [quantity, setQuantity] = useState(1);
+	const [showDescription, setShowDescription] = useState<boolean>(false);
+
+	const onSetQuantity = (_: number,quan: number) => {
+		setQuantity(quan);
 	}
 
 	const handleClick = () => {
-		setShowDescription(true)
+		setShowDescription(true);
+	}
+
+	const onChange = (e: { target: HTMLInputElement }) => {
+		const value = e.target.value;
+		const onlyNumbers = value.replace(/\D/g, '');
+		const numericValue = Number(onlyNumbers);
+
+		setQuantity(numericValue < 99 ? numericValue : 99);
 	}
 
 	return <DeliveryCalculationComponent
-		setCity={ setCity }
-		cityOptions={ cityOptions }
-		onChange={ onChange }
+		offer_id={ offer_id }
+		quantity={ quantity }
 		handleClick={ handleClick }
+		onChange={ onChange }
+		onSetQuantity={ onSetQuantity }
+		handleModalClose={ handleModalClose }
 		showDescription={ showDescription }
-		dataNpDocumentPrice={ dataNpDocumentPrice?.[0] }
 	/>
 };

@@ -30,7 +30,7 @@ export const ProductCard: FC<ProductCardProps> = ({ item }) => {
 		event.preventDefault();
 		dispatch(isComparison ? removeComparison(id) : addComparison(id));
 		const storage = localStorage.reducerComparison ? JSON.parse(localStorage.reducerComparison) : [];
-		localStorage.setItem('reducerComparison', JSON.stringify(storage.includes(id) ? [...storage.filter((item: number) => item !== id), id] : [...storage, id]));
+		localStorage.setItem('reducerComparison', JSON.stringify(storage.includes(id) ? [...storage.filter((item: number) => item !== id)] : [...storage, id]));
 	};
 
 	return <ProductCardComponent

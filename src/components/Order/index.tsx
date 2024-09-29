@@ -1,10 +1,11 @@
-import { FC, Dispatch, SetStateAction } from 'react';
-import { Controller, useFormContext } from 'react-hook-form'
+import { FC } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppTranslation } from '../../hooks';
 import { MySelect } from './Select';
 import { Summary } from './Summary';
-import { TextFile } from '../Lib';
+import { PhoneMaskInput, TextFile } from '../Lib';
+import { NpCitySearch, NpWarehousesSearch } from '../../containers/Lib';
 import { Language } from '../../models/language';
 import type { ProductsProps } from '../../models/products';
 import type { OrdersParamProps } from '../../models/ordersParam';
@@ -12,12 +13,9 @@ import type { OrdersParamProps } from '../../models/ordersParam';
 interface OrderProps {
 	data: ProductsProps | undefined
 	isLoading: boolean
-	cityOptions: {
-		value: string
-		label: string
-	}[]
+	loadingBtn: boolean
+	showNpWarehouses: boolean | undefined
 	shippingMethod: string | number | undefined
-	setCity: Dispatch<SetStateAction<string | number | undefined>>
 	cartItems: { id: number; quantity: number }[]
 	onChange: (name: string, value: number | string | undefined) => void
 	dataOrdersParam: OrdersParamProps | undefined
@@ -29,13 +27,14 @@ export const OrderComponent: FC<OrderProps> = (
 		isLoading,
 		cartItems,
 		onChange,
-		setCity,
-		cityOptions,
+		loadingBtn,
 		shippingMethod,
-		dataOrdersParam
+		dataOrdersParam,
+		showNpWarehouses,
 	}) => {
 	const { control, formState: { errors } } = useFormContext();
 	const { lang } = useAppSelector(state => state.langReducer);
+	const t = useAppTranslation();
 
 	const deliverysOptions = dataOrdersParam?.Deliverys.map(item => {
 		return { value: item.deliverys_id, label: lang === Language.UA ? item.name : item.name_ru }
@@ -49,46 +48,44 @@ export const OrderComponent: FC<OrderProps> = (
 		<div className='flex-1'>
 			<div className='bg-white pt-5 pb-8 px-6'>
 				<h3 className='font-bold text-xl'>
-					{ lang === Language.UA ? 'Контактні дані' : 'Контактные данные' }
+					{lang === Language.UA ? 'Контактні дані' : 'Контактные данные'}
 				</h3>
+				<input
+					type={'text'}
+					placeholder=' '
+				/>
 				<Controller
 					name="firstname"
 					control={control}
-					render={({ field }) => {
-						return <TextFile field={ field } label={ lang === Language.UA ? 'Ім\'я' : 'Имя' } error={ typeof errors?.['firstname']?.message === 'string' ? errors['firstname'].message : null } />
+					render={({field}) => {
+						return <TextFile field={field} label={lang === Language.UA ? 'Ім\'я' : 'Имя'} error={typeof errors?.['firstname']?.message === 'string' ? errors['firstname'].message : null}/>
 					}}
 				/>
 				<Controller
 					name="lastname"
 					control={control}
-					render={({ field }) => {
-						return <TextFile field={ field } label={ lang === Language.UA ? 'Прізвище' : 'Фамилия' } error={ typeof errors?.['lastname']?.message === 'string' ? errors['lastname'].message : null } />
+					render={({field}) => {
+						return <TextFile field={field} label={lang === Language.UA ? 'Прізвище' : 'Фамилия'} error={typeof errors?.['lastname']?.message === 'string' ? errors['lastname'].message : null}/>
 					}}
 				/>
 				<Controller
 					name="surname"
 					control={control}
-					render={({ field }) => {
-						return <TextFile field={ field } label={ lang === Language.UA ? 'По батькові' : 'Отчество' } error={ typeof errors?.['surname']?.message === 'string' ? errors['surname'].message : null } />
+					render={({field}) => {
+						return <TextFile field={field} label={lang === Language.UA ? 'По батькові' : 'Отчество'} error={typeof errors?.['surname']?.message === 'string' ? errors['surname'].message : null}/>
 					}}
 				/>
-				<Controller
-					name="telephone"
-					control={control}
-					render={({ field }) => {
-						return <TextFile field={ field } label='Номер телефону' error={ typeof errors?.['telephone']?.message === 'string' ? errors['telephone'].message : null } />
-					}}
-				/>
+				<PhoneMaskInput />
 				<Controller
 					name="email"
 					control={control}
-					render={({ field }) => {
-						return <TextFile field={ field } label={ lang === Language.UA ? 'Електронна пошта' : 'Электронная почта' } error={ typeof errors?.['email']?.message === 'string' ? errors['email'].message : null } />
+					render={({field}) => {
+						return <TextFile field={field} label={lang === Language.UA ? 'Електронна пошта' : 'Электронная почта'} error={typeof errors?.['email']?.message === 'string' ? errors['email'].message : null}/>
 					}}
 				/>
 			</div>
 			<div className='bg-white pt-5 pb-8 px-6 mt-4'>
-				<h3 className='font-bold text-xl'>{ lang === Language.UA ? 'Доставка та оплата' : 'Доставка и оплата' }</h3>
+				<h3 className='font-bold text-xl'>{lang === Language.UA ? 'Доставка та оплата' : 'Доставка и оплата' }</h3>
 				<div className="relative mt-6 w-full min-w-[200px]">
 					<h4 className='font-semibold'>
 						{lang === Language.UA ? 'Виберіть спосіб доставки' : 'Выберите способ доставки'}
@@ -98,7 +95,10 @@ export const OrderComponent: FC<OrderProps> = (
 											options={deliverysOptions} onChange={onChange}/>
 					</div>
 					{(shippingMethod === 2 || shippingMethod === 3) && <div className='mt-3'>
-						<MySelect name='city' label='Місто' options={cityOptions} onChange={onChange} setCity={setCity} />
+						<NpCitySearch title={ t('city', true) } />
+					</div>}
+					{shippingMethod === 2 && showNpWarehouses && <div className='mt-3'>
+						<NpWarehousesSearch title={ t('department', true) } />
 					</div>}
 					{shippingMethod === 3 && <Controller
 						name="address"
@@ -113,7 +113,7 @@ export const OrderComponent: FC<OrderProps> = (
 					<MySelect name='payment_method' label='Способ оплаты' options={ paymentsOptions } onChange={ onChange }/>
 				</div>
 			</div>
-			<div className='bg-white pt-5 pb-8 px-6 mt-4 mb-20'>
+			<div className='bg-white pt-5 pb-8 px-6 mt-4 md:mb-20'>
 				<h4 className='font-semibold'>
 					{lang === Language.UA ? 'Додати коментар' : 'Додати коментар'}
 				</h4>
@@ -124,6 +124,6 @@ export const OrderComponent: FC<OrderProps> = (
 				/>
 			</div>
 		</div>
-		<Summary data={data} isLoading={isLoading} cartItems={cartItems}/>
+		<Summary data={ data } isLoading={ isLoading } cartItems={ cartItems } loadingBtn={ loadingBtn } />
 	</div>
 };

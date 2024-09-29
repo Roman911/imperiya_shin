@@ -1,13 +1,15 @@
 import { Helmet } from 'react-helmet-async';
 
+import { config } from '../../config';
 import { useAppDispatch, useAppSelector, useAppTranslation } from '../../hooks';
 import { removeComparison, reset } from '../../store/reducers/comparisonSlice';
 import { LayoutWrapper } from '../../components/Layout';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { NoResult, Spinner, Title } from '../../components/Lib';
 import { ComparisonComponent } from '../../components/Comparison';
-import { Language } from "../../models/language.ts";
-import { baseDataAPI } from "../../services/baseDataService.ts";
+import { Language } from '../../models/language';
+import { baseDataAPI } from '../../services/baseDataService';
+import { Support } from '../../components/Home';
 
 export const Comparison = () => {
 	const dispatch = useAppDispatch();
@@ -38,7 +40,7 @@ export const Comparison = () => {
 
 	return <LayoutWrapper >
 		<Helmet>
-			<title>{ t('comparison', true) } | luxshina.ua</title>
+			<title>{ t('comparison', true) } | { config.domain }</title>
 		</Helmet>
 		<Breadcrumbs path={ path } />
 		<Title title='comparison' />
@@ -49,5 +51,6 @@ export const Comparison = () => {
 				handleClick={ handleClick }
 			/>
 		</Spinner> : <NoResult noResultText={ noDataText } />}
+		<Support />
 	</LayoutWrapper>
 };

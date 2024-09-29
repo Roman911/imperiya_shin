@@ -9,6 +9,7 @@ import { Bookmarks } from './containers/Bookmarks';
 import { Comparison } from './containers/Comparison';
 import { Cart } from './containers/Cart';
 import { Order } from './containers/Order';
+import { SuccessfulOrder } from './containers/SuccessfulOrder';
 import { Search } from './containers/Search';
 import { CalculatorForTires } from './containers/CalculatorForTiresPage';
 import { AboutUs, Contacts, Credit, Payment, PublicOffer, Shipment } from './containers/StaticPage/';
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
 			{
 				path: ROUTES.order,
 				element: <Order />
+			},
+			{
+				path: ROUTES.successful,
+				element: <SuccessfulOrder />
 			},
 			{
 				path: ROUTES.search,
