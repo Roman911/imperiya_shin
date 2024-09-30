@@ -118,11 +118,16 @@ export const Order = () => {
 			ref_wirehouse: wirehouse.value,
 			ref_city: city.value,
 			products,
-		}).then((response: { data?: { result: boolean }; error?: FetchBaseQueryError | SerializedError }) => {
-			if (response?.data?.result) {
-				methods.reset();
-				dispatch(reset());
-				navigate('/order/successful');
+		}).then((response: { data?: { result: boolean, linkpay: string }; error?: FetchBaseQueryError | SerializedError }) => {
+			if (response?.data) {
+				if(response?.data?.result) {
+					methods.reset();
+					dispatch(reset());
+					navigate('/order/successful');
+				}
+				if(response?.data?.linkpay?.length > 0) {
+					window.open(response?.data?.linkpay, "_blank")
+				}
 			} else if (response.error) {
 				console.error('An error occurred:', response.error);
 			}

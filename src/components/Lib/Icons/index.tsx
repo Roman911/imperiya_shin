@@ -1,4 +1,5 @@
 export { BusIcon } from './BusIcon';
+export { CalculatorIcon } from './CalculatorIcon';
 export { CarFilterIcon } from './CarFilterIcon';
 export { CargoIcon } from './CargoIcon';
 export { CarIcon } from './CarIcon';

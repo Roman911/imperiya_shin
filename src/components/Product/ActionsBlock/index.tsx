@@ -2,7 +2,8 @@ import { FC } from 'react';
 import { FacebookShareButton, TelegramShareButton, ViberShareButton, TwitterShareButton, EmailShareButton } from 'react-share';
 import classNames from 'classnames';
 
-import { HeartIcon, LibraIcon, MailIcon, PhoneCircuitIcon, ShareIcon } from '../../Lib/Icons';
+import { Link } from '../../../lib';
+import { CalculatorIcon, HeartIcon, LibraIcon, MailIcon, PhoneCircuitIcon, ShareIcon } from '../../Lib/Icons';
 
 interface ActionsBlockProps {
 	className: string
@@ -17,7 +18,8 @@ export const ActionsBlockComponent: FC<ActionsBlockProps> = ({ className, isBook
 	const url = window.location.href;
 
 	return <div className={classNames('gap-1.5 xl:gap-2.5 h-full items-center', className)}>
-		<button onClick={() => openModal('Callback')} className='p-4 bg-blue-500 rounded-full group border-4 border-[#CCE3F8]'>
+		<button onClick={() => openModal('Callback')}
+						className='p-4 bg-blue-500 rounded-full group border-4 border-[#CCE3F8]'>
 			<PhoneCircuitIcon className='stroke-white w-6 h-6'/>
 		</button>
 		<button onClick={() => openModal('AddAsk')} className='p-3 bg-blue-50 rounded-full group'>
@@ -36,6 +38,13 @@ export const ActionsBlockComponent: FC<ActionsBlockProps> = ({ className, isBook
 					'fill-gray-500': !isComparison
 				})}/>
 		</button>
+		<Link to={ '/tyre-disk-size-calc' } className='p-3 bg-blue-50 rounded-full group'>
+			<CalculatorIcon
+				className={classNames('group-hover:fill-blue-500 w-6 h-6', {
+					'fill-blue-500': isComparison,
+					'fill-gray-500': !isComparison
+				})}/>
+		</Link>
 		<div className='p-3 bg-blue-50 rounded-full group cursor-pointer relative'>
 			<ShareIcon className='fill-gray-500 group-hover:fill-blue-500 w-6 h-6'/>
 			<div className='absolute top-10 left-0 bg-white rounded shadow-md py-4 px-6 hidden group-hover:block'>
