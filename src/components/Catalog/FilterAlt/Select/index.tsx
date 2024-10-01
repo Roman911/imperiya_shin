@@ -15,6 +15,13 @@ interface SelectProps {
 	onChange: (name: string, value: number | string | undefined | null, element: HTMLElement) => void
 	filterValue?: null | number | string
 	valueStudded?: null | number | string
+	filterOther?: {
+		only_c: string | null | undefined
+		only_xl: string | null | undefined
+		only_owl: string | null | undefined
+		only_run_flat: string | null | undefined
+		only_off_road: string | null | undefined
+	}
 }
 
 export const Select: FC<SelectProps> = (
@@ -26,18 +33,26 @@ export const Select: FC<SelectProps> = (
 		options,
 		onChange,
 		filterValue,
-		valueStudded
+		valueStudded,
+		filterOther
 	}) => {
 	const [ open, setOpen ] = useState( false );
-	const [eventSearch, setEventSearch] = useState('');
+	const [ eventSearch, setEventSearch ] = useState('');
 
 	const handleClick = (event: MouseEvent<HTMLElement> | ChangeEvent<HTMLElement>, value: number | string | undefined, isStudded?: boolean) => {
 		const newValue = filterValue === value ? null : value;
 		const newValueStudded = valueStudded === value ? null : value;
-		if(name === 'sezon') {
-			onChange('only_studded', null, event.currentTarget);
+		if(name === 'other') {
+			if (typeof value === 'string' && (value === 'only_c' || value === 'only_xl' || value === 'only_owl' || value === 'only_run_flat' || value === 'only_off_road')) {
+				const othersValue = filterOther?.[value] === '1' ? null : '1';
+				onChange(value, othersValue, event.currentTarget);
+			}
+		} else {
+			if(name === 'sezon') {
+				onChange('only_studded', null, event.currentTarget);
+			}
+			onChange(isStudded ? 'only_studded' : name, isStudded ? newValueStudded : newValue, event.currentTarget);
 		}
-		onChange(isStudded ? 'only_studded' : name, isStudded ? newValueStudded : newValue, event.currentTarget);
 	}
 
 	const handleChange = (value: string) => {
@@ -71,7 +86,7 @@ export const Select: FC<SelectProps> = (
 						>
 							<input
 								onChange={(event) => handleClick(event, item.value)}
-								checked={filterValue == item.value}
+								checked={name === 'other' ? !!filterOther?.[item.value as keyof typeof filterOther] : filterValue === item.value}
 								id={`${ name }-${ item.value }`}
 								type="checkbox"
 								className="peer relative h-7 w-7 bg-white appearance-none cursor-pointer rounded-sm border border-[#A9ACB2] transition-all checked:border-blue-500 checked:bg-blue-500 hover:border-blue-500"

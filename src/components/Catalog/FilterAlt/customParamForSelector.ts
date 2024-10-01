@@ -22,3 +22,11 @@ export const appointmentIndustrial = [
 	{ value: '10', name: 'Карьерная', name_ua: 'Кар\'єрна' },
 	{ value: '11', name: 'Индустріальна', name_ua: 'Індустріальна' },
 ];
+
+export const others = [
+	{ value: 'only_c', name: 'C', name_ua: 'C' },
+	{ value: 'only_xl', name: 'XL', name_ua: 'XL' },
+	{ value: 'only_owl', name: 'OWL (белые буквы)', name_ua: 'OWL (білі букви)' },
+	{ value: 'only_run_flat', name: 'RunFlat', name_ua: 'RunFlat' },
+	{ value: 'only_off_road', name: 'Off-Road 4x4', name_ua: 'Off-Road 4x4' },
+];

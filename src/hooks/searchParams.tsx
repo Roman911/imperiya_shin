@@ -28,7 +28,12 @@ const PARAM_KEYS = [
 	'napruga',
 	'poliarnist',
 	'li',
-	'si'
+	'si',
+	'only_c',
+	'only_xl',
+	'only_owl',
+	'only_run_flat',
+	'only_off_road'
 ] as const;
 
 export const useAppSearchParams = () => {

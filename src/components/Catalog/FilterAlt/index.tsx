@@ -15,7 +15,7 @@ import { Badge } from '../../Lib/';
 import { Section, Subsection } from '../../../models/filter';
 import { SubmitFloat } from './SubmitFloat';
 import { Language } from "../../../models/language";
-import { appointmentCargo, appointmentIndustrial, customTireSeason, typeDisc } from './customParamForSelector';
+import { appointmentCargo, appointmentIndustrial, customTireSeason, others, typeDisc } from './customParamForSelector';
 import type { CarModelProps, BaseDataProps, Options, ManufModels } from '../../../models/baseData';
 import type { AkumProps } from '../../../models/akumData';
 
@@ -74,17 +74,25 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 		value?: null | number | string,
 		search?: boolean,
 		valueStudded?: null | number | string,
+		filterOther?: {
+			only_c: string | null | undefined
+			only_xl: string | null | undefined
+			only_owl: string | null | undefined
+			only_run_flat: string | null | undefined
+			only_off_road: string | null | undefined
+		}
 	) => (
 		<div className='relative'>
 			<Select
-				name={name}
-				label={label}
-				options={options}
-				variant={variant}
-				onChange={onChange}
-				filterValue={value}
+				name={ name }
+				label={ label }
+				options={ options }
+				variant={ variant }
+				onChange={ onChange }
+				filterValue={ value }
 				search={ search }
-				valueStudded={valueStudded}
+				valueStudded={ valueStudded }
+				filterOther={ filterOther }
 			/>
 			{ value && <Badge value={ 1 } className='-left-2' />}
 		</div>
@@ -108,7 +116,10 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 		);
 	};
 
-	return <div className={classNames('fixed lg:static top-0 left-0 right-0 bottom-0 bg-[#070B14]/60 lg:bg-transparent z-10 lg:block', {'hidden': !isOpenFilter, 'pt-12': section === Section.Battery }) }>
+	return <div className={
+		classNames('fixed lg:static top-0 left-0 right-0 bottom-0 bg-[#070B14]/60 lg:bg-transparent z-10 lg:block',
+			{'hidden': !isOpenFilter, 'pt-12': section === Section.Battery })
+	}>
 		<button onClick={ () => closeFilter() } className='absolute top-5 right-5 lg:hidden'>
 			<CloseIcon className='fill-[#B9B9BA] w-7 h-7' />
 		</button>
@@ -402,6 +413,22 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 						data?.omolog.map(item => ({ value: item.value, label: item.value })),
 						filter?.omolog,
 						true,
+					)}
+					{renderSelect(
+						'other',
+						t('other', true),
+						'gray',
+						others.map(item => ({value: item.value, label: lang === Language.UA ? item.name_ua : item.name})),
+						null,
+						false,
+						null,
+						{
+							only_c: filter?.only_c ?? null,
+							only_xl: filter?.only_xl ?? null,
+							only_owl: filter?.only_owl ?? null,
+							only_run_flat: filter?.only_run_flat ?? null,
+							only_off_road: filter?.only_off_road ?? null,
+						}
 					)}
 				</>}
 			</div>

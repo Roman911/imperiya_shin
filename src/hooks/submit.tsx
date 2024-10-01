@@ -43,6 +43,11 @@ export const useAppSubmit = () => {
 		updateParamsList('vehicle_type', filter.vehicle_type ?? '');
 		updateParamsList('li', filter.li ?? '');
 		updateParamsList('si', filter.si ?? '');
+		updateParamsList('only_c', filter.only_c ?? '');
+		updateParamsList('only_xl', filter.only_xl ?? '');
+		updateParamsList('only_owl', filter.only_owl ?? '');
+		updateParamsList('only_run_flat', filter.only_run_flat ?? '');
+		updateParamsList('only_off_road', filter.only_off_road ?? '');
 	}, [
 		filter.width,
 		filter.height,
@@ -68,7 +73,12 @@ export const useAppSubmit = () => {
 		filter.poliarnist,
 		filter.vehicle_type,
 		filter.li,
-		filter.si
+		filter.si,
+		filter.only_c,
+		filter.only_xl,
+		filter.only_owl,
+		filter.only_run_flat,
+		filter.only_off_road
 	]);
 
 	// Function to handle form submit (update URL)

@@ -35,4 +35,9 @@ export interface IFilter {
 	li?: null | string
 	si?: null | string
 	only_studded?: null | string
+	only_c?: null | string
+	only_xl?: null | string
+	only_owl?: null | string
+	only_run_flat?: null | string
+	only_off_road?: null | string
 }

@@ -34,6 +34,11 @@ const initialFilterState: IFilter = {
 	li: null,
 	si: null,
 	only_studded: null,
+	only_c: null,
+	only_xl: null,
+	only_owl: null,
+	only_run_flat: null,
+	only_off_road: null,
 }
 
 const initialState: FilterState = {

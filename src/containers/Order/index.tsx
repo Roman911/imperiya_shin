@@ -119,14 +119,15 @@ export const Order = () => {
 			ref_city: city.value,
 			products,
 		}).then((response: { data?: { result: boolean, linkpay: string }; error?: FetchBaseQueryError | SerializedError }) => {
-			if (response?.data) {
-				if(response?.data?.result) {
+			const data = response?.data;
+			if (data) {
+				if(data?.linkpay?.length > 0) {
+					window.open(data?.linkpay, "_blank");
+				}
+				if(data?.result) {
 					methods.reset();
 					dispatch(reset());
 					navigate('/order/successful');
-				}
-				if(response?.data?.linkpay?.length > 0) {
-					window.open(response?.data?.linkpay, "_blank")
 				}
 			} else if (response.error) {
 				console.error('An error occurred:', response.error);

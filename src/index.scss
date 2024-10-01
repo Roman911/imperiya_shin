@@ -26,7 +26,7 @@
 
 @layer components {
 	.btn {
-		@apply h-12 rounded-sm font-bold border w-72 flex justify-center items-center;
+		@apply h-12 rounded-sm font-bold border w-72 flex justify-center items-center transition-all;
 	}
 
 	.primary {

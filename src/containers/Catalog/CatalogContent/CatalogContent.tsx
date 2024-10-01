@@ -6,10 +6,8 @@ import { baseDataAPI } from '../../../services/baseDataService';
 import { useAppDispatch, useAppSelector, useAppSearchParams } from '../../../hooks';
 import { setParams } from '../../../store/reducers/filterSlice';
 import { ProductList } from '../../ProductList';
-import { FilterByCar } from '../../../components/Catalog/FilterByCar';
+import { FilterByCar, Paginate, SelectionByCar, ShowMore } from '../../../components/Catalog';
 import { FilterActive } from '../FilterActive';
-import { SelectionByCar } from '../../../components/Catalog/SelectionByCar';
-import { Paginate } from '../../../components/Catalog/Paginate';
 import { Language } from '../../../models/language';
 import { NoResult, Spinner } from '../../../components/Lib';
 
@@ -19,11 +17,12 @@ interface CatalogContentProps {
 
 export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 	const [ paginateCount, setPaginateCount ] = useState(0);
+	const [ itemsProduct, setItemsProduct ] = useState(config.catalog.itemsProduct);
 	const location = useLocation();
 	const dispatch = useAppDispatch();
 	const [ , setSearchParams ] = useSearchParams();
 	const { lang } = useAppSelector(state => state.langReducer);
-	const { data, isLoading } = baseDataAPI.useFetchProductsQuery({ id: location?.search, length: config.catalog.itemsProduct, start: paginateCount * config.catalog.itemsProduct });
+	const { data, isLoading } = baseDataAPI.useFetchProductsQuery({ id: location?.search, length: itemsProduct, start: paginateCount * config.catalog.itemsProduct });
 	const searchParams = useAppSearchParams();
 
 	useEffect(() => {
@@ -35,6 +34,15 @@ export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 			params.set(param1, param2)
 			return params
 		});
+	}
+
+	const handlePageClick = (event: { selected: number; }) => {
+		setPaginateCount(event.selected);
+		setItemsProduct(config.catalog.itemsProduct);
+	};
+
+	const onClickShowMore = () => {
+		setItemsProduct(prevState => prevState + config.catalog.itemsProduct);
 	}
 
 	return (
@@ -50,17 +58,18 @@ export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 					noResultText={lang === Language.UA ?
 						'На жаль, по заданих параметрах товарів не знайдено' :
 						'К сожалению, по заданным параметрам товаров не найдено'
-				}
+					}
 				/>}
 			</Spinner>
-			{data?.result && data.data.total_count > 12 &&
+			{ data?.result && paginateCount * config.catalog.itemsProduct + itemsProduct < data.data.total_count &&
+				<ShowMore onClickShowMore={ onClickShowMore } title={ lang === Language.UA ? 'Показати більше' : 'Показать больше' } /> }
+			{ data?.result && data.data.total_count > 12 &&
 				<Paginate
 					itemsPerPage={ config.catalog.itemsProduct }
 					paginateCount={ paginateCount }
 					total_count={ data?.data.total_count }
-					setPaginateCount={ setPaginateCount }
-				/>
-			}
+					handlePageClick={ handlePageClick }
+				/>}
 		</div>
 	)
 };

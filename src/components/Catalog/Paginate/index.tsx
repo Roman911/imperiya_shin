@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 
 import './index.scss';
@@ -7,10 +7,10 @@ interface PaginateProps {
 	itemsPerPage: number
 	paginateCount: number
 	total_count: number | undefined
-	setPaginateCount: Dispatch<SetStateAction<number>>
+	handlePageClick: (event: { selected: number; }) => void
 }
 
-export const Paginate: FC<PaginateProps> = ({ itemsPerPage, total_count = 0, setPaginateCount }) => {
+export const Paginate: FC<PaginateProps> = ({ itemsPerPage, total_count = 0, handlePageClick }) => {
 	const [ pageRangeDisplayed, setPageRangeDisplayed ] = useState(3);
 
 	useEffect(() => {
@@ -19,10 +19,6 @@ export const Paginate: FC<PaginateProps> = ({ itemsPerPage, total_count = 0, set
 		}
 	}, [])
 	const pageCount = Math.ceil(total_count / itemsPerPage);
-
-	const handlePageClick = (event: { selected: number; }) => {
-		setPaginateCount(event.selected);
-	};
 
 	return <ReactPaginate
 		className='paginate'
