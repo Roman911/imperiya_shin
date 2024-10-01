@@ -1,34 +1,47 @@
 import { FC } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { addToStorage, getFromStorage, removeFromStorage } from '../../../lib';
 import { addBookmarks, removeBookmarks } from '../../../store/reducers/bookmarksSlice';
 import { addComparison, removeComparison } from '../../../store/reducers/comparisonSlice';
 import { ActionsBlockComponent } from '../../../components/Product/ActionsBlock';
+import { Section } from '../../../models/filter';
+
+// Helper function to update local storage
+const updateStorage = (storageKey: string, id: number, section: Section, shouldRemove: boolean) => {
+	if (shouldRemove) {
+		removeFromStorage(storageKey, id);
+	} else {
+		const storage = getFromStorage(storageKey) || [];
+		addToStorage(storageKey, [...storage, { id, section }]);
+	}
+};
 
 interface ActionsBlockProps {
 	id: number
 	className: string
+	section: Section
 	handleModalOpen: (type: 'QuickOrder' | 'OnlineInstallment' | 'DeliveryCalculation' | 'Callback' | 'AddAsk') => void
 }
 
-export const ActionsBlock: FC<ActionsBlockProps> = ({ id, className, handleModalOpen }) => {
+export const ActionsBlock: FC<ActionsBlockProps> = ({ id, className, handleModalOpen, section }) => {
 	const dispatch = useAppDispatch();
 	const { bookmarksItems } = useAppSelector(state => state.bookmarksReducer);
 	const { comparisonItems } = useAppSelector(state => state.comparisonReducer);
-	const isBookmarks = bookmarksItems.includes(id);
-	const isComparison = comparisonItems.includes(id);
+	const isBookmarks = bookmarksItems.some(item => item.id === id);
+	const isComparison = comparisonItems.some(item => item.id === id);
 
+	// Toggle bookmarks
 	const handleClickBookmarks = () => {
-		dispatch(isBookmarks ? removeBookmarks(id) : addBookmarks(id));
-		const storage = localStorage.reducerBookmarks ? JSON.parse(localStorage.reducerBookmarks) : [];
-		localStorage.setItem('reducerBookmarks', JSON.stringify(  storage.includes(id) ? [...storage.filter((item: number) => item !== id)] : [...storage, id]));
-	}
+		dispatch(isBookmarks ? removeBookmarks(id) : addBookmarks({ id, section }));
+		updateStorage('reducerBookmarks', id, section, isBookmarks);
+	};
 
+	// Toggle comparison
 	const handleClickComparison = () => {
-		dispatch(isComparison ? removeComparison(id) : addComparison(id));
-		const storage = localStorage.reducerComparison ? JSON.parse(localStorage.reducerComparison) : [];
-		localStorage.setItem('reducerComparison', JSON.stringify(storage.includes(id) ? [...storage.filter((item: number) => item !== id)] : [...storage, id]));
-	}
+		dispatch(isComparison ? removeComparison(id) : addComparison({ id, section }));
+		updateStorage('reducerComparison', id, section, isComparison);
+	};
 
 	const openModal = (type: 'QuickOrder' | 'OnlineInstallment' | 'DeliveryCalculation' | 'Callback' | 'AddAsk') => {
 		handleModalOpen(type);

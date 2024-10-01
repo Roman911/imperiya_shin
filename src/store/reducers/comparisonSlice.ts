@@ -1,8 +1,15 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
+import { Section } from '../../models/filter';
+
+interface Item {
+	id: number
+	section: Section
+}
+
 export interface ComparisonState {
-	comparisonItems: number[]
+	comparisonItems: Item[]
 }
 
 const initialState: ComparisonState = {
@@ -13,14 +20,14 @@ export const comparisonSlice = createSlice({
 	name: 'comparison',
 	initialState,
 	reducers: {
-		addComparison: (state, actions: PayloadAction<number>) => {
+		addComparison: (state, actions: PayloadAction<Item>) => {
 			state.comparisonItems.push(actions.payload);
 		},
-		addComparisonFromStorage: (state, actions: PayloadAction<number[]>) => {
+		addComparisonFromStorage: (state, actions: PayloadAction<Item[]>) => {
 			state.comparisonItems = actions.payload;
 		},
 		removeComparison: (state, actions: PayloadAction<number>) => {
-			state.comparisonItems = state.comparisonItems.filter(item => item !== actions.payload);
+			state.comparisonItems = state.comparisonItems.filter(item => item.id !== actions.payload);
 		},
 		reset: () => initialState,
 	},

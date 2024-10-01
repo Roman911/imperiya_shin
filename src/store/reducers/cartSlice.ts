@@ -1,9 +1,11 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import { Section } from '../../models/filter';
 
 interface CreateItem {
 	id: number
 	quantity: number
+	section: Section
 }
 
 export interface CartState {
@@ -30,7 +32,7 @@ export const cartSlice = createSlice({
 		setQuantity: (state, actions: PayloadAction<CreateItem>) => {
 			state.cartItems = [
 				...state.cartItems.filter(item => item.id !== actions.payload.id),
-				{ id: actions.payload.id, quantity: actions.payload.quantity }
+				{ id: actions.payload.id, quantity: actions.payload.quantity, section: actions.payload.section }
 			];
 		},
 		reset: () => initialState,

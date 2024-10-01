@@ -3,14 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 
 import style from './index.module.scss';
-import { Link, countryCodeTransform } from '../../lib';
+import { addToStorage, getFromStorage, Link, countryCodeTransform } from '../../lib';
 import { useAppDispatch, useAppSelector, useAppTranslation } from '../../hooks';
 import { addCart } from '../../store/reducers/cartSlice';
 import { BusIcon, CargoIcon, CarIcon, CartIcon, HeartIcon, LibraIcon, MotorcyclesIcon, SuvIcon } from '../Lib/Icons';
 import { Language } from '../../models/language';
 import { CountryInfo, Rating } from '../Lib';
-import noPhoto from '../../assets/no-photo.s400.jpg';
 import type { Product } from '../../models/products';
+import { Section } from '../../models/filter';
+
+import noPhoto from '../../assets/no-photo.s400.jpg';
 
 const icons = {
 	1: CarIcon,
@@ -30,13 +32,12 @@ interface ProductCardProps {
 
 export const ProductCardComponent: FC<ProductCardProps> = ({ item, isBookmarks, isComparison, addToDefense, addToComparison }) => {
 	const navigate = useNavigate();
-	const { best_offer, default_photo, full_name, group, min_price, season, vehicle_type, page_url } = item;
-	const { lang }  =useAppSelector(state => state.langReducer);
-	const dispatch = useAppDispatch();
 	const t = useAppTranslation();
-	const cartStorage = useMemo(() => {
-		return localStorage.reducerCart ? JSON.parse(localStorage.reducerCart) : [];
-	}, []);
+	const dispatch = useAppDispatch();
+	const { best_offer, default_photo, full_name, group, min_price, season, vehicle_type, page_url } = item;
+	const { lang } = useAppSelector(state => state.langReducer);
+	const cartStorage = useMemo(() => getFromStorage('reducerCart'), []);
+	const section = item.vehicle_type.length !== 0 ? Section.Tires : item.diameter.length !== 0 ? Section.Disks : Section.Battery;
 
 	const seasonIcon = season === '1' ? 'sun' : season === '2' ? 'snow' : season === '3' ? 'all-season' : undefined;
 	const vehicle_type_number = vehicle_type as unknown as keyof typeof icons;
@@ -46,9 +47,9 @@ export const ProductCardComponent: FC<ProductCardProps> = ({ item, isBookmarks, 
 	const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 		if(!cartStorage?.find((item: { id: number, quantity: number }) => item.id === best_offer.id)) {
-			const cart = [ ...cartStorage, { id: best_offer.id, quantity: 1 }];
-			dispatch(addCart({ id: best_offer.id, quantity: 1 }));
-			localStorage.setItem('reducerCart', JSON.stringify(cart));
+			const cart = [ ...cartStorage, { id: best_offer.id, section, quantity: 1 }];
+			dispatch(addCart({ id: best_offer.id, quantity: 1, section }));
+			addToStorage('reducerCart', cart);
 		}
 		navigate( lang === Language.UA ?'/cart' : '/ru/cart');
 	}

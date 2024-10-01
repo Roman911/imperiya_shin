@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { baseDataAPI } from '../../services/baseDataService';
+import { addToStorage, getFromStorage } from '../../lib';
 import { useAppDispatch, useAppTranslation } from '../../hooks';
 import { addCart } from '../../store/reducers/cartSlice';
 import { changeSection } from '../../store/reducers/filterSlice';
@@ -18,11 +19,6 @@ import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Section } from '../../models/filter';
 import { SimilarProducts } from './SimilarProducts';
 import { RecentlyViewed } from './RecentlyViewed';
-
-type CartItem = {
-	id: number;
-	quantity: number;
-};
 
 export const Product = () => {
 	const [isModalActive, setModalActive] = useState(false);
@@ -52,15 +48,13 @@ export const Product = () => {
 	}
 
 	useEffect(() => {
-		if(section === Section.Tires) {
-			const storage: number[] = localStorage.reducerRecentlyViewed ? JSON.parse(localStorage.reducerRecentlyViewed) : [];
-			const matchValue = match?.[0] ? Number(match[0]) : undefined;
+		const storage = getFromStorage('reducerRecentlyViewed');
+		const matchValue = match?.[0] ? Number(match[0]) : undefined;
 
-			if (typeof matchValue === 'number' && !isNaN(matchValue)) {
-				const updatedStorage = storage.filter((item) => item !== matchValue);
-				const deleteElement = updatedStorage.length === 4 ? updatedStorage.slice(1,3) : updatedStorage;
-				localStorage.setItem('reducerRecentlyViewed', JSON.stringify([...deleteElement, matchValue]));
-			}
+		if (typeof matchValue === 'number' && !isNaN(matchValue)) {
+			const updatedStorage = storage.filter((item: { id: number, section: Section }) => item.id !== matchValue);
+			const deleteElement = updatedStorage.length === 4 ? updatedStorage.slice(1,3) : updatedStorage;
+			addToStorage('reducerRecentlyViewed', [...deleteElement, {id: matchValue, section}]);
 		}
 	}, [match, section]);
 
@@ -116,10 +110,10 @@ export const Product = () => {
 	}
 
 	const onSubmit = () => {
-		const cartStorage = localStorage.reducerCart ? JSON.parse(localStorage.reducerCart) as CartItem[] : [];
-		const cart = [ ...cartStorage, { id: offerId, quantity }];
-		dispatch(addCart({ id: offerId, quantity }));
-		localStorage.setItem('reducerCart', JSON.stringify(cart));
+		const cartStorage = getFromStorage('reducerCart');
+		const cart = [ ...cartStorage, { id: offerId, section, quantity }];
+		dispatch(addCart({ id: offerId, section, quantity }));
+		addToStorage('reducerCart', cart);
 	}
 
 	return <div>
@@ -135,6 +129,7 @@ export const Product = () => {
 				handleClick={ handleClick }
 				setQuantity={ setQuantity }
 				onSubmit={ onSubmit }
+				section={ section }
 			/>
 		</LayoutWrapper>
 		<div className='container mx-auto'>
