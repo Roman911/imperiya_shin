@@ -11,7 +11,7 @@ import { FilterAlt } from './FilterAlt';
 import { CatalogContent } from './CatalogContent/CatalogContent';
 import { LayoutWrapper } from '../../components/Layout';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
-import { Support } from '../../components/Home';
+import { Support } from '../Layout/Support';
 import { Section } from '../../models/filter';
 
 export const Catalog = () => {

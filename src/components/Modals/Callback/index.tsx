@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { useAppSelector } from '../../../hooks';
 import { Language } from '../../../models/language';
-import { PhoneMaskInput } from "../../Lib";
+import { PhoneMaskInput } from '../../Lib';
 
 interface CallbackProps {
 	isSending: boolean;
@@ -30,7 +30,7 @@ export const CallbackComponent: FC<CallbackProps> = ({ isSending }) => {
 							'Оставьте телефон и менеджер с Вами свяжется'}
 					</p>
 					<div className="relative mt-6 h-11 w-full min-w-[200px]">
-						<PhoneMaskInput/>
+						<PhoneMaskInput />
 					</div>
 				</div>}
 			</div>

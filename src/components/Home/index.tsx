@@ -6,6 +6,5 @@ export { OurAdvantages } from './OurAdvantages';
 export { PopularBrands } from './PopularBrands';
 export { PopularSizes } from './PopularSizes';
 export { ShowAll } from './ShowAll';
-export { Support } from './Support';
 export { TextSeo } from './TextSeo';
 export { TopBrands } from './TopBrands';

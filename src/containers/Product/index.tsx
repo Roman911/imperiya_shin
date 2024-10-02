@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 import { baseDataAPI } from '../../services/baseDataService';
 import { addToStorage, getFromStorage } from '../../lib';
@@ -14,7 +15,7 @@ import { DeliveryCalculation } from '../Modals/DeliveryCalculation';
 import { OnlineInstallment } from '../../components/Modals';
 import { LayoutWrapper } from '../../components/Layout';
 import { ProductComponent } from '../../components/Product';
-import { Support } from '../../components/Home';
+import { Support } from '../Layout/Support';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Section } from '../../models/filter';
 import { SimilarProducts } from './SimilarProducts';
@@ -118,9 +119,13 @@ export const Product = () => {
 	}
 
 	return <div>
-		<LayoutWrapper>
-			<Breadcrumbs path={ path } />
-			<ProductComponent
+		<Helmet>
+			<title>{ data?.data.full_name }</title>
+			<meta name='description' content={ data?.data.full_name } />
+	</Helmet>
+	<LayoutWrapper>
+		<Breadcrumbs path={path}/>
+		<ProductComponent
 				data={ data }
 				quantity={ quantity }
 				handleModalOpen={ handleModalOpen }

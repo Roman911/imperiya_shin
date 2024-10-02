@@ -18,9 +18,11 @@ export const ActionsBlockComponent: FC<ActionsBlockProps> = ({ className, isBook
 	const url = window.location.href;
 
 	return <div className={classNames('gap-1.5 xl:gap-2.5 h-full items-center', className)}>
-		<button onClick={() => openModal('Callback')}
-						className='p-4 bg-blue-500 rounded-full group border-4 border-[#CCE3F8]'>
-			<PhoneCircuitIcon className='stroke-white w-6 h-6'/>
+		<button onClick={() => openModal('Callback')} className='group relative'>
+			<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+			<span className="relative inline-flex rounded-full w-12 h-12 bg-sky-500 p-3">
+				<PhoneCircuitIcon className='stroke-white w-6 h-6'/>
+			</span>
 		</button>
 		<button onClick={() => openModal('AddAsk')} className='p-3 bg-blue-50 rounded-full group'>
 			<MailIcon className='stroke-gray-500 group-hover:stroke-blue-500 w-6 h-6'/>
@@ -38,7 +40,7 @@ export const ActionsBlockComponent: FC<ActionsBlockProps> = ({ className, isBook
 					'fill-gray-500': !isComparison
 				})}/>
 		</button>
-		<Link to={ '/tyre-disk-size-calc' } className='p-3 bg-blue-50 rounded-full group'>
+		<Link to={'/tyre-disk-size-calc'} className='p-3 bg-blue-50 rounded-full group'>
 			<CalculatorIcon
 				className={classNames('group-hover:fill-blue-500 w-6 h-6', {
 					'fill-blue-500': isComparison,

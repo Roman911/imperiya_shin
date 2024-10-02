@@ -10,7 +10,7 @@ import { NoResult, Spinner, Title } from '../../components/Lib';
 import { ComparisonComponent } from '../../components/Comparison';
 import { Language } from '../../models/language';
 import { baseDataAPI } from '../../services/baseDataService';
-import { Support } from '../../components/Home';
+import { Support } from '../Layout/Support';
 import { Section } from '../../models/filter';
 
 export const Comparison = () => {
