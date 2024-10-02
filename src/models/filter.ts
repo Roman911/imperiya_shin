@@ -40,4 +40,16 @@ export interface IFilter {
 	only_owl?: null | string
 	only_run_flat?: null | string
 	only_off_road?: null | string
+	minPrice?: null | string
+	maxPrice?: null | string
+	etMin?: null | string
+	etMax?: null | string
+	diaMin?: null | string
+	diaMax?: null | string
+	minShirina?: null | string
+	maxShirina?: null | string
+	minVisota?: null | string
+	maxVisota?: null | string
+	minDovzina?: null | string
+	maxDovzina?: null | string
 }

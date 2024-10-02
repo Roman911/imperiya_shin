@@ -3,12 +3,14 @@ import Iframe from 'react-iframe';
 import { Helmet } from 'react-helmet-async';
 
 import { config } from '../../config';
-import { useAppTranslation } from '../../hooks';
+import { useAppSelector, useAppTranslation } from '../../hooks';
 import { LayoutWrapper } from '../../components/Layout';
 import { Title } from '../../components/Lib';
+import { Language } from '../../models/language';
 
 export const CalculatorForTires = () => {
 	const [height, setHeight] = useState('0px');
+	const { lang } = useAppSelector(state => state.langReducer);
 	const t = useAppTranslation();
 
 	const changeHeight = useCallback(() => {
@@ -42,7 +44,7 @@ export const CalculatorForTires = () => {
 			<title>{ t('tire calculator', true) } | { config.domain }</title>
 		</Helmet>
 		<Title title='tire calculator'/>
-		<Iframe url="/calc/kalkulator.htm?background=2772E2"
+		<Iframe url={`/calc/kalkulator${lang === Language.UA ? '_ua' : ''}.htm?background=2772E2`}
 						width="100%"
 						height={height}
 						id="tireCalculator"
@@ -51,4 +53,4 @@ export const CalculatorForTires = () => {
 						loading='lazy'
 						position="relative"/>
 	</LayoutWrapper>
-}
+};

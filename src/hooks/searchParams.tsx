@@ -33,7 +33,19 @@ const PARAM_KEYS = [
 	'only_xl',
 	'only_owl',
 	'only_run_flat',
-	'only_off_road'
+	'only_off_road',
+	'minPrice',
+	'maxPrice',
+	'etMin',
+	'etMax',
+	'diaMin',
+	'diaMax',
+	'minShirina',
+	'maxShirina',
+	'minVisota',
+	'maxVisota',
+	'minDovzina',
+	'maxDovzina',
 ] as const;
 
 export const useAppSearchParams = () => {

@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
-import { useAppTranslation } from '../../../../hooks';
+import { useAppDispatch, useAppSubmit, useAppTranslation } from '../../../../hooks';
+import { setParams } from '../../../../store/reducers/filterSlice';
 
 interface SelectFromTo {
 	name: string
@@ -16,7 +16,8 @@ interface SelectFromTo {
 
 export const SelectFromTo: FC<SelectFromTo> = ({ nameMin, nameMax,  from, to, title, btnTitle, minus }) => {
 	const [minMax, setMinMax] = useState({ min: '', max: '' });
-	const [, setSearchParams] = useSearchParams();
+	const dispatch = useAppDispatch();
+	const { handleSubmit } = useAppSubmit();
 	const t = useAppTranslation();
 
 	const onChange = (param: string, value: string) => {
@@ -26,18 +27,16 @@ export const SelectFromTo: FC<SelectFromTo> = ({ nameMin, nameMax,  from, to, ti
 
 	const handleClick = () => {
 		const updateParams = (key: string, value: string) => {
-			setSearchParams(params => {
-				if (value.length > 0) {
-					params.set(key, value);
-				} else {
-					params.delete(key);
-				}
-				return params;
-			});
+			if (value.length > 0) {
+				dispatch(setParams({ [key]: value })); // Use computed property name for dynamic key
+			} else {
+				dispatch(setParams({ [key]: null }));
+			}
 		};
 
 		updateParams(nameMin, minMax.min);
 		updateParams(nameMax, minMax.max);
+		handleSubmit();
 	};
 
 	return <div className='mt-5'>

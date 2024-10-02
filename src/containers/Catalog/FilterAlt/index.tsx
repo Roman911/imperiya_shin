@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from 'react';
 
 import { baseDataAPI } from '../../../services/baseDataService';
-import { FilterAltComponent } from '../../../components/Catalog/FilterAlt';
+import { FilterAltComponent } from '../../../components/Catalog';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { changeSection, changeSubsection, setParams, reset } from '../../../store/reducers/filterSlice';
+import { changeSection, changeSubsection, setParams, resetFilter } from '../../../store/reducers/filterSlice';
 import { Section, Subsection } from '../../../models/filter';
 import { setCarFilter } from '../../../store/reducers/filterCarSlice';
 
@@ -15,7 +15,7 @@ interface FilterAltProps {
 export const FilterAlt: FC<FilterAltProps> = ({ isOpenFilter, closeFilter }) => {
 	const [ element, setElement ] = useState<HTMLElement | null>(null);
 	const { filter, isSend } = useAppSelector(state => state.filterCarReducer);
-	const { filter: filterBrand } = useAppSelector(state => state.filterReducer);
+	const { filter: filterBrand, section } = useAppSelector(state => state.filterReducer);
 	const dispatch = useAppDispatch();
 	const { data } = baseDataAPI.useFetchBaseDataQuery('');
 	const { data: dataAkum } = baseDataAPI.useFetchDataAkumQuery('');
@@ -30,12 +30,15 @@ export const FilterAlt: FC<FilterAltProps> = ({ isOpenFilter, closeFilter }) => 
 		}
 	}, [dispatch, isSend]);
 
+	useEffect(() => {
+		dispatch(resetFilter());
+	}, [dispatch, section]);
+
 	const handleClick = (value: Subsection) => {
 		dispatch(changeSubsection(value));
 	}
 
 	const onClick = (value: Section) => {
-		dispatch(reset());
 		dispatch(changeSection(value));
 	}
 

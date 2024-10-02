@@ -12,7 +12,8 @@ import { CountryInfo, Rating } from '../Lib';
 import type { Product } from '../../models/products';
 import { Section } from '../../models/filter';
 
-import noPhoto from '../../assets/no-photo.s400.jpg';
+import noPhoto from '../../assets/no-photo.jpg';
+import noPhotoRu from '../../assets/no-photo-ru.jpg';
 
 const icons = {
 	1: CarIcon,
@@ -71,9 +72,9 @@ export const ProductCardComponent: FC<ProductCardProps> = ({ item, isBookmarks, 
 							className={classNames('mt-5 fill-[#8D8E90] hover:fill-blue-500', {'fill-blue-500': isComparison})}/>
 					</button>
 				</div>
-				<img src={ default_photo || noPhoto } alt={full_name}/>
+				<img src={ default_photo || (lang === Language.UA ? noPhoto : noPhotoRu) } alt={ full_name }/>
 			</div>
-			<p className='font-bold my-2.5 min-h-12'>{full_name}</p>
+			<p className='font-bold my-2.5 min-h-12'>{ full_name }</p>
 			<div className='text-sm text-gray-500 my-2.5'>
 				<span>Артикул: </span><span>{ group }</span>
 			</div>

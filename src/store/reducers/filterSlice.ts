@@ -39,6 +39,18 @@ const initialFilterState: IFilter = {
 	only_owl: null,
 	only_run_flat: null,
 	only_off_road: null,
+	minPrice: null,
+	maxPrice: null,
+	etMin: null,
+	etMax: null,
+	diaMin: null,
+	diaMax: null,
+	minShirina: null,
+	maxShirina: null,
+	minVisota: null,
+	maxVisota: null,
+	minDovzina: null,
+	maxDovzina: null,
 }
 
 const initialState: FilterState = {

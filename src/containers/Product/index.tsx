@@ -19,6 +19,7 @@ import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Section } from '../../models/filter';
 import { SimilarProducts } from './SimilarProducts';
 import { RecentlyViewed } from './RecentlyViewed';
+import { Bookmarks } from './Bookmarks';
 
 export const Product = () => {
 	const [isModalActive, setModalActive] = useState(false);
@@ -135,6 +136,7 @@ export const Product = () => {
 		<div className='container mx-auto'>
 			<SimilarProducts id={ id.join('&') } />
 			<RecentlyViewed />
+			<Bookmarks />
 		</div>
 		<Support />
 		{isModalActive && (

@@ -48,6 +48,18 @@ export const useAppSubmit = () => {
 		updateParamsList('only_owl', filter.only_owl ?? '');
 		updateParamsList('only_run_flat', filter.only_run_flat ?? '');
 		updateParamsList('only_off_road', filter.only_off_road ?? '');
+		updateParamsList('minPrice', filter.minPrice ?? '');
+		updateParamsList('maxPrice', filter.maxPrice ?? '');
+		updateParamsList('etMin', filter.etMin ?? '');
+		updateParamsList('etMax', filter.etMax ?? '');
+		updateParamsList('diaMin', filter.diaMin ?? '');
+		updateParamsList('diaMax', filter.diaMax ?? '');
+		updateParamsList('minShirina', filter.minShirina ?? '');
+		updateParamsList('maxShirina', filter.maxShirina ?? '');
+		updateParamsList('minVisota', filter.minVisota ?? '');
+		updateParamsList('maxVisota', filter.maxVisota ?? '');
+		updateParamsList('minDovzina', filter.minDovzina ?? '');
+		updateParamsList('maxDovzina', filter.maxDovzina ?? '');
 	}, [
 		filter.width,
 		filter.height,
@@ -78,7 +90,19 @@ export const useAppSubmit = () => {
 		filter.only_xl,
 		filter.only_owl,
 		filter.only_run_flat,
-		filter.only_off_road
+		filter.only_off_road,
+		filter.minPrice,
+		filter.maxPrice,
+		filter.etMin,
+		filter.etMax,
+		filter.diaMin,
+		filter.diaMax,
+		filter.minShirina,
+		filter.maxShirina,
+		filter.minVisota,
+		filter.maxVisota,
+		filter.minDovzina,
+		filter.maxDovzina,
 	]);
 
 	// Function to handle form submit (update URL)
