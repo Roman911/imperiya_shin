@@ -10,5 +10,5 @@ export const Shipment = () => {
 	const { lang } = useAppSelector(state => state.langReducer);
 	const title = data ? data?.[page].description[lang].title : '';
 
-	return <LayoutStaticPage title={ title } data={ data?.[page] } isLoading={ isLoading } />
+	return <LayoutStaticPage title={ title } data={ data?.[page] } isLoading={ isLoading } lang={ lang } />
 };
