@@ -1,5 +1,6 @@
 import { useEffect, useMemo, ReactNode } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+// import { Helmet } from 'react-helmet-async';
 
 import { baseDataAPI } from '../../services/baseDataService';
 import { getFromStorage } from '../../lib';
@@ -29,7 +30,20 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
 		if(cartStorage.length !== 0) dispatch(addCartFromStorage(cartStorage));
 	}, [bookmarksStorage, cartStorage, comparisonStorage, dispatch]);
 
+	// useEffect(() => {
+	// 	if (settings?.[0].body_html) {
+	// 		const script = document.createElement('script');
+	// 		script.innerHTML = settings[0].body_html;
+	// 		document.body.appendChild(script);
+	// 	}
+	// }, [settings]);
+
 	return <>
+		{/*<Helmet>*/}
+		{/*	<script type="text/javascript">*/}
+		{/*		{ settings?.[0].head_html }*/}
+		{/*	</script>*/}
+		{/*</Helmet>*/}
 		<Header />
 		{ children || <Outlet /> }
 		<Footer />

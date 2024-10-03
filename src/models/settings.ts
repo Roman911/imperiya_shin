@@ -20,6 +20,10 @@ interface SettingsItems {
 }
 
 export interface SettingsProps {
+	0: {
+		body_html: string
+		head_html: string
+	}
 	ru: SettingsItems
 	ua: SettingsItems
 }
