@@ -6,6 +6,7 @@ import type { ProductsProps } from '../models/products';
 import type { ProductProps } from '../models/product';
 import type { AkumProps } from '../models/akumData';
 import type { OrdersParamProps } from '../models/ordersParam';
+import type { AliasAll } from '../models/alias';
 
 export const baseDataAPI = createApi({
 	reducerPath: 'dataAPI',
@@ -56,6 +57,11 @@ export const baseDataAPI = createApi({
 		fetchManufModels: build.query<ManufModels[], string>({
 			query: (id) => ({
 				url: `/api/getManufModels/${id}`,
+			}),
+		}),
+		fetchStatiAliasAll: build.query<AliasAll, string>({
+			query: () => ({
+				url: `/baseData/StatiAlias`,
 			}),
 		}),
 		fetchStatiAlias: build.query({

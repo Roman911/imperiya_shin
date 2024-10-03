@@ -2,16 +2,14 @@ import { Helmet } from 'react-helmet-async';
 
 import { config } from '../../config';
 import { removeFromStorage, resetStorage } from '../../lib';
-import { useAppDispatch, useAppSelector, useAppTranslation } from '../../hooks';
+import { useAppGetProducts, useAppDispatch, useAppSelector, useAppTranslation } from '../../hooks';
 import { removeComparison, reset } from '../../store/reducers/comparisonSlice';
 import { LayoutWrapper } from '../../components/Layout';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { NoResult, Spinner, Title } from '../../components/Lib';
 import { ComparisonComponent } from '../../components/Comparison';
 import { Language } from '../../models/language';
-import { baseDataAPI } from '../../services/baseDataService';
 import { Support } from '../Layout/Support';
-import { Section } from '../../models/filter';
 
 export const Comparison = () => {
 	const dispatch = useAppDispatch();
@@ -19,21 +17,7 @@ export const Comparison = () => {
 	const { lang } = useAppSelector(state => state.langReducer);
 	const noDataText = lang === Language.UA ? 'Ви ще не додали в обране жодного товару' : 'Вы еще не добавили в избранное ни одного товара';
 	const { comparisonItems } = useAppSelector(state => state.comparisonReducer);
-	const tires = comparisonItems.filter((item: { id: number, section: Section }) => item.section === Section.Tires)
-		.map((item: { id: number, section: Section }) => item.id);
-	const disks = comparisonItems.filter((item: { id: number, section: Section }) => item.section === Section.Disks)
-		.map((item: { id: number, section: Section }) => item.id);
-	const battery = comparisonItems.filter((item: { id: number, section: Section }) => item.section === Section.Battery)
-		.map((item: { id: number, section: Section }) => item.id);
-	const { data: dataTires } = baseDataAPI.useFetchProductsQuery({ id: `?product_ids=${tires.join(',')}`, length: tires.length || 1 });
-	const { data: dataDisks } = baseDataAPI.useFetchProductsQuery({ id: `?typeproduct=3&product_ids=${disks.join(',')}`, length: disks.length || 1 });
-	const { data: dataBattery, isLoading } = baseDataAPI.useFetchProductsQuery({ id: `?typeproduct=4&product_ids=${battery.join(',')}`, length: battery.length || 1 });
-	const showItems = [];
-
-	if(dataTires) showItems.push(...dataTires.data.products);
-	if (dataDisks) showItems.push(...dataDisks.data.products);
-	if (dataBattery) showItems.push(...dataBattery.data.products);
-	const productsFilter = showItems.filter(item => comparisonItems.findIndex((i: { id: number }) => i.id === item.product_id) !== -1);
+	const { products, isLoading} = useAppGetProducts(comparisonItems);
 
 	const path = [
 		{
@@ -61,7 +45,7 @@ export const Comparison = () => {
 		<Title title='comparison' />
 		{comparisonItems.length > 0 ? <Spinner height='h-40' show={ isLoading } >
 			<ComparisonComponent
-				data={{ products: productsFilter, total_count: showItems.length }}
+				data={{ products, total_count: products.length }}
 				resetEverything={ resetEverything }
 				handleClick={ handleClick }
 			/>

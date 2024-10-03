@@ -3,8 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 
 import { baseDataAPI } from '../../../services/baseDataService';
 import { useAppDispatch, useAppSelector, useAppSearchParams } from '../../../hooks';
-import { removeParam, reset } from '../../../store/reducers/filterSlice';
-import { FilterActiveComponent } from '../../../components/Catalog/FilterActive';
+import { removeParam, resetFilter } from '../../../store/reducers/filterSlice';
+import { FilterActiveComponent } from '../../../components/Catalog';
 import { Section } from '../../../models/filter';
 
 interface FilterActiveProps {
@@ -21,7 +21,7 @@ export const FilterActive: FC<FilterActiveProps> = ({ className }) => {
 	const { data: manufModels } = baseDataAPI.useFetchManufModelsQuery(`${filter.brand}`);
 
 	useEffect(() => {
-		dispatch(reset());
+		dispatch(resetFilter());
 	}, [dispatch]);
 
 	const clearParam = (name: string) => {
@@ -33,7 +33,7 @@ export const FilterActive: FC<FilterActiveProps> = ({ className }) => {
 	}
 
 	const clearAllParams = () => {
-		dispatch(reset());
+		dispatch(resetFilter());
 		setSearchParams(section === Section.Disks ? 'typeproduct=3' : section === Section.Battery ? 'typeproduct=4' : '');
 	}
 

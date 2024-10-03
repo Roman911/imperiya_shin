@@ -2,10 +2,10 @@ import { FC, memo } from 'react';
 import DOMPurify from 'dompurify';
 import { Helmet } from 'react-helmet-async';
 
-import { useAppSelector } from '../../../hooks';
 import { LayoutWrapper } from '../../../components/Layout';
 import { Breadcrumbs } from '../../../components/Breadcrumbs';
 import { Spinner, Title } from '../../../components/Lib';
+import { Language } from '../../../models/language';
 
 interface Description {
 	title: string
@@ -29,12 +29,10 @@ interface StaticPageProps {
 	title: string
 	data: Data | undefined
 	isLoading: boolean
+	lang: Language
 }
 
-export const LayoutStaticPage: FC<StaticPageProps> = ({ title, data, isLoading }) => {
-	const { lang } = useAppSelector(state => state.langReducer);
-	const { settings } = useAppSelector(state => state.settingsReducer);
-
+export const LayoutStaticPage: FC<StaticPageProps> = ({ title, data, isLoading, lang }) => {
 	const path = [
 		{
 			id: 1,
@@ -52,9 +50,10 @@ export const LayoutStaticPage: FC<StaticPageProps> = ({ title, data, isLoading }
 
 	return <LayoutWrapper>
 		<Helmet>
-			<title>{ title } | { settings.ua.config_email }</title>
+			<title>{ data?.description[lang].meta_title }</title>
+			<meta name='description' content={ data?.description[lang].meta_description }/>
 		</Helmet>
-		<Breadcrumbs path={ path }/>
+		<Breadcrumbs path={path}/>
 		<Spinner height='h-60' show={ isLoading }>
 			<Title title={ data ? data?.description[lang].meta_h1 : '' } />
 			<HtmlContent htmlString={ data ? data?.description?.[lang].content : '' } />
