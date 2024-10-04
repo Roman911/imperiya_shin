@@ -30,6 +30,10 @@ const items = {
 
 const initialState: RootParamsProps = {
 	settings: {
+		0: {
+			body_html: '',
+			head_html: '',
+		},
 		ru: items,
 		ua: items,
 	}
