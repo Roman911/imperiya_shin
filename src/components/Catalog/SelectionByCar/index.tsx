@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+//import { useEffect } from 'react';
+//import { useNavigate } from 'react-router-dom';
 
 import { useAppSelector } from '../../../hooks';
 import { baseDataAPI } from '../../../services/baseDataService';
@@ -7,17 +7,17 @@ import { Section, Subsection } from '../../../models/filter';
 import { Link } from '../../../lib';
 
 export const SelectionByCar = () => {
-	const navigate = useNavigate();
+	//const navigate = useNavigate();
 	const { section, subsection } = useAppSelector(state => state.filterReducer);
 	const { filter } = useAppSelector(state => state.filterCarReducer);
 	const { data } = baseDataAPI.useFetchKitTyreSizeQuery(`${filter.modification}`);
 	const { data: diskSize } = baseDataAPI.useFetchKitDiskSizeQuery(`${filter.modification}`);
 
-	useEffect(() => {
-		if(data?.length !== 0) {
-			navigate(`?width=${ data?.[0].width }&height=${ data?.[0].height }&radius=${ data?.[0].diameter }`)
-		}
-	}, [data, navigate]);
+	// useEffect(() => {
+	// 	if(data?.length !== 0) {
+	// 		navigate(`?width=${ data?.[0].width }&height=${ data?.[0].height }&radius=${ data?.[0].diameter }`)
+	// 	}
+	// }, [data, navigate]);
 
 	if(subsection === Subsection.ByParams || data?.length === 0) return null;
 
