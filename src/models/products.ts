@@ -30,7 +30,22 @@ export interface Product {
 	brand: number
 	offers: BestOffer[]
 	brand_name: string
-	diameter: string
+	diameter: string | false
+	width: string | false
+	height: string | false
+	load_index: string | false
+	load_index_ru: string | false
+	speed_index: string | false
+	speed_index_ru: string | false
+	homologation: string | false
+	typedisc: string | false
+	krep_pcd1: string | false
+	et: string | false
+	dia: string | false
+	jemnist: string | false
+	puskovii_strum: string | false
+	napruga: string | false
+	run_flat: boolean
 	page_url: string
 	model: Model
 	best_offer: BestOffer

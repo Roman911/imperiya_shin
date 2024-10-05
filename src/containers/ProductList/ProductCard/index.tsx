@@ -28,10 +28,7 @@ export const ProductCard: FC<ProductCardProps> = ({ item }) => {
 	const { comparisonItems } = useAppSelector(state => state.comparisonReducer);
 	const isBookmarks = bookmarksItems.some(i => i.id === item.group);
 	const isComparison = comparisonItems.some(i => i.id === item.group);
-	const section =
-		item.vehicle_type.length !== 0 ? Section.Tires :
-			item.diameter.length !== 0 ? Section.Disks :
-				Section.Battery;
+	const section = item.vehicle_type ? Section.Tires : item.diameter ? Section.Disks : Section.Battery;
 
 	const handleToggle = (
 		event: MouseEvent<HTMLButtonElement>,

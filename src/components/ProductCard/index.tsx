@@ -38,7 +38,7 @@ export const ProductCardComponent: FC<ProductCardProps> = ({ item, isBookmarks, 
 	const { best_offer, default_photo, full_name, group, min_price, season, vehicle_type, page_url } = item;
 	const { lang } = useAppSelector(state => state.langReducer);
 	const cartStorage = useMemo(() => getFromStorage('reducerCart'), []);
-	const section = item.vehicle_type.length !== 0 ? Section.Tires : item.diameter.length !== 0 ? Section.Disks : Section.Battery;
+	const section = item.vehicle_type ? Section.Tires : item.diameter ? Section.Disks : Section.Battery;
 
 	const seasonIcon = season === '1' ? 'sun' : season === '2' ? 'snow' : season === '3' ? 'all-season' : undefined;
 	const vehicle_type_number = vehicle_type as unknown as keyof typeof icons;

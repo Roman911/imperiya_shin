@@ -82,6 +82,9 @@ export const useAppGetProducts = (products: ProductItem[] = []) => {
 
 	return {
 		products: newProducts,
+		tires: groupedIds.tires.length > 0 ? groupedItems.tiresItems : [],
+		disks: groupedIds.disks.length > 0 ? groupedItems.disksItems : [],
+		battery: groupedIds.battery.length > 0 ? groupedItems.batteryItems : [],
 		isLoading,
 	};
 };
