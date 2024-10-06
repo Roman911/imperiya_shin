@@ -18,8 +18,6 @@ const initialFilterState: IFilter = {
 	model_id: null,
 	country: null,
 	year: null,
-	load: null,
-	speed: null,
 	omolog: null,
 	krepeg: null,
 	typedisk: null,

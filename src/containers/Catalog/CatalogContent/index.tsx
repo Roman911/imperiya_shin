@@ -1,10 +1,8 @@
 import { FC, useEffect, useState } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
 
 import { config } from '../../../config';
 import { baseDataAPI } from '../../../services/baseDataService';
-import { useAppDispatch, useAppSelector, useAppSearchParams } from '../../../hooks';
-import { setParams } from '../../../store/reducers/filterSlice';
+import { useAppDispatch, useAppGetProductsForCatalog, useAppSelector } from '../../../hooks';
 import { ProductList } from '../../ProductList';
 import { FilterByCar, Paginate, SelectionByCar, ShowMore } from '../../../components/Catalog';
 import { FilterActive } from '../FilterActive';
@@ -17,23 +15,20 @@ interface CatalogContentProps {
 
 export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 	const [ paginateCount, setPaginateCount ] = useState(0);
+	const [ getParams, setGetParams ] = useState('');
+	const [ sort, setSort ] = useState('');
 	const [ itemsProduct, setItemsProduct ] = useState(config.catalog.itemsProduct);
-	const location = useLocation();
 	const dispatch = useAppDispatch();
-	const [ , setSearchParams ] = useSearchParams();
 	const { lang } = useAppSelector(state => state.langReducer);
-	const { data, isLoading } = baseDataAPI.useFetchProductsQuery({ id: location?.search, length: itemsProduct, start: paginateCount * config.catalog.itemsProduct });
-	const searchParams = useAppSearchParams();
+	const params = useAppGetProductsForCatalog();
+	const { data, isLoading } = baseDataAPI.useFetchProductsQuery({ id: `?${getParams}${sort}`, length: itemsProduct, start: paginateCount * config.catalog.itemsProduct });
 
 	useEffect(() => {
-		dispatch(setParams(searchParams));
-	}, [dispatch, searchParams]);
+		setGetParams(params);
+	}, [dispatch, params]);
 
 	const handleClick = (param1: string, param2: string) => {
-		setSearchParams(params => {
-			params.set(param1, param2)
-			return params
-		});
+		setSort(`&${param1}=${param2}`);
 	}
 
 	const handlePageClick = (event: { selected: number; }) => {

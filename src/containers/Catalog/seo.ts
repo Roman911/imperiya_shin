@@ -1,57 +1,64 @@
-interface IFilter {
-	width?: number
-	height?: number
-	radius?: string
-	country?: string
-	year?: number
-	brand?: number
-	krepeg?: string
-	sezon?: number
-}
-
-type OriginalType = {
-	w: 'width',
-	h: 'height',
-	d: 'diameter',
-	ctr: 'country',
-	y: 'year',
-};
+import { IFilter, OriginalType } from './seoType';
 
 const paramTrans: OriginalType = {
 	w: 'width',
 	h: 'height',
-	d: 'diameter',
+	d: 'radius',
+	b: 'brand',
+	s: 'sezon',
+	stud: 'only_studded',
+	m: 'model_id',
 	ctr: 'country',
 	y: 'year',
+	hm: 'omolog',
+	kr: 'krepeg',
+	td: 'typedisk',
+	clr: 'colir',
+	ct: 'jemnist',
+	sk: 'puskovii_strum',
+	elt: 'tip_elektrolitu',
+	tk: 'tip_korpusu',
+	am: 'napruga',
+	pl: 'poliarnist',
+	vt: 'vehicle_type',
+	li: 'li',
+	si: 'si',
+	oc: 'only_c',
+	xl: 'only_xl',
+	owl: 'only_owl',
+	rf: 'only_run_flat',
+	ofr: 'only_off_road',
+	pfrom: 'minPrice',
+	pto: 'maxPrice',
+	etfrom: 'etMin',
+	etto: 'etMax',
+	diafrom: 'diaMin',
+	diato: 'diaMax',
+	wfrom: 'minShirina',
+	wto: 'maxShirina',
+	hfrom: 'minVisota',
+	hto: 'maxVisota',
+	lngfrom: 'minDovzina',
+	lngto: 'maxDovzina',
 };
 
-const digitValueToUrl = (value: number) => {
-	return value.toString();
-}
+const paramsTransForURL: IFilter = Object.fromEntries(
+	Object.entries(paramTrans).map(([key, value]) => [value, key])
+) as IFilter;
 
-export const generateUrl = (filter: IFilter) => {
-	const parts: string[] = [];
-
-	const appendFilterPart = <T extends string | number | string[]>(key: keyof IFilter, transformer?: (val: T) => string) => {
-		const value = filter[key];
+export const generateUrl = (filter: IFilter): string => {
+	const parts = Object.entries(filter).reduce<string[]>((acc, [key, value]) => {
 		if (value) {
-			const formattedValue = Array.isArray(value)
-				? (value as string[]).join(',')
-				: transformer ? transformer(value as T) : String(value);
-			parts.push(`${key}=${formattedValue}`);
+			const formattedValue = Array.isArray(value) ? value.join(',') : String(value);
+			const urlParamKey = paramsTransForURL[key as keyof IFilter];
+			if (urlParamKey) {
+				acc.push(`${urlParamKey}-${formattedValue}`);
+			}
 		}
-	};
+		return acc;
+	}, []);
 
-	appendFilterPart('width', digitValueToUrl);
-	appendFilterPart('height', digitValueToUrl);
-	appendFilterPart('radius');
-	appendFilterPart('country');
-	appendFilterPart('krepeg');
-	appendFilterPart('year', digitValueToUrl);
-	appendFilterPart('brand', digitValueToUrl);
-	appendFilterPart('sezon', digitValueToUrl);
-
-	return parts.join('&');
+	return parts.join('/');
 };
 
 type ParsedResult = {
@@ -59,18 +66,13 @@ type ParsedResult = {
 };
 
 export const parseUrl = (url: string): ParsedResult => {
-	const urlParts = url.split('/');
-	if (urlParts.length === 0) return {};
-
 	const result: ParsedResult = {};
 
-	urlParts.forEach(item => {
-		const [name, id, value] = item.split('-');
-
-		// Use type assertion to let TypeScript know that 'name' is a valid key for 'paramTrans'
+	url.split('/').forEach(item => {
+		const [name, value] = item.split('-');
 		const paramName = paramTrans[name as keyof typeof paramTrans];
 		if (paramName) {
-			result[paramName] = value || id || '';
+			result[paramName] = value || '';
 		}
 	});
 

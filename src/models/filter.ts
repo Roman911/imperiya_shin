@@ -19,8 +19,6 @@ export interface IFilter {
 	model_id?: null | string
 	country?: null | string
 	year?: null | string
-	load?: null | string
-	speed?: null | string
 	omolog?: null | string
 	krepeg?: null | string
 	typedisk?: null | string

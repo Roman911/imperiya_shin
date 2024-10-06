@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { Link } from '../../../lib';
 import { useAppDispatch, useAppTranslation } from '../../../hooks';
-import { setParams } from '../../../store/reducers/filterSlice';
+import { setParams, resetFilter } from '../../../store/reducers/filterSlice';
 
 import { BusIcon, CargoIcon, CarIcon, MotorcyclesIcon, SpecialEquipmentIcon, SuvIcon } from '../Icons';
 
@@ -44,9 +44,9 @@ const LinkComponent: FC<ILinkComponent> = (
 		iconStylesActive,
 		vehicleType
 	}) => {
-	const [searchParams] = useSearchParams();
-	const vehicleTypeSearchParams = searchParams.get('vehicle_type');
-	const active = vehicleTypeSearchParams && vehicleType.includes(vehicleTypeSearchParams);
+	const params = useParams();
+	const value = params?.['*'] ? params['*'].split("vt-")[1]?.split("/")[0] || null : null;
+	const active = value && vehicleType.includes(value);
 	const IconComponent = Icons[icon];
 
 	return <Link
@@ -82,6 +82,7 @@ export const TypeCarLinks: FC<TypeCarLinksProps> = ({ onClick, section }) => {
 
 	const handleClick = () => {
 		if(onClick) onClick();
+		dispatch(resetFilter());
 		dispatch(setParams({ 'vehicle_type': null }));
 	}
 

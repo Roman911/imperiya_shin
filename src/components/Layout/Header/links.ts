@@ -1,7 +1,7 @@
 export const links = [
 	{
 		title: 'accumulators',
-		url: '/catalog/battery?typeproduct=4',
+		url: '/catalog/battery',
 	},
 	{
 		title: 'tire calculator',

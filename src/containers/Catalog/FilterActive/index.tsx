@@ -1,40 +1,50 @@
-import { FC, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { baseDataAPI } from '../../../services/baseDataService';
-import { useAppDispatch, useAppSelector, useAppSearchParams } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { removeParam, resetFilter } from '../../../store/reducers/filterSlice';
 import { FilterActiveComponent } from '../../../components/Catalog';
-import { Section } from '../../../models/filter';
+import { Language } from '../../../models/language';
+import { parseUrl, generateUrl } from '../seo';
+import { IFilter } from '../seoType';
 
 interface FilterActiveProps {
 	className: string
 }
 
 export const FilterActive: FC<FilterActiveProps> = ({ className }) => {
+	const [searchParams, setSearchParams] = useState<IFilter | undefined>(undefined);
 	const { filter, section } = useAppSelector(state => state.filterReducer);
-	const [ , setSearchParams ] = useSearchParams();
+	const { lang } = useAppSelector(state => state.langReducer);
 	const dispatch = useAppDispatch();
-	const searchParams = useAppSearchParams();
+	const navigate = useNavigate();
+	const params = useParams();
 	const { data } = baseDataAPI.useFetchBaseDataQuery('');
 	const { data: dataAkum } = baseDataAPI.useFetchDataAkumQuery('');
 	const { data: manufModels } = baseDataAPI.useFetchManufModelsQuery(`${filter.brand}`);
 
 	useEffect(() => {
-		dispatch(resetFilter());
-	}, [dispatch]);
+		if(params['*']) {
+			const url = parseUrl(params['*']);
+			setSearchParams(url);
+		}
+	}, [params]);
 
-	const clearParam = (name: string) => {
-		dispatch(removeParam({[name]: null}));
-		setSearchParams(params => {
-			params.delete(name);
-			return params;
-		});
-	}
+	const clearParam = (name: keyof IFilter) => {  // Use keyof IFilter to restrict name to valid keys
+		if (searchParams) {  // Check if searchParams is defined
+			const updatedSearchParams = { ...searchParams };
+			delete updatedSearchParams[name];
+			const searchUrl = generateUrl(updatedSearchParams);
+			setSearchParams(updatedSearchParams);
+			dispatch(removeParam({ [name]: null }));
+			navigate(`${lang === Language.UA ? '' : '/ru'}/catalog/${section}/${searchUrl}`);
+		}
+	};
 
 	const clearAllParams = () => {
 		dispatch(resetFilter());
-		setSearchParams(section === Section.Disks ? 'typeproduct=3' : section === Section.Battery ? 'typeproduct=4' : '');
+		navigate(`${lang === Language.UA ? '' : '/ru'}/catalog/${section}`);
 	}
 
 	return <FilterActiveComponent
