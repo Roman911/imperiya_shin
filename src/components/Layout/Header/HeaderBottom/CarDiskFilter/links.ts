@@ -1,17 +1,17 @@
 export const typeDiskLinks = [
 	{
 		label: 'cast',
-		to: '/catalog/disks?typeproduct=3&typedisk=3',
+		to: '/catalog/disks/td-3',
 		mt: 'mt-3',
 	},
 	{
 		label: 'steel',
-		to: '/catalog/disks?typeproduct=3&typedisk=1',
+		to: '/catalog/disks/td-1',
 		mt: 'mt-3',
 	},
 	{
 		label: 'forged',
-		to: '/catalog/disks?typeproduct=3&typedisk=2',
+		to: '/catalog/disks/td-2',
 		mt: 'mt-3',
 	},
 ];
@@ -19,113 +19,113 @@ export const typeDiskLinks = [
 export const brandsLinks = [
 	{
 		label: 'Alutec',
-		to: '/catalog/disks?typeproduct=3&brand=476',
+		to: '/catalog/disks/b-476',
 	},
 	{
 		label: 'Angel',
-		to: '/catalog/disks?typeproduct=3&brand=575',
+		to: '/catalog/disks/b-575',
 	},
 	{
 		label: 'Allante',
-		to: '/catalog/disks?typeproduct=3&brand=474',
+		to: '/catalog/disks/b-474',
 	},
 	{
 		label: 'Disla',
-		to: '/catalog/disks?typeproduct=3&brand=495',
+		to: '/catalog/disks/b-495',
 	},
 	{
 		label: 'GT',
-		to: '/catalog/disks?typeproduct=3&brand=597',
+		to: '/catalog/disks/b-597',
 	},
 	{
 		label: 'JH',
-		to: '/catalog/disks?typeproduct=3&brand=509',
+		to: '/catalog/disks/b-509',
 	},
 	{
 		label: 'JT',
-		to: '/catalog/disks?typeproduct=3&brand=510',
+		to: '/catalog/disks/b-510',
 	},
 	{
 		label: 'Kosei',
-		to: '/catalog/disks?typeproduct=3&brand=514',
+		to: '/catalog/disks/b-514',
 	},
 	{
 		label: 'Marcello',
-		to: '/catalog/disks?typeproduct=3&brand=524',
+		to: '/catalog/disks/b-524',
 	},
 	{
 		label: 'Rial',
-		to: '/catalog/disks?typeproduct=3&brand=542',
+		to: '/catalog/disks/b-542',
 	},
 	{
 		label: 'Replica',
-		to: '/catalog/disks?typeproduct=3&brand=541',
+		to: '/catalog/disks/b-541',
 	},
 	{
 		label: 'Ronal',
-		to: '/catalog/disks?typeproduct=3&brand=543',
+		to: '/catalog/disks/b-543',
 	},
 ];
 
 export const carBrandsLinks = [
 	{
 		label: 'Audi',
-		to: '/catalog/disks?typeproduct=3',
+		to: '/catalog/disks',
 		brand: 4,
 	},
 	{
 		label: 'BMW',
-		to: '/catalog/disks?typeproduct=3',
+		to: '/catalog/disks',
 		brand: 11,
 	},
 	{
 		label: 'Chevrolet',
-		to: '/catalog/disks?typeproduct=3',
+		to: '/catalog/disks',
 		brand: 20,
 	},
 	{
 		label: 'Citroen',
-		to: '/catalog/disks?typeproduct=3',
+		to: '/catalog/disks',
 		brand: 22,
 	},
 	{
 		label: 'Ford',
-		to: '/catalog/disks?typeproduct=3',
+		to: '/catalog/disks',
 		brand: 44,
 	},
 	{
 		label: 'Honda',
-		to: '/catalog/disks?typeproduct=3',
+		to: '/catalog/disks',
 		brand: 57,
 	},
 	{
 		label: 'Hyundai',
-		to: '/catalog/disks?typeproduct=3',
+		to: '/catalog/disks',
 		brand: 59,
 	},
 	{
 		label: 'Kia',
-		to: '/catalog/disks?typeproduct=3',
+		to: '/catalog/disks',
 		brand: 69,
 	},
 	{
 		label: 'Lexus',
-		to: '/catalog/disks?typeproduct=3',
+		to: '/catalog/disks',
 		brand: 75,
 	},
 	{
 		label: 'Mazda',
-		to: '/catalog/disks?typeproduct=3',
+		to: '/catalog/disks',
 		brand: 83,
 	},
 	{
 		label: 'Mercedes',
-		to: '/catalog/disks?typeproduct=3',
+		to: '/catalog/disks',
 		brand: 85,
 	},
 	{
 		label: 'Mitsubishi',
-		to: '/catalog/disks?typeproduct=3',
+		to: '/catalog/disks',
 		brand: 89,
 	},
 ];
@@ -133,77 +133,77 @@ export const carBrandsLinks = [
 export const diameterLinks = [
 	{
 		label: 'R13',
-		to: '/catalog/disks?typeproduct=3&radius=13',
+		to: '/catalog/disks/d-13',
 		border: true
 	},
 	{
 		label: 'R14',
-		to: '/catalog/disks?typeproduct=3&radius=14',
+		to: '/catalog/disks/d-14',
 		border: true
 	},
 	{
 		label: 'R15',
-		to: '/catalog/disks?typeproduct=3&radius=15',
+		to: '/catalog/disks/d-15',
 		border: true
 	},
 	{
 		label: 'R16',
-		to: '/catalog/disks?typeproduct=3&radius=16',
+		to: '/catalog/disks/d-16',
 		border: true
 	},
 	{
 		label: 'R17',
-		to: '/catalog/disks?typeproduct=3&radius=17',
+		to: '/catalog/disks/d-17',
 		border: true
 	},
 	{
 		label: 'R18',
-		to: '/catalog/disks?typeproduct=3&radius=18',
+		to: '/catalog/disks/d-18',
 		border: true
 	},
 	{
 		label: 'R19',
-		to: '/catalog/disks?typeproduct=3&radius=19',
+		to: '/catalog/disks/d-19',
 		border: true
 	},
 	{
 		label: 'R20',
-		to: '/catalog/disks?typeproduct=3&radius=20',
+		to: '/catalog/disks/d-20',
 		border: true
 	},
 	{
 		label: 'R21',
-		to: '/catalog/disks?typeproduct=3&radius=21',
+		to: '/catalog/disks/d-21',
 		border: true
 	},
 	{
 		label: 'R22',
-		to: '/catalog/disks?typeproduct=3&radius=22',
+		to: '/catalog/disks/d-22',
 		border: true
 	},
 	{
 		label: 'R23',
-		to: '/catalog/disks?typeproduct=3&radius=23',
+		to: '/catalog/disks/d-23',
 		border: true
 	},
 	{
 		label: 'R24',
-		to: '/catalog/disks?typeproduct=3&radius=24',
+		to: '/catalog/disks/d-24',
 		border: true
 	},
 	{
 		label: 'R17.5',
-		to: '/catalog/disks?typeproduct=3&radius=17,5',
+		to: '/catalog/disks/d-17,5',
 		border: true
 	},
 	{
 		label: 'R19.5',
-		to: '/catalog/disks?typeproduct=3&radius=19,5',
+		to: '/catalog/disks/d-19,5',
 		border: true
 	},
 	{
 		label: 'R22.5',
-		to: '/catalog/disks?typeproduct=3&radius=22,5',
+		to: '/catalog/disks/d-22,5',
 		border: true
 	},
 ];
