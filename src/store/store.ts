@@ -9,6 +9,7 @@ import langReducer from './reducers/langSlice';
 import orderReducer from './reducers/orderSlice';
 import settingsReducer from './reducers/settingsSlice';
 import searchReducer from './reducers/searchSlice';
+import brandAliasReducer from './reducers/brandAliasSlice';
 
 import { baseDataAPI } from '../services/baseDataService';
 
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
 	orderReducer,
 	settingsReducer,
 	searchReducer,
+	brandAliasReducer,
 	[baseDataAPI.reducerPath]: baseDataAPI.reducer
 })
 

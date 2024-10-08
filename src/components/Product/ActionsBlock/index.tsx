@@ -1,9 +1,22 @@
-import { FC } from 'react';
+import { FC, type MouseEvent, useRef, useState } from 'react';
 import { FacebookShareButton, TelegramShareButton, ViberShareButton, TwitterShareButton, EmailShareButton } from 'react-share';
 import classNames from 'classnames';
 
 import { Link } from '../../../lib';
 import { CalculatorIcon, HeartIcon, LibraIcon, MailIcon, PhoneCircuitIcon, ShareIcon } from '../../Lib/Icons';
+import { useAppSelector } from '../../../hooks';
+
+import vodafoneLogo from '../../../assets/vodafone-logo.png';
+import kievstarLogo from '../../../assets/kievstar-logo.png';
+import lifecellLogo from '../../../assets/life-logo.png';
+
+import { PhoneLogo } from '../../../models/config';
+
+const phoneLogos: Record<PhoneLogo, string> = {
+	vodafone: vodafoneLogo,
+	kievstar: kievstarLogo,
+	lifecell: lifecellLogo,
+};
 
 interface ActionsBlockProps {
 	className: string
@@ -15,15 +28,50 @@ interface ActionsBlockProps {
 }
 
 export const ActionsBlockComponent: FC<ActionsBlockProps> = ({ className, isBookmarks, isComparison, handleClickBookmarks, handleClickComparison, openModal }) => {
+	const [ showOptions, setShowOptions ] = useState<boolean>(false);
+	const { lang } = useAppSelector(state => state.langReducer);
+	const { settings } = useAppSelector(state => state.settingsReducer);
 	const url = window.location.href;
+	const tooltipRef = useRef<HTMLDivElement>(null);
+
+	const telephones: { phone: string; url: string; logo: "vodafone" | "kievstar" | "lifecell"; }[] = [
+		{ phone: settings[lang].config_telephone_vodafone, url: settings[lang].config_telephone_vodafone_url, logo: 'vodafone' },
+		{ phone: settings[lang].config_telephone_kievstar, url: settings[lang].config_telephone_kievstar_url, logo: 'kievstar' },
+		{ phone: settings[lang].config_telephone_life, url: settings[lang].config_telephone_life_url, logo: 'lifecell' },
+	];
+
+	const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+		event.stopPropagation();
+		setShowOptions(prev => !prev);
+	}
 
 	return <div className={classNames('gap-1.5 xl:gap-2.5 h-full items-center', className)}>
-		<button onClick={() => openModal('Callback')} className='group relative'>
-			<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-			<span className="relative inline-flex rounded-full w-12 h-12 bg-sky-500 p-3">
+		<div className='relative'>
+			<button onClick={event => handleClick(event)} className='group relative'>
+				<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+				<span className="relative inline-flex rounded-full w-12 h-12 bg-sky-500 p-3">
 				<PhoneCircuitIcon className='stroke-white w-6 h-6'/>
 			</span>
-		</button>
+			</button>
+			<div
+				ref={tooltipRef}
+				className={
+					classNames('absolute left-0 lg:left-auto lg:-right-10 z-10 mt-2 origin-top-right border border-gray-200 bg-white shadow-lg px-5 rounded-sm w-48 py-2',
+						{hidden: !showOptions}
+					)}
+				role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+				<div className="py-1 text-black" role="none">
+					{telephones.map((item, index) => {
+						return <div key={index} className='flex items-center my-3'>
+							<img src={phoneLogos[item.logo]} alt={item.logo + '-logo'}/>
+							<a href={`tel:${item.url}`} className='ml-2.5 font-medium'>
+								{item.phone}
+							</a>
+						</div>
+					})}
+				</div>
+			</div>
+		</div>
 		<button onClick={() => openModal('AddAsk')} className='p-3 bg-blue-50 rounded-full group'>
 			<MailIcon className='stroke-gray-500 group-hover:stroke-blue-500 w-6 h-6'/>
 		</button>

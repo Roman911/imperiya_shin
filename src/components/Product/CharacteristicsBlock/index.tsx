@@ -1,7 +1,8 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
-import { useAppSelector, useAppTranslation } from '../../../hooks';
+import { useAppDispatch, useAppSelector, useAppTranslation } from '../../../hooks';
+import { addBrandAlias, addModelAlias, reset } from '../../../store/reducers/brandAliasSlice';
 import { ChevronDownIcon, InfoIcon } from '../../Lib/Icons';
 import { TooltipWithIcon } from '../../Lib';
 import { Link, SeasonTransform, VehicleTypeTransform } from '../../../lib';
@@ -28,14 +29,19 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 	const metaDescription = data?.data.model_description[lang]?.meta_description;
 	const vehicleType = data?.data.offer_group.vehicle_type;
 	const vehicleTransform = vehicleType ? VehicleTypeTransform(vehicleType) : undefined;
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		dispatch(reset());
+	}, [dispatch]);
 
 	const link = (to: string) => {
 		if(section === 'tires') {
-			return `/catalog/tires?${to}`
+			return `/catalog/tires${to}`
 		} else if(section === 'disks') {
-			return `/catalog/disks?typeproduct=3&${to}`
+			return `/catalog/disks${to}`
 		} else {
-			return `/catalog/battery?typeproduct=4&${to}`
+			return `/catalog/battery${to}`
 		}
 	};
 
@@ -92,7 +98,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 							{ t('width', true) }
 						</span>
 					</div>
-					<Link to={link(`width=${data?.data.offer_group.width}`)} className='text-blue-500 max-w-max w-full hover:underline'>
+					<Link to={link(`/w-${data?.data.offer_group.width}`)} className='text-blue-500 max-w-max w-full hover:underline'>
 						{ data?.data.offer_group.width }
 					</Link>
 				</div>}
@@ -108,7 +114,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 							{ t('height', true) }
 						</span>
 					</div>
-					<Link to={link(`height=${data?.data.offer_group.height}`)} className='text-blue-500 max-w-max w-full hover:underline'>
+					<Link to={link(`/h-${data?.data.offer_group.height}`)} className='text-blue-500 max-w-max w-full hover:underline'>
 						{ data?.data.offer_group.height }
 					</Link>
 				</div>}
@@ -124,7 +130,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 							{ t('diameter', true) }
 						</span>
 					</div>
-					<Link to={link(`radius=${data?.data.offer_group.diameter}`)} className='text-blue-500 max-w-max w-full hover:underline'>
+					<Link to={link(`/d-${data?.data.offer_group.diameter}`)} className='text-blue-500 max-w-max w-full hover:underline'>
 						{ data?.data.offer_group.diameter }
 					</Link>
 				</div>}
@@ -140,7 +146,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 							{ t('fasteners', true) }
 						</span>
 					</div>
-					<Link to={link(`krepeg=${data?.data.offer_group.krep_pcd1}`)} className='text-blue-500 max-w-max w-full hover:underline'>
+					<Link to={link(`/kr-${data?.data.offer_group.krep_pcd1}`)} className='text-blue-500 max-w-max w-full hover:underline'>
 						{ data?.data.offer_group.krep_pcd1 }
 					</Link>
 				</div>}
@@ -150,7 +156,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 						<InfoIcon className='fill-[#7D92B2] mr-2.5 mb-0.5'/>
 						{t('speed index', true)}
 					</div>
-					<Link to={link(`si=${data?.data.offer_group.speed_index}`)}
+					<Link to={link(`/si-${data?.data.offer_group.speed_index}`)}
 								className='text-blue-500 max-w-max w-full hover:underline'>
 						{lang === Language.UA ? data?.data.offer_group.speed_index : data?.data.offer_group.speed_index_ru}
 					</Link>
@@ -161,18 +167,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 						<InfoIcon className='fill-[#7D92B2] mr-2.5 mb-0.5'/>
 						{t('load index', true)}
 					</div>
-					<Link to={link(`li=${data?.data.offer_group.load_index}`)}
-								className='text-blue-500 max-w-max w-full hover:underline'>
-						{lang === Language.UA ? data?.data.offer_group.load_index : data?.data.offer_group.load_index_ru}
-					</Link>
-				</div>}
-				{data?.data.offer_group.load_index && <div className='flex my-4 text-sm font-medium'>
-					<div
-						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
-						<InfoIcon className='fill-[#7D92B2] mr-2.5 mb-0.5'/>
-						{t('load index', true)}
-					</div>
-					<Link to={link(`li=${data?.data.offer_group.load_index}`)}
+					<Link to={link(`/li-${data?.data.offer_group.load_index}`)}
 								className='text-blue-500 max-w-max w-full hover:underline'>
 						{lang === Language.UA ? data?.data.offer_group.load_index : data?.data.offer_group.load_index_ru}
 					</Link>
@@ -184,7 +179,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
 						{t('brand', true)}
 					</div>
-					<Link to={link(`${section === 'disks' ? 'brand_disc' : 'brand'}=${data?.data.brand.id}`)} className='text-blue-500 max-w-max w-full hover:underline'>
+					<Link to={link(`/b-${data?.data.brand.id}`)} onClick={() => dispatch(addBrandAlias(data ? data?.data.brand.alias : ''))} className='text-blue-500 max-w-max w-full hover:underline'>
 						{data?.data.brand.name}
 					</Link>
 				</div>}
@@ -193,7 +188,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
 						{t('model', true)}
 					</div>
-					<Link to={link(`${section === 'disks' ? 'brand_disc' : 'brand'}=${data?.data.brand.id}&model_id=${data?.data.model.id}`)} className='text-blue-500 max-w-max w-full hover:underline'>
+					<Link to={link(`/b-${data?.data.brand.id}/m-${data?.data.model.id}`)} onClick={() => dispatch(addModelAlias(data ? data?.data.model.alias : ''))} className='text-blue-500 max-w-max w-full hover:underline'>
 						{data?.data.model.name}
 					</Link>
 				</div>}
@@ -202,7 +197,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
 						{t('appointment', true)}
 					</div>
-					<Link to={vehicleTransform?.to || ''} className='text-blue-500'>
+					<Link to={`/vt-${vehicleType}`} className='text-blue-500'>
 						{t(vehicleTransform?.name || '', true)}
 					</Link>
 				</div>}
@@ -211,7 +206,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
 						Сезон
 					</div>
-					<Link to={link(`sezon=${data?.data.model.season}`)} className='text-blue-500 max-w-max w-full hover:underline'>
+					<Link to={link(`/s-${data?.data.model.season}`)} className='text-blue-500 max-w-max w-full hover:underline'>
 						{ t(SeasonTransform(data?.data.model.season)?.name || '', true) }
 					</Link>
 				</div>}
@@ -220,7 +215,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
 						ET
 					</div>
-					<Link to={link(`et=${data?.data.offer_group.et}`)} className='text-blue-500 max-w-max w-full hover:underline'>
+					<Link to={link(`/et-${data?.data.offer_group.et}`)} className='text-blue-500 max-w-max w-full hover:underline'>
 						{ data?.data.offer_group.et }
 					</Link>
 				</div>}
@@ -229,7 +224,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
 						DIA
 					</div>
-					<Link to={link(`dia=${data?.data.offer_group.dia}`)} className='text-blue-500 max-w-max w-full hover:underline'>
+					<Link to={link(`/dia-${data?.data.offer_group.dia}`)} className='text-blue-500 max-w-max w-full hover:underline'>
 						{ data?.data.offer_group.dia }
 					</Link>
 				</div>}
@@ -239,7 +234,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 						{t('type size', true)}
 					</div>
 					<Link
-						to={link(`width=${data?.data.offer_group.width}&height=${data?.data.offer_group.height}&radius=${data?.data.offer_group.diameter}`)}
+						to={link(`/w-${data?.data.offer_group.width}/h-${data?.data.offer_group.height}/d-${data?.data.offer_group.diameter}`)}
 						className='text-blue-500 max-w-max w-full hover:underline'>
 						{`${data?.data.offer_group.width}/${data?.data.offer_group.height} R${data?.data.offer_group.diameter}`}
 					</Link>

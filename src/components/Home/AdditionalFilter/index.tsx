@@ -28,7 +28,7 @@ export const AdditionalFilterComponent: FC<AdditionalFilterProps> = ({ children,
 			)}>
 			<div className={classNames('max-w-lg mx-auto md:flex md:justify-between items-end', {'text-white': additionalFilter === 'tires'})}>
 				<h2 className='text-3xl font-bold uppercase'>
-					{t('tires', true)}
+					{t(section, true)}
 				</h2>
 				<div className='flex font-semibold gap-x-5 mt-3 md:mt-0'>
 					<button

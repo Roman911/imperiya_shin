@@ -124,6 +124,7 @@ export interface Product {
 	brand: {
 		id: number
 		name: string
+		alias: string
 	}
 	offers: Offers[]
 	full_name: string

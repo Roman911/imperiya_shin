@@ -1,35 +1,45 @@
-import { FC } from 'react';
-import classNames from 'classnames';
+import { FC, useRef, useState, type MouseEvent } from 'react';
 
-import { config } from '../../config';
-
-import { formatPhoneNumber } from '../../lib';
-
-import vodafoneLogo from '../../assets/vodafone-logo.png';
-import kievstarLogo from '../../assets/kievstar-logo.png';
-import lifecellLogo from '../../assets/life-logo.png';
-
-import { PhoneLogo } from '../../models/config';
-
-const phoneLogos: Record<PhoneLogo, string> = {
-	vodafone: vodafoneLogo,
-	kievstar: kievstarLogo,
-	lifecell: lifecellLogo,
-};
+import { useClickOutside, useAppSelector } from '../../hooks';
+import { ContactsComponent } from '../../components/Contacts';
+import { useAppTranslation } from '../../hooks';
 
 interface ContactsProps {
+	isInfoBlock?: boolean
 	className?: string
 }
 
-export const Contacts: FC<ContactsProps> = ({ className = 'text-white' }) => {
-	return <div className={classNames('py-1 font-semibold', className)}>
-		{config.contacts.phone.map(item => {
-			return <div key={item.value} className='flex items-center'>
-				<img src={phoneLogos[item.logo]} alt={item.logo + '-logo'}/>
-				<a href={`tel:${item.value}`} className='ml-2.5'>
-					{formatPhoneNumber(item.value)}
-				</a>
-			</div>
-		})}
-	</div>
+export const Contacts: FC<ContactsProps> = ({ isInfoBlock, className}) => {
+	const [ showOptions, setShowOptions ] = useState<boolean>(false);
+	const { lang } = useAppSelector(state => state.langReducer);
+	const { settings } = useAppSelector(state => state.settingsReducer);
+	const tooltipRef = useRef<HTMLDivElement>(null);
+	const t = useAppTranslation();
+
+	const closeOptions = () => {
+		setShowOptions(false);
+	}
+
+	useClickOutside({ref: tooltipRef, open: showOptions, onClose: closeOptions});
+
+	const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+		event.stopPropagation();
+		setShowOptions(prev => !prev);
+	}
+
+	const telephones: { phone: string; url: string; logo: "vodafone" | "kievstar" | "lifecell"; }[] = [
+		{ phone: settings[lang].config_telephone_vodafone, url: settings[lang].config_telephone_vodafone_url, logo: 'vodafone' },
+		{ phone: settings[lang].config_telephone_kievstar, url: settings[lang].config_telephone_kievstar_url, logo: 'kievstar' },
+		{ phone: settings[lang].config_telephone_life, url: settings[lang].config_telephone_life_url, logo: 'lifecell' },
+	];
+
+	return <ContactsComponent
+		isInfoBlock={ isInfoBlock }
+		className={ className }
+		showOptions={ showOptions }
+		handleClick={ handleClick }
+		label={ t('phones') }
+		tooltipRef={ tooltipRef }
+		telephones={ telephones }
+	/>
 };

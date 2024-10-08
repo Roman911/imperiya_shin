@@ -27,7 +27,7 @@ export const Filter: FC<FilterProps> = ({ additionalFilter, additionalSection })
 	const getFilters = () => {
 		const filterConfigs = [];
 
-		if(section === Section.Tires) {
+		if(additionalSection ? additionalSection === Section.Tires : section === Section.Tires) {
 			filterConfigs.push({
 				label: t('width', true),
 				name: 'width',
@@ -60,7 +60,7 @@ export const Filter: FC<FilterProps> = ({ additionalFilter, additionalSection })
 				name: 'brand',
 				options: data?.brand?.map(item => ({ value: item.value, label: item.label }))
 			});
-		} else if(section === Section.Disks) {
+		} else if(additionalSection ? additionalSection === Section.Disks : section === Section.Disks) {
 			filterConfigs.push({
 				label: t('brand', true),
 				name: 'brand',

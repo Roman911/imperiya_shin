@@ -20,7 +20,7 @@ export const AdditionalFilter = () => {
 		<AdditionalFilterComponent additionalFilter='tires' section={ sectionTires } onChangeFilter={ onChangeFilter }>
 			<Filter additionalFilter='tires' additionalSection={ sectionTires } />
 		</AdditionalFilterComponent>
-		<AdditionalFilterComponent additionalFilter='disks' section={ sectionTires } onChangeFilter={ onChangeFilter }>
+		<AdditionalFilterComponent additionalFilter='disks' section={ sectionDisks } onChangeFilter={ onChangeFilter }>
 			<Filter additionalFilter='disks' additionalSection={ sectionDisks } />
 		</AdditionalFilterComponent>
 	</div>

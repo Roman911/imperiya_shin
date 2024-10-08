@@ -131,12 +131,12 @@ export const Product = () => {
 
 	return <div>
 		<Helmet>
-			<title>{ data?.data.full_name }</title>
-			<meta name='description' content={ data?.data.full_name } />
-	</Helmet>
-	<LayoutWrapper>
-		<Breadcrumbs path={path}/>
-		<ProductComponent
+			<title>{data?.data.full_name}</title>
+			<meta name='description' content={data?.data.full_name}/>
+		</Helmet>
+		<LayoutWrapper>
+			<Breadcrumbs path={path}/>
+			<ProductComponent
 				data={ data }
 				quantity={ quantity }
 				handleModalOpen={ handleModalOpen }

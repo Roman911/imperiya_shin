@@ -95,6 +95,16 @@ export const baseDataAPI = createApi({
 				url: `/api/baseDataAkum`,
 			}),
 		}),
+		fetchBrand: build.query({
+			query: (id) => ({
+				url: `/api/brand/${id}`,
+			}),
+		}),
+		fetchModel: build.query({
+			query: (id) => ({
+				url: `/api/model/${id}`,
+			}),
+		}),
 		createComment: build.mutation({
 			query: (comment) => ({
 				url: '/api/addReview',
