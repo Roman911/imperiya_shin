@@ -58,21 +58,21 @@ export const FilterActiveComponent: FC<FilterActiveProps> = (
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					// @ts-expect-error
 					const brand = dataAkum.brand_akum.find(i => i.value === +searchParams[item as keyof IFilter]);
-					label = brand ? brand.label : '';
+					return renderItem(item as keyof IFilter, t(brand ? brand.label : '', true) || null);
 				}
 
 				else if (section === Section.Disks && data?.brand_disc) {
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					// @ts-expect-error
 					const brand = data.brand_disc.find(i => i.value === +searchParams[item as keyof IFilter]);
-					label = brand ? brand.label : '';
+					return renderItem(item as keyof IFilter, t(brand ? brand.label : '', true) || null);
 				}
 
 				else if (data?.brand) {
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					// @ts-expect-error
 					const brand = data.brand.find(i => i.value === +searchParams[item as keyof IFilter]);
-					label = brand ? brand.label : '';
+					return renderItem(item as keyof IFilter, t(brand ? brand.label : '', true) || null);
 				}
 			}
 
@@ -80,32 +80,32 @@ export const FilterActiveComponent: FC<FilterActiveProps> = (
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-expect-error
 				const modelId = manufModels?.find(i => i.value === +searchParams[item as keyof IFilter]);
-				label = modelId ? modelId.label : '';
+				return renderItem(item as keyof IFilter, t(modelId ? modelId.label : '', true) || null);
 			}
 
 			if (item === 'sezon') {
 				if (searchParams[item] === '1') {
-					label = t('summer', true);
+					return renderItem(item as keyof IFilter, t('summer', true) || null);
 				} else if (searchParams[item] === '2') {
-					label = t('winter', true);
+					return renderItem(item as keyof IFilter, t('winter', true) || null);
 				} else if (searchParams[item] === '3') {
-					label = t('all season', true);
+					return renderItem(item as keyof IFilter, t('all season', true) || null);
 				} else {
 					return null; // Return null if the season value is not valid
 				}
 			}
 
 			if (item === 'only_studded') {
-				label = 'Шип';
+				return label = 'Шип';
 			}
 
 			if (item === 'typedisk') {
 				if (searchParams[item] === '1') {
-					label = t('steel', true);
+					return renderItem(item as keyof IFilter, t('steel', true) || null);
 				} else if (searchParams[item] === '2') {
-					label = t('forged', true);
+					return renderItem(item as keyof IFilter, t('forged', true) || null);
 				} else if (searchParams[item] === '3') {
-					label = t('cast', true);
+					return renderItem(item as keyof IFilter, t('cast', true) || null);
 				} else {
 					return null; // Return null if the type value is not valid
 				}
