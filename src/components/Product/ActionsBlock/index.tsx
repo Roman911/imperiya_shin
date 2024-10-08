@@ -97,7 +97,7 @@ export const ActionsBlockComponent: FC<ActionsBlockProps> = ({ className, isBook
 		</Link>
 		<div className='p-3 bg-blue-50 rounded-full group cursor-pointer relative'>
 			<ShareIcon className='fill-gray-500 group-hover:fill-blue-500 w-6 h-6'/>
-			<div className='absolute top-10 left-0 bg-white rounded shadow-md py-4 px-6 hidden group-hover:block'>
+			<div className='absolute top-10 md:left-0 right-0 md:right-auto bg-white rounded shadow-md py-4 px-6 hidden group-hover:block'>
 				<FacebookShareButton url={url} className='flex items-center gap-x-2'>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className='fill-blue-500 w-5'>
 						<path
