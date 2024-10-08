@@ -14,10 +14,12 @@ interface FilterAltProps {
 
 export const FilterAlt: FC<FilterAltProps> = ({ isOpenFilter, closeFilter }) => {
 	const [ element, setElement ] = useState<HTMLElement | null>(null);
+	const [ searchParams, setSearchParams ] = useState('');
 	const { filter, isSend } = useAppSelector(state => state.filterCarReducer);
 	const { filter: filterBrand, section } = useAppSelector(state => state.filterReducer);
 	const dispatch = useAppDispatch();
 	const { data } = baseDataAPI.useFetchBaseDataQuery('');
+	const { data: fildterData } = baseDataAPI.useFildterDataQuery(`?typeproduct=${section === Section.Tires ? 1 : section === Section.Disks ? 3 : 4 }${filterBrand.vehicle_type ? `&vehicle_type=${filterBrand.vehicle_type}` : ''}&${searchParams}`);
 	const { data: dataAkum } = baseDataAPI.useFetchDataAkumQuery('');
 	const { data: model, refetch: modelRefetch } = baseDataAPI.useFetchAutoModelQuery(`${filter.brand}`);
 	const { data: modelYear } = baseDataAPI.useFetchAutoYearQuery(`${filter.model}`);
@@ -33,6 +35,15 @@ export const FilterAlt: FC<FilterAltProps> = ({ isOpenFilter, closeFilter }) => 
 	useEffect(() => {
 		dispatch(resetFilter());
 	}, [dispatch, section]);
+
+	useEffect(() => {
+		const params = [];
+		if(filterBrand.width) params.push(`width=${filterBrand.width}`);
+		if(filterBrand.height) params.push(`height=${filterBrand.height}`);
+		if(filterBrand.radius) params.push(`radius=${filterBrand.radius}`);
+
+		setSearchParams(params.join('&'))
+	}, [filterBrand]);
 
 	const handleClick = (value: Subsection) => {
 		dispatch(changeSubsection(value));
@@ -62,6 +73,7 @@ export const FilterAlt: FC<FilterAltProps> = ({ isOpenFilter, closeFilter }) => 
 	return <FilterAltComponent
 		element={ element }
 		data={ data }
+		fildterData={ fildterData }
 		isOpenFilter={ isOpenFilter }
 		closeFilter={ closeFilter }
 		handleClick={ handleClick }
