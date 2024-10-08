@@ -58,7 +58,7 @@ export const CartComponent: FC<CarProps> = ({ data, cartItems, removeProduct, se
 					country={ item.best_offer.country }
 					country_ru={ item.best_offer.country_ru }
 					year={ item.best_offer.year }
-					offerQuantity={ item.offers[0].quantity }
+					offerQuantity={ item.offers[0]?.quantity }
 					removeProduct={ removeProduct }
 					setQuantity={ setQuantity }
 				/>

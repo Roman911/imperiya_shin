@@ -44,12 +44,12 @@ export const Characteristics: FC<CharacteristicsProps> = ({ name, item, params  
 		} else if(i === 'country') {
 			return <Item key={ index } content={ item.best_offer.country ? lang === Language.UA ? item.best_offer.country : item.best_offer.country_ru : '-' } param={ t(params[index], true) } />
 		} else if(i === 'price') {
-			return <>
+			return <div	key={index}>
 				<div className='h-11 leading-[44px] bg-[#D0D4D9]'>{t(params[index], true)}</div>
-				<div key={index} className='h-11 leading-[44px] font-bold bg-[#E1E8F5]'>
+				<div className='h-11 leading-[44px] font-bold bg-[#E1E8F5]'>
 					{item.best_offer.price} ₴
 				</div>
-			</>
+			</div>
 		} else if(i === 'load_index') {
 			return <Item key={index} content={(item.load_index && item.load_index_ru) ? lang === Language.UA ? item.load_index : item.load_index_ru : '-' } param={ t(params[index], true) } />
 		} else if(i === 'speed_index') {
