@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { config } from '../../../config';
 import { baseDataAPI } from '../../../services/baseDataService';
-import { useAppDispatch, useAppGetProductsForCatalog, useAppSelector } from '../../../hooks';
+import { useAppGetProductsForCatalog, useAppSelector } from '../../../hooks';
 import { ProductList } from '../../ProductList';
 import { FilterByCar, Paginate, SelectionByCar, ShowMore } from '../../../components/Catalog';
 import { FilterActive } from '../FilterActive';
@@ -19,7 +19,6 @@ export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 	const [ getParams, setGetParams ] = useState('');
 	const [ sort, setSort ] = useState('');
 	const [ itemsProduct, setItemsProduct ] = useState(config.catalog.itemsProduct);
-	const dispatch = useAppDispatch();
 	const { lang } = useAppSelector(state => state.langReducer);
 	const params = useAppGetProductsForCatalog();
 	const { data, isLoading } = baseDataAPI.useFetchProductsQuery({ id: `?${getParams}${sort}`, length: itemsProduct, start: paginateCount * config.catalog.itemsProduct });
@@ -27,12 +26,8 @@ export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 	const paramsUrl = useParams();
 
 	useEffect(() => {
-		if(!paramsUrl['*']) {
-			setGetParams('');
-		} else {
-			setGetParams(params);
-		}
-	}, [dispatch, params, paramsUrl]);
+		setGetParams(params);
+	}, [params, paramsUrl]);
 
 	const handleClick = (param1: string, param2: string) => {
 		setSort(`&${param1}=${param2}`);
