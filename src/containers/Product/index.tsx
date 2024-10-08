@@ -100,7 +100,7 @@ export const Product = () => {
 		{
 			id: 1,
 			title: t(section, true),
-			url: `/catalog/${section === 'disks' ? section + '?typeproduct=3' : section === 'battery' ? '?typeproduct=4' : section}`
+			url: `/catalog/${section}`
 		},
 		{
 			id: 2,

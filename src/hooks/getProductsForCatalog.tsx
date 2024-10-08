@@ -65,7 +65,7 @@ export const useAppGetProductsForCatalog = () => {
 	useEffect(() => {
 		if(urlParams['*']) {
 			const url = parseUrl(urlParams['*']);
-			setFilter(url)
+			setFilter(url);
 		}
 	}, [urlParams]);
 

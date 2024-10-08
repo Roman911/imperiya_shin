@@ -7,6 +7,7 @@ import type { BaseDataProps, ManufModels } from '../../../models/baseData';
 import type { AkumProps } from '../../../models/akumData';
 import { Section } from '../../../models/filter';
 import { IFilter } from '../../../containers/Catalog/seoType';
+import { SeasonTransform, VehicleTypeTransform } from '../../../lib';
 
 interface FilterActiveProps {
 	data: BaseDataProps | undefined
@@ -48,27 +49,27 @@ export const FilterActiveComponent: FC<FilterActiveProps> = (
 		classNames('mb-4 flex-wrap justify-end gap-x-2 gap-y-3 lg:gap-4 text-end bg-blue-50 lg:bg-transparent p-4 lg:p-0', className)}
 	>
 		{searchParams && Object.keys(searchParams || {}).filter(item => searchParams && searchParams[item as keyof IFilter]).map(item => {
-			let label = searchParams[item as keyof IFilter];
+			const label = searchParams[item as keyof IFilter];
 
 			// Example: Additional check if label is null or undefined
-			if (label == null) return null; // Skip rendering if label is null
+			if(label == null) return null; // Skip rendering if label is null
 
-			if (item === 'brand') {
-				if (section === Section.Battery && dataAkum?.brand_akum) {
+			if(item === 'brand') {
+				if(section === Section.Battery && dataAkum?.brand_akum) {
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					// @ts-expect-error
 					const brand = dataAkum.brand_akum.find(i => i.value === +searchParams[item as keyof IFilter]);
 					return renderItem(item as keyof IFilter, t(brand ? brand.label : '', true) || null);
 				}
 
-				else if (section === Section.Disks && data?.brand_disc) {
+				else if(section === Section.Disks && data?.brand_disc) {
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					// @ts-expect-error
 					const brand = data.brand_disc.find(i => i.value === +searchParams[item as keyof IFilter]);
 					return renderItem(item as keyof IFilter, t(brand ? brand.label : '', true) || null);
 				}
 
-				else if (data?.brand) {
+				else if(data?.brand) {
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					// @ts-expect-error
 					const brand = data.brand.find(i => i.value === +searchParams[item as keyof IFilter]);
@@ -76,30 +77,36 @@ export const FilterActiveComponent: FC<FilterActiveProps> = (
 				}
 			}
 
-			if (item === 'model_id') {
+			if(item === 'model_id') {
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-expect-error
 				const modelId = manufModels?.find(i => i.value === +searchParams[item as keyof IFilter]);
 				return renderItem(item as keyof IFilter, t(modelId ? modelId.label : '', true) || null);
 			}
 
-			if (item === 'sezon') {
-				if (searchParams[item] === '1') {
-					return renderItem(item as keyof IFilter, t('summer', true) || null);
-				} else if (searchParams[item] === '2') {
-					return renderItem(item as keyof IFilter, t('winter', true) || null);
-				} else if (searchParams[item] === '3') {
-					return renderItem(item as keyof IFilter, t('all season', true) || null);
-				} else {
-					return null; // Return null if the season value is not valid
+			if(item === 'sezon') {
+				if(searchParams[item]) {
+					return renderItem(
+						item as keyof IFilter,
+						t(SeasonTransform(searchParams[item])?.name || '', true) ?? ''
+					);
 				}
 			}
 
-			if (item === 'only_studded') {
-				return label = 'Шип';
+			if(item === 'vehicle_type') {
+				if(searchParams[item]) {
+					return renderItem(
+						item as keyof IFilter,
+						t(VehicleTypeTransform(searchParams[item])?.name || '', true) ?? ''
+					);
+				}
 			}
 
-			if (item === 'typedisk') {
+			if(item === 'only_studded') {
+				return renderItem(item as keyof IFilter, 'Шип');
+			}
+
+			if(item === 'typedisk') {
 				if (searchParams[item] === '1') {
 					return renderItem(item as keyof IFilter, t('steel', true) || null);
 				} else if (searchParams[item] === '2') {
@@ -112,7 +119,7 @@ export const FilterActiveComponent: FC<FilterActiveProps> = (
 			}
 
 			// Double-check that label is not null or undefined before rendering
-			if (label == null) return null;
+			if(label == null) return null;
 
 			return renderItem(item as keyof IFilter, searchParams[item as keyof IFilter] || null);
 		})}

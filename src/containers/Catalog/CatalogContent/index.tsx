@@ -1,4 +1,5 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { config } from '../../../config';
 import { baseDataAPI } from '../../../services/baseDataService';
@@ -22,16 +23,23 @@ export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 	const { lang } = useAppSelector(state => state.langReducer);
 	const params = useAppGetProductsForCatalog();
 	const { data, isLoading } = baseDataAPI.useFetchProductsQuery({ id: `?${getParams}${sort}`, length: itemsProduct, start: paginateCount * config.catalog.itemsProduct });
+	const targetRef = useRef<HTMLDivElement>(null);
+	const paramsUrl = useParams();
 
 	useEffect(() => {
-		setGetParams(params);
-	}, [dispatch, params]);
+		if(!paramsUrl['*']) {
+			setGetParams('');
+		} else {
+			setGetParams(params);
+		}
+	}, [dispatch, params, paramsUrl]);
 
 	const handleClick = (param1: string, param2: string) => {
 		setSort(`&${param1}=${param2}`);
 	}
 
 	const handlePageClick = (event: { selected: number; }) => {
+		targetRef.current?.scrollIntoView({ behavior: 'smooth' });
 		setPaginateCount(event.selected);
 		setItemsProduct(config.catalog.itemsProduct);
 	};
@@ -45,6 +53,7 @@ export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 			<FilterByCar openFilter={ openFilter } handleClick={ handleClick } />
 			<SelectionByCar />
 			<FilterActive className='hidden lg:flex'/>
+			<div ref={ targetRef }></div>
 			<Spinner height='h-60' show={isLoading} size='large'>
 				{data?.result ? <ProductList
 					classnames='grid-cols-1 sm:grid-cols-2 md:grid-cols-3'

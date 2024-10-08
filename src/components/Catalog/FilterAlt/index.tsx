@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { useAppSelector, useAppTranslation } from '../../../hooks';
@@ -53,18 +52,16 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 		modelYear,
 		modelKit
 	}) => {
-	const [searchParams] = useSearchParams();
 	const { section, subsection, filter } = useAppSelector(state => state.filterReducer);
 	const { filter: filterCar } = useAppSelector(state => state.filterCarReducer);
 	const { lang } = useAppSelector(state => state.langReducer);
 	const t = useAppTranslation();
 	const country = lang === Language.UA ? data?.country : data?.country_ru;
-	const vehicleType = searchParams.get('vehicle_type');
 	const cargoTypes = ['3', '4', '5', '6'];
 	const industrialTypes = ['9', '10', '11'];
 
-	const appointmentCargoShow = vehicleType && cargoTypes.includes(vehicleType);
-	const appointmentIndustrialShow = vehicleType && industrialTypes.includes(vehicleType);
+	const appointmentCargoShow = filter.vehicle_type && cargoTypes.includes(filter.vehicle_type);
+	const appointmentIndustrialShow = filter.vehicle_type && industrialTypes.includes(filter.vehicle_type);
 
 	const renderSelect = (
 		name: string,
@@ -279,7 +276,7 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 					)}
 				</>}
 				{section === Section.Tires && <>
-					{renderSelect(
+					{!appointmentCargoShow && !appointmentIndustrialShow && renderSelect(
 						'sezon',
 						'Сезон',
 						'gray',

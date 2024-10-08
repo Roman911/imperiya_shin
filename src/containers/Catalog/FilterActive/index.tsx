@@ -28,6 +28,8 @@ export const FilterActive: FC<FilterActiveProps> = ({ className }) => {
 		if(params['*']) {
 			const url = parseUrl(params['*']);
 			setSearchParams(url);
+		} else {
+			setSearchParams(undefined);
 		}
 	}, [params]);
 

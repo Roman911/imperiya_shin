@@ -41,7 +41,6 @@ export const Catalog = () => {
 			const url = parseUrl(params['*']);
 			dispatch(setParams(url));
 		}
-
 	}, [dispatch, params]);
 
 	const path = [
