@@ -27,7 +27,7 @@ export const TopBrands = () => {
 		<div className='mt-24'>
 			<div className='grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 justify-items-center'>
 				{images.map((item, index) => (
-					<Link to={`/catalog/tires?brand=${item.link}`} key={index} className=''>
+					<Link to={`/catalog/tires/b-${item.link}`} key={index} className=''>
 						<img src={ item.img } alt='' />
 					</Link>
 				))}

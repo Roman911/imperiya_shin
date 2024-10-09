@@ -127,7 +127,7 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 				{renderTab(Section.Tires)}
 				{renderTab(Section.Disks)}
 			</div>}
-			<div className='relative h-full px-4 py-4 lg:py-7 bg-white border border-gray-200 overflow-y-auto'>
+			<div className='relative h-full px-4 py-4 lg:py-7 bg-white border border-gray-200 overflow-y-auto md:overflow-y-visible'>
 				<SubmitFloat element={element} btnTitle={t('to apply', true) } setElement={ setElement } />
 				<FilterActive className='flex lg:hidden' />
 				{section !== Section.Battery && <div className='flex lg:justify-between gap-x-5'>

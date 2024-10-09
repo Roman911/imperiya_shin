@@ -62,12 +62,15 @@ export const ActionsBlockComponent: FC<ActionsBlockProps> = ({ className, isBook
 				role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
 				<div className="py-1 text-black" role="none">
 					{telephones.map((item, index) => {
-						return <div key={index} className='flex items-center my-3'>
-							<img src={phoneLogos[item.logo]} alt={item.logo + '-logo'}/>
-							<a href={`tel:${item.url}`} className='ml-2.5 font-medium'>
-								{item.phone}
-							</a>
-						</div>
+						if(item.phone) {
+							return <div key={index} className='flex items-center my-3'>
+								<img src={phoneLogos[item.logo]} alt={item.logo + '-logo'}/>
+								<a href={`tel:${item.url}`} className='ml-2.5 font-medium'>
+									{item.phone}
+								</a>
+							</div>
+						}
+						return null;
 					})}
 				</div>
 			</div>
