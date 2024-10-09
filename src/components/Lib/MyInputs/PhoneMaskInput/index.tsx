@@ -17,7 +17,7 @@ export const PhoneMaskInput: FC<PhoneMaskInputProps> = ({ isSupport }) => {
 		control={control}
 		render={({field}) => {
 			return <>
-				<div className={classNames('relative', { 'h-12 w-80 mt-2': isSupport, 'min-w-[200px] h-14 mt-3 w-full': !isSupport })}>
+				<div className={classNames('relative', { 'h-12 w-60 md:w-80 mt-2': isSupport, 'min-w-[200px] h-14 mt-3 w-full': !isSupport })}>
 					<IMaskInput
 						className={classNames(
 							'peer h-full w-full rounded-md border px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50',

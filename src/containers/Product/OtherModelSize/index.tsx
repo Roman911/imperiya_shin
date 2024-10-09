@@ -51,6 +51,7 @@ export const OtherModelSize: FC<OtherModelSizeProps> = ({ section, brand, model,
 			<div className='mt-8 grid grid-cols-1 md:grid-cols-3 gap-5'>
 				{ data?.data.products.map(item => {
 					return <ItemRender
+						key={ item.brand }
 						b={ item.brand }
 						m={ item.model_id }
 						modelName={ item.model.name }

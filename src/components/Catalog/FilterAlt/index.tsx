@@ -98,8 +98,7 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 	);
 
 	const renderTab = (value: Section) => {
-		const typeproduct = value === Section.Disks ? '?typeproduct=3' : '';
-		const url = `/catalog/${value}${typeproduct}`;
+		const url = `/catalog/${value}`;
 
 		return (
 			<Link

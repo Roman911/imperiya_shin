@@ -21,6 +21,7 @@ import { Section } from '../../models/filter';
 import { SimilarProducts } from './SimilarProducts';
 import { RecentlyViewed } from './RecentlyViewed';
 import { Bookmarks } from './Bookmarks';
+import {FilterAlt} from "../Catalog/FilterAlt";
 
 const scrollToTop = () => {
 	window.scrollTo({
@@ -30,6 +31,7 @@ const scrollToTop = () => {
 };
 
 export const Product = () => {
+	const [ isOpenFilter, setOpenFilter ] = useState(false);
 	const [isModalActive, setModalActive] = useState(false);
 	const [offerId, setOfferId] = useState(0);
 	const [quantity, setQuantity] = useState(1);
@@ -129,31 +131,43 @@ export const Product = () => {
 		addToStorage('reducerCart', cart);
 	}
 
+	const closeFilter = () => {
+		setOpenFilter(false);
+	}
+
+	// const openFilter = () => {
+	// 	setOpenFilter(true);
+	// }
+
 	return <div>
 		<Helmet>
 			<title>{data?.data.full_name}</title>
 			<meta name='description' content={data?.data.full_name}/>
 		</Helmet>
-		<LayoutWrapper>
+		<LayoutWrapper homePage={ true }>
 			<Breadcrumbs path={path}/>
-			<ProductComponent
-				data={ data }
-				quantity={ quantity }
-				handleModalOpen={ handleModalOpen }
-				isLoading={ isLoading }
-				offerId={ offerId }
-				onChange={ onChange }
-				handleClick={ handleClick }
-				setQuantity={ setQuantity }
-				onSubmit={ onSubmit }
-				section={ section }
-			/>
-
+			<div className='py-5 lg:flex'>
+				<FilterAlt isOpenFilter={ isOpenFilter } closeFilter={ closeFilter } />
+				<ProductComponent
+					data={data}
+					quantity={quantity}
+					handleModalOpen={handleModalOpen}
+					isLoading={isLoading}
+					offerId={offerId}
+					onChange={onChange}
+					handleClick={handleClick}
+					setQuantity={setQuantity}
+					onSubmit={onSubmit}
+					section={section}
+				/>
+			</div>
 		</LayoutWrapper>
 		<div className='container mx-auto'>
-			<SimilarProducts id={ id.join('&') } />
-			<RecentlyViewed />
-			<Bookmarks />
+			<div className='lg:ml-72 lg:mr-10'>
+				<SimilarProducts id={ id.join('&') } />
+				<RecentlyViewed />
+				<Bookmarks />
+			</div>
 		</div>
 		<Support />
 		{isModalActive && (
