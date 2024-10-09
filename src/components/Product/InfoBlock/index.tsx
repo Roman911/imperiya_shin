@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { FC, memo } from 'react';
 import DOMPurify from 'dompurify';
 
 import { Link } from '../../../lib';
@@ -12,7 +12,11 @@ import guaranteeIcon from '../../../assets/icons/guarantee-icon.svg';
 import returnIcon from '../../../assets/icons/return-icon.svg';
 import calendarIcon from '../../../assets/icons/calendar-icon.svg';
 
-export const InfoBlock = () => {
+interface InfoBlockProps {
+	handleModalOpen: (type: 'QuickOrder' | 'OnlineInstallment' | 'DeliveryCalculation' | 'Callback' | 'AddAsk') => void
+}
+
+export const InfoBlock: FC<InfoBlockProps> = ({ handleModalOpen }) => {
 	const { lang } = useAppSelector(state => state.langReducer);
 	const { settings } = useAppSelector(state => state.settingsReducer);
 	const t = useAppTranslation();
@@ -29,19 +33,19 @@ export const InfoBlock = () => {
 	return <div className='lg:w-64'>
 		<div className=' bg-white rounded-sm border border-gray-200 px-5'>
 			<div className='border-b border-gray-200 pb-4'>
-				<Link to='/guarantee' className='mt-4 flex items-center gap-x-2.5 font-medium hover:text-blue-500 group'>
+				<Link to='/page/garantiya-ta-povernennya' className='mt-4 flex items-center gap-x-2.5 font-medium hover:text-blue-500 group'>
 					<img src={guaranteeIcon} alt=""/>
 					<span className='underline'>{ t('guarantee', true) }</span>
 				</Link>
-				<Link to='/payment' className='mt-4 flex items-center gap-x-2.5 font-medium hover:text-blue-500 group'>
+				<Link to='/page/payment' className='mt-4 flex items-center gap-x-2.5 font-medium hover:text-blue-500 group'>
 					<img src={paymentIcon} alt=""/>
 					<span className='underline'>Оплата</span>
 				</Link>
-				<Link to='/payment' className='mt-4 flex items-center gap-x-2.5 font-medium hover:text-blue-500 group'>
+				<button onClick={() => handleModalOpen('OnlineInstallment')} className='mt-4 flex items-center gap-x-2.5 font-medium hover:text-blue-500 group'>
 					<img src={payment2Icon} alt=""/>
 					<span className='underline'>{ t('payment in installments', true) }</span>
-				</Link>
-				<Link to='/refund' className='mt-4 flex items-center gap-x-2.5 font-medium hover:text-blue-500 group'>
+				</button>
+				<Link to='/page/garantiya-ta-povernennya' className='mt-4 flex items-center gap-x-2.5 font-medium hover:text-blue-500 group'>
 					<img src={returnIcon} alt=""/>
 					<span className='underline'>{t('refund', true)}</span>
 				</Link>

@@ -161,7 +161,6 @@ export const Product = () => {
 					<QuickOrder offerId={ offerId } quantity={ quantity } offerItem={ data?.data?.offers?.find(item => item.offer_id === offerId) } setModalActive={ setModalActive } />}
 				{ modalType === 'OnlineInstallment' && <OnlineInstallment /> }
 				{ modalType === 'DeliveryCalculation' && <DeliveryCalculation offer_id={ data?.data.id } handleModalClose={ handleModalClose } /> }
-				{ modalType === 'OnlineInstallment' && <OnlineInstallment /> }
 				{ modalType === 'Callback' && <Callback productId={ data?.data?.offers?.find(item => item.offer_id === offerId)?.product_id } quantity={ quantity } /> }
 				{ modalType === 'AddAsk' && <AddAskModal productId={ data?.data?.offers?.find(item => item.offer_id === offerId)?.product_id } name={ data?.data.full_name } /> }
 			</Modal>

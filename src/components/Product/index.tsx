@@ -129,12 +129,14 @@ export const ProductComponent: FC<ProductComponentProps> = (
 							<div className='mt-7 md:mt-11'>
 								<div className='flex items-end'>
 									<div className='mr-2.5 text-xl font-medium'>{t('from')}</div>
-									<div className='text-4xl font-bold mr-2.5'>{min_price} ₴</div>
-									<div className='text-xl font-medium'>/шт.</div>
+									<div className='text-4xl font-bold mr-2.5'>{min_price}</div>
+									<div className='text-xl font-medium'>грн/шт.</div>
 								</div>
-								<div className='mt-3 text-gray-500'>{t('from')} <span className='font-bold'>{min_price * 4}</span> за 4
-									шт.
-								</div>
+								{section !== Section.Battery && <div className='mt-3 text-gray-500'>
+									{t('from')}
+									<span className='font-bold'> {min_price * 4} ₴ </span>
+									за 4 шт.
+								</div>}
 							</div>
 							<div className='offers mt-7'>
 								{offers.map(item => {
@@ -185,19 +187,21 @@ export const ProductComponent: FC<ProductComponentProps> = (
 					</button>
 				</div>
 			</div>
-			<div className='my-10 p-8 bg-[#FDFEFF] border border-gray-200 rounded-sm'>
+			{section !== Section.Battery && <div className='my-10 p-8 bg-[#FDFEFF] border border-gray-200 rounded-sm'>
 				<div className='flex items-center gap-2'>
 					<img src={warningIcon} alt=""/>
 					<h4 className='text-lg font-bold'>
-						{ lang === Language.UA ? 'Зверніть увагу!' : 'Обратите внимание!' }
+						{lang === Language.UA ? 'Зверніть увагу!' : 'Обратите внимание!'}
 					</h4>
 				</div>
-				{ lang === Language.UA ?
-					<p className='text-sm mt-5'>При покупці <strong>менше 4-х одиниць</strong> товару вартість може бути вище зазначеної. Бувають випадки, коли у нас немає можливості продати менше 4-х одиниць товару.</p> :
-					<p className='text-sm mt-5'>При покупке <strong>менее 4-х единиц</strong> товара стоимость может быть выше указанной. Бывают случаи, когда у нас нет возможности продать менее 4 единиц товара.</p> }
-			</div>
-			<CharacteristicsBlock data={ data } />
+				{lang === Language.UA ?
+					<p className='text-sm mt-5'>При покупці <strong>менше 4-х одиниць</strong> товару вартість може бути вище
+						зазначеної. Бувають випадки, коли у нас немає можливості продати менше 4-х одиниць товару.</p> :
+					<p className='text-sm mt-5'>При покупке <strong>менее 4-х единиц</strong> товара стоимость может быть выше
+						указанной. Бывают случаи, когда у нас нет возможности продать менее 4 единиц товара.</p>}
+			</div>}
+			<CharacteristicsBlock data={data}/>
 		</div>
-		<InfoBlock/>
+		<InfoBlock handleModalOpen={ handleModalOpen } />
 	</section>
 };

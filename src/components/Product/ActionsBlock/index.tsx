@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { Link } from '../../../lib';
 import { CalculatorIcon, HeartIcon, LibraIcon, MailIcon, PhoneCircuitIcon, ShareIcon } from '../../Lib/Icons';
-import { useAppSelector } from '../../../hooks';
+import {useAppSelector, useClickOutside} from '../../../hooks';
 
 import vodafoneLogo from '../../../assets/vodafone-logo.png';
 import kievstarLogo from '../../../assets/kievstar-logo.png';
@@ -29,10 +29,16 @@ interface ActionsBlockProps {
 
 export const ActionsBlockComponent: FC<ActionsBlockProps> = ({ className, isBookmarks, isComparison, handleClickBookmarks, handleClickComparison, openModal }) => {
 	const [ showOptions, setShowOptions ] = useState<boolean>(false);
+	const tooltipRef = useRef<HTMLDivElement>(null);
 	const { lang } = useAppSelector(state => state.langReducer);
 	const { settings } = useAppSelector(state => state.settingsReducer);
 	const url = window.location.href;
-	const tooltipRef = useRef<HTMLDivElement>(null);
+
+	const closeFilter = () => {
+		setShowOptions(false);
+	}
+
+	useClickOutside({ ref: tooltipRef, open: showOptions, onClose: closeFilter });
 
 	const telephones: { phone: string; url: string; logo: "vodafone" | "kievstar" | "lifecell"; }[] = [
 		{ phone: settings[lang].config_telephone_vodafone, url: settings[lang].config_telephone_vodafone_url, logo: 'vodafone' },
@@ -56,7 +62,7 @@ export const ActionsBlockComponent: FC<ActionsBlockProps> = ({ className, isBook
 			<div
 				ref={tooltipRef}
 				className={
-					classNames('absolute left-0 lg:left-auto lg:-right-10 z-10 mt-2 origin-top-right border border-gray-200 bg-white shadow-lg px-5 rounded-sm w-48 py-2',
+					classNames('absolute left-0 z-10 mt-2 origin-top-right border border-gray-200 bg-white shadow-lg px-5 rounded-sm w-48 py-2',
 						{hidden: !showOptions}
 					)}
 				role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
