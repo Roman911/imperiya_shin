@@ -148,6 +148,7 @@ export const Product = () => {
 				onSubmit={ onSubmit }
 				section={ section }
 			/>
+
 		</LayoutWrapper>
 		<div className='container mx-auto'>
 			<SimilarProducts id={ id.join('&') } />

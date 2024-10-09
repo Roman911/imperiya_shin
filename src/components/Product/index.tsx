@@ -13,6 +13,7 @@ import { CartIcon, MarkerIcon, BusIcon, CargoIcon, CarIcon, MotorcyclesIcon, Spe
 import truckIcon from '../../assets/icons/truck-icon.svg';
 import { Language } from '../../models/language';
 import { Section } from '../../models/filter';
+import { OtherModelSize } from '../../containers/Product/OtherModelSize';
 import type { ProductProps } from '../../models/product';
 
 import noPhoto from '../../assets/no-photo.jpg';
@@ -201,6 +202,9 @@ export const ProductComponent: FC<ProductComponentProps> = (
 						указанной. Бывают случаи, когда у нас нет возможности продать менее 4 единиц товара.</p>}
 			</div>}
 			<CharacteristicsBlock data={data}/>
+			{ section !== Section.Battery &&
+				<OtherModelSize section={ section } brand={ data?.data.brand.id } model={ data?.data.model.id } vehicle_type={ data?.data.offer_group.vehicle_type } />
+			}
 		</div>
 		<InfoBlock handleModalOpen={ handleModalOpen } />
 	</section>
