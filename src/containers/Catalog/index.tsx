@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
+import { baseDataAPI } from '../../services/baseDataService';
+import { SeasonTransform } from '../../lib';
 import { useAppDispatch, useAppSelector, useAppTranslation } from '../../hooks';
 import { setParams, changeSection, resetFilter } from '../../store/reducers/filterSlice';
 
@@ -14,9 +16,26 @@ import { Support } from '../Layout/Support';
 import { Section } from '../../models/filter';
 import { FetchBrand } from './FetchBrand';
 import { FetchModel } from './FetchModel';
+import { Title } from '../../components/Lib';
+import { Language } from '../../models/language';
+
+interface UrlParams {
+	sezon?: string;
+	brand?: string;
+	width?: string;
+	height?: string;
+	radius?: string;
+}
+
+interface Brand {
+	label: string;
+	value: number;
+}
 
 export const Catalog = () => {
 	const [ isOpenFilter, setOpenFilter ] = useState(false);
+	const [ urlParams, setUrlParams ] = useState<UrlParams>({});
+	const { data } = baseDataAPI.useFetchBaseDataQuery('');
 	const { settings } = useAppSelector(state => state.settingsReducer);
 	const { filter, section } = useAppSelector(state => state.filterReducer);
 	const { brand, model } = useAppSelector(state => state.brandAliasReducer);
@@ -24,6 +43,14 @@ export const Catalog = () => {
 	const t = useAppTranslation();
 	const dispatch = useAppDispatch();
 	const params = useParams();
+	const brandParam: Brand | null = urlParams.brand
+		? section === Section.Tires
+			? data?.brand.find(item => item.value === +urlParams.brand!) ?? null
+			: section === Section.Disks
+				? data?.brand_disc.find(item => item.value === +urlParams.brand!) ?? null
+				: null
+		: null;
+	const title = `${urlParams.sezon ? t(SeasonTransform(urlParams.sezon)?.name || '', true) : ''} ${t(section, !(urlParams.sezon && urlParams.brand))} ${brandParam?.label ?? ''} ${urlParams.width ?? ''}${urlParams.width && urlParams.height ? '/' : ''}${urlParams.height ?? ''} ${urlParams.radius ? 'R' + urlParams.radius : ''}`;
 
 	useEffect(() => {
 		dispatch(resetFilter());
@@ -38,7 +65,10 @@ export const Catalog = () => {
 	useEffect(() => {
 		if(params['*']) {
 			const url = parseUrl(params['*']);
+			setUrlParams(url);
 			dispatch(setParams(url));
+		} else {
+			setUrlParams({});
 		}
 	}, [dispatch, params]);
 
@@ -46,9 +76,39 @@ export const Catalog = () => {
 		{
 			id: 1,
 			title: t(section, true),
-			url: '/catalog/tires/'
-		}
-	]
+			url: `/catalog/${section}/`,
+		},
+		{
+			id: 2,
+			title: `${t(SeasonTransform(urlParams.sezon ?? '')?.name || '', true)} ${t(section)}`,
+			url: urlParams.sezon ? `/catalog/${section}/s-${urlParams.sezon}` : undefined,
+		},
+		{
+			id: 3,
+			title: `${typeof brandParam === 'object' && brandParam?.label ? brandParam.label : ''}`,
+			url: urlParams.brand ? `/catalog/${section}/b-${urlParams.brand}` : undefined,
+		},
+		{
+			id: 4,
+			title: `${t('width', true)} ${urlParams.width}`,
+			url: urlParams.width && `/catalog/${section}/w-${urlParams.width}`,
+		},
+		{
+			id: 5,
+			title: `${t('height', true)} ${urlParams.height}`,
+			url: urlParams.height && `/catalog/${section}/h-${urlParams.height}`,
+		},
+		{
+			id: 6,
+			title: `R${urlParams.radius}`,
+			url: urlParams.radius && `/catalog/${section}/d-${urlParams.radius}`,
+		},
+		{
+			id: 7,
+			title: `${title}`,
+			url: Object.keys(urlParams).length !== 0 && `/catalog/${section}/`,
+		},
+	];
 
 	const closeFilter = () => {
 		setOpenFilter(false);
@@ -58,7 +118,7 @@ export const Catalog = () => {
 		setOpenFilter(true);
 	}
 
-	const titleDefault = `${t(section, true)} | ${settings.ua.config_name}`;
+	const titleDefault = `${title} - ${ lang === Language.UA ? 'Купити гуму за найкращою ціною в Україні' : 'Купить резину по лучшей цене в Украине' } | ${settings.ua.config_name}`;
 
 	return <LayoutWrapper>
 		{ (filter?.model_id && model) ? <FetchModel model={ model } lang={ lang } /> :
@@ -69,6 +129,7 @@ export const Catalog = () => {
 				</Helmet>
 		}
 		<Breadcrumbs path={path}/>
+		<Title title={ title } />
 		<div className='py-5 lg:flex'>
 			<FilterAlt isOpenFilter={ isOpenFilter } closeFilter={ closeFilter } />
 			<CatalogContent openFilter={ openFilter } />

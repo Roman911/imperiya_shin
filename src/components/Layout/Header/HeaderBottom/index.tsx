@@ -53,7 +53,7 @@ export const HeaderBottom = () => {
 			})}
 			<div
 				ref={filterRef}
-				className={classNames('absolute left-0 right-0 top-14 z-20 flex w-full', {'hidden': !open})}>
+				className={classNames('absolute left-0 right-0 top-14 z-30 flex w-full', {'hidden': !open})}>
 				<div className='w-full overflow-hidden bg-white shadow-lg ring-1 ring-gray-900/5 pt-8 text-black font-normal'>
 					<div className='flex-auto max-w-7xl grid grid-cols-4 mx-auto px-4'>
 						{section === 'tires' ? <CarTireFilter closeFilter={closeFilter}/> :

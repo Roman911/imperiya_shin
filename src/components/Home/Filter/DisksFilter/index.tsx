@@ -21,6 +21,7 @@ export const DisksFilter: FC<DisksFilterProps> = ({ filters, onChange, onSubmit,
 						label={item.label}
 						options={item.options}
 						onChange={onChange}
+						focusValue={item.focusValue}
 					/>
 				</div>
 			})}

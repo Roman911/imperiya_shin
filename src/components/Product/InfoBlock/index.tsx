@@ -30,8 +30,8 @@ export const InfoBlock: FC<InfoBlockProps> = ({ handleModalOpen }) => {
 		);
 	});
 
-	return <div className='lg:w-64'>
-		<div className=' bg-white rounded-sm border border-gray-200 px-5'>
+	return <div className='2xl:w-64'>
+		<div className='grid sm:grid-cols-3 2xl:grid-cols-1 bg-white rounded-sm border border-gray-200 px-5'>
 			<div className='border-b border-gray-200 pb-4'>
 				<Link to='/page/garantiya-ta-povernennya' className='mt-4 flex items-center gap-x-2.5 font-medium hover:text-blue-500 group'>
 					<img src={guaranteeIcon} alt=""/>

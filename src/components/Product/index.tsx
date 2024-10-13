@@ -88,7 +88,7 @@ export const ProductComponent: FC<ProductComponentProps> = (
 
 	const averageScore = review && review.length > 0 ? commentsAvgRateSum / review.length : undefined;
 
-	return <section className='product-page flex flex-col lg:flex-row justify-between gap-1 xl:gap-x-6 mt-10'>
+	return <section className='product-page flex flex-col 2xl:flex-row justify-between gap-1 2xl:gap-x-6 mt-10'>
 		<div className='max-w-[900px] flex-1 pr-3 xl:pr-5'>
 			<Spinner height='h-96' show={ isLoading }>
 				{data?.result &&
@@ -117,8 +117,8 @@ export const ProductComponent: FC<ProductComponentProps> = (
 						<ActionsBlock className='flex md:hidden' id={ id } handleModalOpen={ handleModalOpen } section={ section } />
 						<div className='flex-1 md:ml-6 xl:ml-20'>
 							<h1 className='text-2xl font-bold mt-8 md:mt-0'>{ full_name }</h1>
-							<div className='flex justify-between items-center mt-5'>
-								<div>
+							<div className='flex justify-between flex-col xl:flex-row xl:items-center mt-5'>
+								<div className='mb-4 xl:mb-0'>
 									<div className='text-[15px] text-gray-500 mr-5 max-w-max mb-2'>Артикул: {id}</div>
 									<Rating
 										commentsCount={review ? (review.length > 0 ? review.length : undefined) : undefined}
@@ -203,7 +203,7 @@ export const ProductComponent: FC<ProductComponentProps> = (
 			</div>}
 			<CharacteristicsBlock data={data}/>
 			{ section !== Section.Battery &&
-				<OtherModelSize section={ section } brand={ data?.data.brand.id } model={ data?.data.model.id } vehicle_type={ data?.data.offer_group.vehicle_type } />
+				<OtherModelSize section={ section } diameter={ data?.data.offer_group.diameter } brand={ data?.data.brand.id } model={ data?.data.model.id } vehicle_type={ data?.data.offer_group.vehicle_type } />
 			}
 		</div>
 		<InfoBlock handleModalOpen={ handleModalOpen } />

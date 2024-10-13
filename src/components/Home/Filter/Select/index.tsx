@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import Select, { SingleValue, StylesConfig } from 'react-select';
+import { FC, useCallback, useRef } from 'react';
+import Select, { GroupBase, SelectInstance, SingleValue, StylesConfig } from 'react-select';
 
 import { useAppSelector } from '../../../../hooks';
 import { Language } from '../../../../models/language';
@@ -9,6 +9,7 @@ interface SelectProps {
 	name: string
 	label: string
 	isDisabled?: boolean
+	focusValue?: string
 	options: Options[] | undefined
 	onChange: (name: string, value: number | string | undefined) => void
 }
@@ -73,20 +74,42 @@ const colourStyles: StylesConfig<Options | undefined, IsMulti> = {
 	},
 };
 
-export const MySelect: FC<SelectProps> = ({ name, label, options = [], isDisabled = false, onChange }) => {
+export const MySelect: FC<SelectProps> = ({ name, label, options = [], focusValue, isDisabled = false, onChange }) => {
 	const { lang } = useAppSelector(state => state.langReducer);
+	const ref = useRef<SelectInstance<Options, IsMulti, GroupBase<Options>> | null>(null);
+
+	const onMenuOpen = useCallback( () => {
+		if (focusValue) {
+			setTimeout(() => {
+				const selectedEl = ref.current?.menuListRef;
+				const cont = selectedEl?.querySelectorAll('.MyDropdown__option') || [];
+
+				// Find the index of the element with the matching textContent
+				const elIndex = Array.from(cont).findIndex(el => el.textContent === focusValue);
+
+				if (elIndex !== -1) {
+					// Scroll to the found option
+					selectedEl?.scroll(0, elIndex * 40);
+				}
+			}, 15);  // Adjusted delay
+		}
+	}, [focusValue]);
 
 	const handleChange = (value: SingleValue<Options | undefined>) => {
 		onChange(name, value?.value);
 	}
-
+	
 	return <Select
 		options={ options }
+		ref={ ref as never }
+		onMenuOpen={ onMenuOpen }
 		styles={ colourStyles }
 		placeholder={ label }
 		isClearable={ true }
 		isDisabled={ isDisabled }
 		onChange={ handleChange }
+		className='MyDropdown'
+		classNamePrefix='MyDropdown'
 		noOptionsMessage={ () => lang === Language.UA ? 'Збігів не знайдено' : 'Совпадений не найдено' }
 	/>
-}
+};

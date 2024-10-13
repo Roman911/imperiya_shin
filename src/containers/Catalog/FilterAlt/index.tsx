@@ -10,9 +10,10 @@ import { setCarFilter } from '../../../store/reducers/filterCarSlice';
 interface FilterAltProps {
 	isOpenFilter: boolean
 	closeFilter: () => void
+	isProduct?: boolean
 }
 
-export const FilterAlt: FC<FilterAltProps> = ({ isOpenFilter, closeFilter }) => {
+export const FilterAlt: FC<FilterAltProps> = ({ isProduct, isOpenFilter, closeFilter }) => {
 	const [ element, setElement ] = useState<HTMLElement | null>(null);
 	const [ searchParams, setSearchParams ] = useState('');
 	const { filter, isSend } = useAppSelector(state => state.filterCarReducer);
@@ -71,6 +72,7 @@ export const FilterAlt: FC<FilterAltProps> = ({ isOpenFilter, closeFilter }) => 
 	}
 
 	return <FilterAltComponent
+		isProduct={ isProduct }
 		element={ element }
 		data={ data }
 		fildterData={ fildterData }

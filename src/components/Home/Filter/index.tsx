@@ -17,7 +17,7 @@ import type { OnChange } from '../../../models/filterHomePage';
 interface IFilterProps {
 	section: Section
 	data: {
-		focusValue?: number | string
+		focusValue?: string
 		label: string
 		name: string
 		options: Options[] | undefined

@@ -18,10 +18,9 @@ import { ProductComponent } from '../../components/Product';
 import { Support } from '../Layout/Support';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Section } from '../../models/filter';
-import { SimilarProducts } from './SimilarProducts';
-import { RecentlyViewed } from './RecentlyViewed';
-import { Bookmarks } from './Bookmarks';
-import {FilterAlt} from "../Catalog/FilterAlt";
+import { FilterAlt } from '../Catalog/FilterAlt';
+import { OthersProducts } from '../../components/Product/OthersProduct';
+import {FilterBtn} from "../../components/Catalog/FilterByCar/FilterBtn";
 
 const scrollToTop = () => {
 	window.scrollTo({
@@ -47,6 +46,10 @@ export const Product = () => {
 	const pushIfExists = (key: string, value: string | number | undefined) => {
 		if (value) id.push(`${key}=${value}`);
 	};
+
+	useEffect(() => {
+		dispatch(changeSection(section));
+	}, [dispatch, section]);
 
 	if (section === Section.Disks) {
 		pushIfExists('width', data?.data.offer_group.width);
@@ -135,9 +138,9 @@ export const Product = () => {
 		setOpenFilter(false);
 	}
 
-	// const openFilter = () => {
-	// 	setOpenFilter(true);
-	// }
+	const openFilter = () => {
+		setOpenFilter(true);
+	}
 
 	return <div>
 		<Helmet>
@@ -147,7 +150,8 @@ export const Product = () => {
 		<LayoutWrapper homePage={ true }>
 			<Breadcrumbs path={path}/>
 			<div className='py-5 lg:flex'>
-				<FilterAlt isOpenFilter={ isOpenFilter } closeFilter={ closeFilter } />
+				<FilterBtn openFilter={ openFilter } title={ t('filters', true) } />
+				<FilterAlt isOpenFilter={ isOpenFilter } closeFilter={ closeFilter } isProduct={ true } />
 				<ProductComponent
 					data={data}
 					quantity={quantity}
@@ -162,13 +166,7 @@ export const Product = () => {
 				/>
 			</div>
 		</LayoutWrapper>
-		<div className='container mx-auto'>
-			<div className='lg:ml-72 lg:mr-10'>
-				<SimilarProducts id={ id.join('&') } />
-				<RecentlyViewed />
-				<Bookmarks />
-			</div>
-		</div>
+		<OthersProducts id={ id.join('&') } />
 		<Support />
 		{isModalActive && (
 			<Modal onClose={ handleModalClose } size={modalType === 'OnlineInstallment' ? 'max-w-6xl' : 'sm:max-w-lg'}>

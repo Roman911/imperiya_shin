@@ -1,4 +1,4 @@
-import { FC, useState, MouseEvent, ChangeEvent } from 'react';
+import { FC, useCallback, useState, MouseEvent, ChangeEvent, useRef } from 'react';
 import classNames from 'classnames';
 
 import './index.scss';
@@ -12,6 +12,7 @@ interface SelectProps {
 	variant: 'white' | 'gray'
 	search?: boolean
 	options: Array<Options>
+	focusValue: string | false
 	onChange: (name: string, value: number | string | undefined | null, element: HTMLElement) => void
 	filterValue?: null | number | string
 	valueStudded?: null | number | string
@@ -32,12 +33,29 @@ export const Select: FC<SelectProps> = (
 		search,
 		options,
 		onChange,
+		focusValue,
 		filterValue,
 		valueStudded,
 		filterOther
 	}) => {
 	const [ open, setOpen ] = useState( false );
 	const [ eventSearch, setEventSearch ] = useState('');
+	const ref = useRef<HTMLUListElement | null>(null);
+
+	const handleClickOpen = useCallback(() => {
+		setOpen(prev => !prev);
+
+		if (focusValue && ref.current) {
+			const cont = ref.current.querySelectorAll('li');
+			const elIndex = Array.from(cont).findIndex(el => el.textContent === focusValue);
+
+			if (elIndex !== -1) {
+				setTimeout(() => {
+					ref.current?.scroll(0, elIndex * 41);
+				}, 15);
+			}
+		}
+	}, [focusValue]);
 
 	const handleClick = (event: MouseEvent<HTMLElement> | ChangeEvent<HTMLElement>, value: number | string | undefined, isStudded?: boolean) => {
 		const newValue = filterValue === value ? null : value;
@@ -61,7 +79,7 @@ export const Select: FC<SelectProps> = (
 
 	return <div className={classNames('relative mt-2 rounded-sm', { 'bg-white': variant === 'white', 'bg-zinc-200': variant === 'gray' })} >
 		<button type="button"
-						onClick={() => setOpen(prev => !prev)}
+						onClick={() => handleClickOpen()}
 						className={classNames('relative w-full cursor-default py-3 pr-10 text-left focus:outline-none', {'font-bold pl-1.5': variant === 'white', 'pl-3.5': variant === 'gray'})}
 						aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
       <span className="flex items-center">
@@ -71,11 +89,11 @@ export const Select: FC<SelectProps> = (
         <ChevronDownIcon className={ classNames({ 'stroke-black': variant === 'white', 'stroke-gray-500': variant === 'gray' }) } />
       </span>
 		</button>
-		<ul className={
-			classNames('relative item-list max-h-[480px] w-full overflow-auto pb-1 text-base ring-black ring-opacity-5 focus:outline-none sm:text-sm',
-				{ 'hidden': !open, 'pt-12': search, 'pt-1': !search })}
+		{ search && open && <SearchInput value={ eventSearch } handleChange={ handleChange } /> }
+		<ul ref={ ref } className={
+			classNames('relative item-list max-h-[480px] w-full overflow-auto pb-1 pt-1 text-base ring-black ring-opacity-5 focus:outline-none sm:text-sm',
+				{ 'hidden': !open })}
 				tabIndex={-1} role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
-			{ search && <SearchInput value={ eventSearch } handleChange={ handleChange } /> }
 			{options?.filter(i => i.label.toString().toLowerCase().includes(eventSearch)).map(item => {
 				return <li key={ item.value } className="relative cursor-default select-none py-1 pl-2.5 pr-9 text-gray-900" id="listbox-option-0" role="option">
 					<div className="inline-flex items-center">

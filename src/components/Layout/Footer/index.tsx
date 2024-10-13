@@ -1,17 +1,18 @@
-import { config } from '../../../config';
+import DOMPurify from 'dompurify';
 
+import { config } from '../../../config';
 import { baseDataAPI } from '../../../services/baseDataService';
 import { Link } from '../../../lib';
 import { useAppSelector, useAppTranslation } from '../../../hooks';
-import { EmailIcon, FacebookIcon, PhoneIcon, TelegramIcon, ViberIcon } from '../../Lib/Icons';
+import { EmailIcon, FacebookIcon, TelegramIcon, ViberIcon } from '../../Lib/Icons';
+import { linksCatalog } from './linksCatalog';
 
 import kievstarLogo from '../../../assets/kievstar-logo.png';
 import lifecellLogo from '../../../assets/life-logo.png';
 import vodafoneLogo from '../../../assets/vodafone-logo.png';
 
-import { linksCatalog } from './linksCatalog';
-
 import { PhoneLogo } from '../../../models/config';
+import {memo} from "react";
 type IconType = 'telegram' | 'facebook' | 'viber';
 
 const phoneLogos: Record<PhoneLogo, string> = {
@@ -44,6 +45,15 @@ export const Footer = () => {
 		{ phone: settings[lang].config_telephone_life, url: settings[lang].config_telephone_life_url, logo: 'lifecell' },
 	];
 
+	const HtmlContent = memo(({ htmlString }: { htmlString: string }) => {
+		const sanitizedHtml = DOMPurify.sanitize(htmlString);
+		return (
+			<div
+				dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+			/>
+		);
+	});
+
 	return <footer className='bg-black'>
 		<div className='container mx-auto py-16 px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
 			<div>
@@ -67,34 +77,25 @@ export const Footer = () => {
 			<div>
 				<h6 className='text-gray-500 text-sm font-bold'>{t('contacts', true)}</h6>
 				{telephones.map((item, index) => {
-					return <div key={index} className='flex items-center mt-5'>
-						<img src={phoneLogos[item.logo]} alt={item.logo + '-logo'}/>
-						<a href={`tel:${item.url}`} className='ml-2.5 text-sm text-white'>
-							{ item.phone }
-						</a>
-					</div>
+					if(item.phone) {
+						return <div key={index} className='flex items-center mt-5'>
+							<img src={phoneLogos[item.logo]} alt={item.logo + '-logo'}/>
+							<a href={`tel:${item.url}`} className='ml-2.5 text-sm text-white'>
+								{ item.phone }
+							</a>
+						</div>
+					}
 				})}
-				<div className='flex items-center mt-5'>
-					<PhoneIcon className='fill-[#0091E5]'/>
-					<span className='ml-2.5 text-sm text-white'>
-						<a href={`tel:${settings[lang].config_telephone_besk_url}`}>
-							{settings[lang].config_telephone_besk}
-						</a>
-						{' '}({t('free')})
-					</span>
-				</div>
 				<div className='flex items-center mt-5'>
 					<EmailIcon className='fill-white'/>
 					<a href={ `mailto:${settings[lang].config_email}` } className='ml-2.5 text-sm text-white'>
 						{ settings[lang].config_email }
 					</a>
 				</div>
-				{settings[lang].config_address && <>
-					<h6 className='mt-8 text-gray-500 text-sm font-bold'>{t('delivery points', true)}</h6>
-					<p className='text-white block text-sm font-medium mt-2 whitespace-pre-wrap leading-8'>
-						{settings[lang].config_address}
-					</p>
-				</>}
+				<div className='text-white mt-5'>
+					{settings[lang].config_address && <HtmlContent htmlString={settings[lang].config_address}/>}
+					{settings[lang].config_open && <HtmlContent htmlString={settings[lang].config_open}/>}
+				</div>
 			</div>
 			<div>
 				<h6 className='text-gray-500 text-sm font-bold mb-7'>Каталог</h6>

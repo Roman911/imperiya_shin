@@ -18,6 +18,7 @@ export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 	const [ paginateCount, setPaginateCount ] = useState(0);
 	const [ getParams, setGetParams ] = useState('');
 	const [ sort, setSort ] = useState('');
+	const [ moreCount, setMoreCount ] = useState(1);
 	const [ itemsProduct, setItemsProduct ] = useState(config.catalog.itemsProduct);
 	const { lang } = useAppSelector(state => state.langReducer);
 	const params = useAppGetProductsForCatalog();
@@ -35,12 +36,27 @@ export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 
 	const handlePageClick = (event: { selected: number; }) => {
 		targetRef.current?.scrollIntoView({ behavior: 'smooth' });
+		const container = document.querySelector('.paginate');
+		const elements = container?.querySelectorAll('li') || [];
+		for(let i = 0; i < elements.length; i++) {
+			elements[i].classList.remove('selected');
+		}
+		setMoreCount(1);
 		setPaginateCount(event.selected);
 		setItemsProduct(config.catalog.itemsProduct);
 	};
 
 	const onClickShowMore = () => {
+		setMoreCount(prev => prev + 1);
 		setItemsProduct(prevState => prevState + config.catalog.itemsProduct);
+
+		const container = document.querySelector('.paginate');
+		const elements = container?.querySelectorAll('li') || [];
+
+		for(let i = 0; i < moreCount; i++) {
+			const element = Array.from(elements).find(el => el.textContent === `${paginateCount + i + 2}`);
+			element?.classList.add('selected');
+		}
 	}
 
 	return (

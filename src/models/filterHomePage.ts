@@ -1,7 +1,7 @@
 import type { Options } from './baseData';
 
 interface Filters {
-	focusValue?: number | string
+	focusValue?: string
 	label: string
 	name: string
 	options: Options[] | undefined
