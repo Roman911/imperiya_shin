@@ -133,7 +133,7 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 			</div>}
 			<div
 				className='relative h-[calc(100%-50px)] pb-32 lg:pb-4 px-4 pt-4 lg:pt-7 bg-white border border-gray-200 overflow-y-auto md:overflow-y-visible'>
-				<SubmitFloat element={element} btnTitle={t('to apply', true)} setElement={setElement}/>
+				<SubmitFloat element={element} btnTitle={t('to apply', true)} setElement={setElement} offset={isProduct ? 304 : 384} />
 				<FilterActive className='flex lg:hidden'/>
 				{section !== Section.Battery && <div className='flex lg:justify-between gap-x-5'>
 					<button
