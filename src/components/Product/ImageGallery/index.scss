@@ -1,8 +1,7 @@
 @import 'react-image-gallery/styles/scss/image-gallery.scss';
 
-.image-gallery,
-.image-gallery-content {
-	@apply z-50;
+.image-gallery-content.fullscreen {
+	@apply fixed z-50 top-0 left-0 right-0 bottom-0;
 }
 
 .image-gallery-icon {
