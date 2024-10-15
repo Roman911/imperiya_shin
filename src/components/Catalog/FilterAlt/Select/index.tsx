@@ -77,13 +77,13 @@ export const Select: FC<SelectProps> = (
 		setEventSearch(value.toLowerCase());
 	}
 
-	return <div className={classNames('relative mt-2 rounded-sm', { 'bg-white': variant === 'white', 'bg-zinc-200': variant === 'gray' })} >
+	return <div className={classNames('relative mt-2 rounded-sm', { 'bg-white': variant === 'white', 'bg-[#F0F2F5]': variant === 'gray' })} >
 		<button type="button"
 						onClick={() => handleClickOpen()}
 						className={classNames('relative w-full cursor-default py-3 pr-10 text-left focus:outline-none', {'font-bold pl-1.5': variant === 'white', 'pl-3.5': variant === 'gray'})}
 						aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
       <span className="flex items-center">
-        <span className="block truncate">{ label }</span>
+        <span className="block truncate uppercase text-[13px] font-semibold text-gray-500">{ label }</span>
       </span>
 			<span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2.5">
         <ChevronDownIcon className={ classNames({ 'stroke-black': variant === 'white', 'stroke-gray-500': variant === 'gray' }) } />

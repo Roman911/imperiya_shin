@@ -26,6 +26,10 @@ export const CalculatorForTires = () => {
 	}, []);
 
 	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
+	useEffect(() => {
 		const iframe = document.getElementById('tireCalculator') as HTMLIFrameElement | null;
 
 		if (iframe) {

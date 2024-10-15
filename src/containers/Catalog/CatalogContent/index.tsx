@@ -30,6 +30,10 @@ export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 		setGetParams(params);
 	}, [params, paramsUrl]);
 
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	const handleClick = (param1: string, param2: string) => {
 		setSort(`&${param1}=${param2}`);
 	}

@@ -68,6 +68,11 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 	const appointmentCargoShow = filter.vehicle_type && cargoTypes.includes(filter.vehicle_type);
 	const appointmentIndustrialShow = filter.vehicle_type && industrialTypes.includes(filter.vehicle_type);
 
+	const onSubmit = () => {
+		handleSubmit();
+		closeFilter();
+	}
+
 	const renderSelect = (
 		name: string,
 		label: string,
@@ -111,7 +116,7 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 				onClick={() => onClick(value)}
 				className={classNames(
 					'text-sm font-bold uppercase py-3.5 rounded-t-sm border border-slate-200 border-b-0 text-center',
-					{ 'bg-white': section === value, 'bg-slate-200 text-gray-500': section !== value }
+					{ 'bg-white': section === value, 'bg-zinc-200 text-gray-500': section !== value }
 				)}
 			>
 				{ t(value, true) }
@@ -127,7 +132,7 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 			<CloseIcon className='fill-[#B9B9BA] w-7 h-7' />
 		</button>
 		<div className='filter h-screen lg:h-auto w-[calc(100%-70px)] lg:w-64 mr-6 lg:pt-0 bg-white lg:bg-transparent'>
-			{section !== Section.Battery && !isProduct && <div className='filter-tabs grid grid-cols-2 gap-2.5 -mb-[1px]'>
+			{section !== Section.Battery && !isProduct && <div className='relative z-10 filter-tabs grid grid-cols-2 gap-2.5 -mb-[1px]'>
 				{renderTab(Section.Tires)}
 				{renderTab(Section.Disks)}
 			</div>}
@@ -284,11 +289,11 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 					)}
 					{renderSelect(
 						'brand',
-						t('brand', true),
+						t('all brands', true),
 						'gray',
 						dataAkum?.brand_akum?.map(item => ({value: item.value, label: item.label})),
 						false,
-						filter?.brand,
+						filter?.brand && Number(filter.brand),
 						true,
 					)}
 				</>}
@@ -324,7 +329,7 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 					)}
 					{renderSelect(
 						'brand',
-						t('brand', true),
+						t('all brands', true),
 						'gray',
 						data?.brand?.map(item => ({value: item.value, label: item.label})),
 						false,
@@ -343,9 +348,9 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 						true,
 					)}
 					<SelectFromTo name='et' nameMin='etMin' nameMax='etMax' minus={true} from={-140} to={500}
-												title={`ET(${t('departure', true)})`} btnTitle={t('to apply')}/>
+												title={`ET(${t('departure', true)})`} btnTitle={t('to apply')} closeFilter={ closeFilter } />
 					<SelectFromTo name='dia' nameMin='diaMin' nameMax='diaMax' from={46} to={500} title='DIA'
-												btnTitle={t('to apply')}/>
+												btnTitle={t('to apply')} closeFilter={ closeFilter } />
 					{renderSelect(
 						'typedisk',
 						t('type', true),
@@ -365,7 +370,7 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 					)}
 					{renderSelect(
 						'brand',
-						t('brand', true),
+						t('all brands', true),
 						'gray',
 						data?.brand_disc?.map(item => ({value: item.value, label: item.label})),
 						false,
@@ -400,14 +405,14 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 					filter?.year && (filter.year),
 				)}
 				<SelectFromTo name='price' nameMin='minPrice' nameMax='maxPrice' from={200} to={10000}
-											title={`${t('price range', true)} (грн)`} btnTitle={t('to apply')}/>
+											title={`${t('price range', true)} (грн)`} btnTitle={t('to apply')} closeFilter={ closeFilter } />
 				{section === Section.Battery && <>
 					<SelectFromTo name='sirina' nameMin='minShirina' nameMax='maxShirina' from={0} to={600} title={`Ширина (см)`}
-												btnTitle={t('to apply')}/>
+												btnTitle={t('to apply')} closeFilter={ closeFilter } />
 					<SelectFromTo name='visota' nameMin='minVisota' nameMax='maxVisota' from={0} to={190} title={`Висота (см)`}
-												btnTitle={t('to apply')}/>
+												btnTitle={t('to apply')} closeFilter={ closeFilter } />
 					<SelectFromTo name='dovzina' nameMin='minDovzina' nameMax='maxDovzina' from={0} to={600}
-												title={`Довжина (см)`} btnTitle={t('to apply')}/>
+												title={`Довжина (см)`} btnTitle={t('to apply')} closeFilter={ closeFilter } />
 					{renderSelect(
 						'napruga',
 						t('high-voltage', true),
@@ -472,9 +477,9 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 					)}
 				</>}
 			</div>
-			<div className='fixed bottom-10 z-10 w-[calc(100%-70px)] px-4 lg:hidden'>
-				<button onClick={() => handleSubmit()} className='btn primary w-full'>
-					{ t('to apply') }
+			<div className='fixed bottom-2 z-10 w-[calc(100%-70px)] px-4 lg:hidden'>
+				<button onClick={() => onSubmit()} className='btn primary w-full text-sm uppercase'>
+					{ t('apply filters') }
 				</button>
 			</div>
 		</div>

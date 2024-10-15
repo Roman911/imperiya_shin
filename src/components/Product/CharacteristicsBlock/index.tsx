@@ -177,7 +177,7 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 				{<div className='flex md:my-4 text-sm font-medium'>
 					<div
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
-						{t('brand', true)}
+						{t('all brands', true)}
 					</div>
 					<Link to={link(`/b-${data?.data.brand.id}`)} onClick={() => dispatch(addBrandAlias(data ? data?.data.brand.alias : ''))} className='text-blue-500 max-w-max w-full hover:underline'>
 						{data?.data.brand.name}

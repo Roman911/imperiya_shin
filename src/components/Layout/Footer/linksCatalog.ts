@@ -1,30 +1,22 @@
 export const linksCatalog = [
 	{
 		link: '/catalog/tires',
-		title: 'cartires',
+		title: 'tires',
 	},
 	{
 		link: '/catalog/disks',
-		title: 'cardiscs',
+		title: 'discs',
 	},
 	{
-		link: '/catalog/disks',
-		title: 'disks',
-	},
-	{
-		link: '/catalog/tires',
+		link: '/catalog/tires/vt-3',
 		title: 'cargo tires',
 	},
 	{
-		link: '/catalog/tires',
+		link: '/catalog/tires/vt-7',
 		title: 'motorcycle tires',
 	},
 	{
-		link: '/',
+		link: '/catalog/battery',
 		title: 'accumulators',
 	},
-	{
-		link: '/',
-		title: 'auto goods',
-	},
-]
+];

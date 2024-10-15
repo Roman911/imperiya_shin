@@ -50,6 +50,7 @@ export const CartComponent: FC<CarProps> = ({ data, cartItems, removeProduct, se
 				return <CartItem
 					key={ item.group }
 					id={ item.best_offer.id }
+					pageUrl={ item.page_url }
 					quantity={ quantity }
 					group={ item.group }
 					default_photo={ item.default_photo }

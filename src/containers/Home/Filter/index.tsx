@@ -56,16 +56,18 @@ export const Filter: FC<FilterProps> = ({ additionalFilter, additionalSection })
 			});
 
 			filterConfigs.push({
-				label: t('brand', true),
+				label: t('all brands', true),
 				name: 'brand',
 				options: data?.brand?.map(item => ({ value: item.value, label: item.label }))
 			});
 		} else if(additionalSection ? additionalSection === Section.Disks : section === Section.Disks) {
-			filterConfigs.push({
-				label: t('brand', true),
-				name: 'brand',
-				options: data?.brand_disc?.map(item => ({ value: item.value, label: item.label }))
-			});
+			if(!additionalFilter) {
+				filterConfigs.push({
+					label: t('all brands', true),
+					name: 'brand',
+					options: data?.brand_disc?.map(item => ({ value: item.value, label: item.label }))
+				});
+			}
 
 			filterConfigs.push({
 				label: t('diameter', true),
@@ -74,21 +76,48 @@ export const Filter: FC<FilterProps> = ({ additionalFilter, additionalSection })
 				options: data?.disc_diameter?.map(item => ({ value: item.value, label: `R${item.value}`, p: item.p }))
 			});
 
+			if(additionalFilter) {
+				filterConfigs.push({
+					label: 'DIA', name: 'dia',
+					options: data?.dia?.map(item => ({ value: item.value, label: item.value, p: item.p }))
+				});
+
+				filterConfigs.push({
+					label: t('width', true), name: 'width',
+					options: data?.disc_width?.map(item => ({ value: item.value, label: item.value, p: item.p }))
+				});
+
+				filterConfigs.push({
+					label: t('all brands', true),
+					name: 'brand',
+					options: data?.brand_disc?.map(item => ({ value: item.value, label: item.label }))
+				});
+			}
+
 			filterConfigs.push({
 				label: t('fasteners', true),
-				name: 'krip',
+				name: 'krepeg',
 				options: data?.krip?.map(item => ({ value: item.value, label: item.value, p: item.p }))
 			});
 
-			filterConfigs.push({
-				label: 'ET ' + t('from'), name: 'et_from',
-				options: data?.et?.map(item => ({ value: item.value, label: item.value, p: item.p }))
-			});
+			if(additionalFilter) {
+				filterConfigs.push({
+					label: 'ET', name: 'et',
+					options: data?.et?.map(item => ({ value: item.value, label: item.value, p: item.p }))
+				});
+			}
 
-			filterConfigs.push({
-				label: 'ET ' + t('to'), name: 'et_to',
-				options: data?.et?.map(item => ({ value: item.value, label: item.value, p: item.p }))
-			});
+			if(!additionalFilter) {
+				filterConfigs.push({
+					label: 'ET ' + t('from'), name: 'et_from',
+					options: data?.et?.map(item => ({ value: item.value, label: item.value, p: item.p }))
+				});
+
+				filterConfigs.push({
+					label: 'ET ' + t('to'), name: 'et_to',
+					options: data?.et?.map(item => ({ value: item.value, label: item.value, p: item.p }))
+				});
+			}
 		}
 
 		return filterConfigs.map(config => ({
@@ -105,7 +134,7 @@ export const Filter: FC<FilterProps> = ({ additionalFilter, additionalSection })
 
 	const submit = () => {
 		const searchUrl = generateUrl(filter);
-		const rout = `/catalog/${section}/`;
+		const rout = `/catalog/${additionalFilter || section}/`;
 		const newRout = lang === Language.UA ? rout : `/ru${rout}`;
 		navigate(newRout + searchUrl);
 	}

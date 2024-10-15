@@ -26,7 +26,7 @@ export const AdditionalFilterComponent: FC<AdditionalFilterProps> = ({ children,
 					'rounded-r-sm bg-white border-[#DCE1E5]': additionalFilter === 'disks'
 				}
 			)}>
-			<div className={classNames('max-w-lg mx-auto md:flex md:justify-between items-end', {'text-white': additionalFilter === 'tires'})}>
+			<div className={classNames('max-w-xl mx-auto md:flex md:justify-between items-end', {'text-white': additionalFilter === 'tires'})}>
 				<h2 className='text-3xl font-bold uppercase'>
 					{t(section, true)}
 				</h2>
@@ -45,7 +45,7 @@ export const AdditionalFilterComponent: FC<AdditionalFilterProps> = ({ children,
 					</button>
 				</div>
 			</div>
-			<div className='max-w-lg mx-auto mt-4'>
+			<div className='max-w-xl mx-auto mt-4'>
 				{children}
 			</div>
 		</div>

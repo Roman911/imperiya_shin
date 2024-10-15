@@ -2,11 +2,12 @@ import { FC } from 'react';
 
 import { CountryInfo, Quantity } from '../../Lib';
 import { Language } from '../../../models/language';
-import { countryCodeTransform } from '../../../lib';
+import { countryCodeTransform, Link } from '../../../lib';
 import { useAppSelector } from '../../../hooks';
 
 interface CartItemProps {
 	id: number
+	pageUrl: string
 	quantity: number
 	default_photo: string
 	full_name: string
@@ -23,6 +24,7 @@ interface CartItemProps {
 export const CartItem: FC<CartItemProps> = (
 	{
 		id,
+		pageUrl,
 		quantity,
 		default_photo,
 		full_name,
@@ -46,10 +48,14 @@ export const CartItem: FC<CartItemProps> = (
 	}
 
 	return <div className='flex flex-col md:flex-row py-4 items-center relative'>
-		<img className='w-36' src={ default_photo } alt=""/>
+		<Link to={ `/${pageUrl}` }>
+			<img className='w-36' src={default_photo} alt=""/>
+		</Link>
 		<div className='flex flex-col md:flex-row justify-between items-center w-full ml-4 pr-4 mt-4 md:mt-0 md:pr-0'>
 			<div className='flex-1'>
-				<div className='font-bold md:text-lg'>{ full_name }</div>
+				<Link to={ `/${pageUrl}` } className='font-bold md:text-lg hover:text-blue-700 transition'>
+					{ full_name }
+				</Link>
 				<div className='font-bold text-xl mt-2'>{ price } ₴/шт.</div>
 				<div className='text-sm text-gray-500 mt-1'>Арт: { group }</div>
 				<div className='country mt-2 md:col-span-4'>

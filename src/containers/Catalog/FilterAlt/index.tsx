@@ -34,10 +34,6 @@ export const FilterAlt: FC<FilterAltProps> = ({ isProduct, isOpenFilter, closeFi
 	}, [dispatch, isSend]);
 
 	useEffect(() => {
-		dispatch(resetFilter());
-	}, [dispatch, section]);
-
-	useEffect(() => {
 		const params = [];
 		if(filterBrand.width) params.push(`width=${filterBrand.width}`);
 		if(filterBrand.height) params.push(`height=${filterBrand.height}`);
@@ -51,6 +47,7 @@ export const FilterAlt: FC<FilterAltProps> = ({ isProduct, isOpenFilter, closeFi
 	}
 
 	const onClick = (value: Section) => {
+		dispatch(resetFilter());
 		dispatch(changeSection(value));
 	}
 

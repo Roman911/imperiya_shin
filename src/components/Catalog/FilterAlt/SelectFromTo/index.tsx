@@ -12,9 +12,10 @@ interface SelectFromTo {
 	title: string
 	btnTitle: string
 	minus?: boolean
+	closeFilter: () => void
 }
 
-export const SelectFromTo: FC<SelectFromTo> = ({ nameMin, nameMax,  from, to, title, btnTitle, minus }) => {
+export const SelectFromTo: FC<SelectFromTo> = ({ nameMin, nameMax,  from, to, title, btnTitle, minus, closeFilter }) => {
 	const [minMax, setMinMax] = useState({ min: '', max: '' });
 	const dispatch = useAppDispatch();
 	const { handleSubmit } = useAppSubmit();
@@ -26,6 +27,7 @@ export const SelectFromTo: FC<SelectFromTo> = ({ nameMin, nameMax,  from, to, ti
 	}
 
 	const handleClick = () => {
+		closeFilter();
 		const updateParams = (key: string, value: string) => {
 			if (value.length > 0) {
 				dispatch(setParams({ [key]: value })); // Use computed property name for dynamic key
