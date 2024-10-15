@@ -94,7 +94,7 @@ export const ProductComponent: FC<ProductComponentProps> = (
 				{data?.result &&
 					<div className='flex flex-col md:flex-row items-center md:items-start md:border-b border-[#DEE2EB]'>
 						<div className='gallery w-64 relative mb-7 pt-10 pb-5'>
-							<div className='absolute z-10 -mt-10 w-full flex justify-between items-start'>
+							<div className='-mt-10 mb-2 w-full flex justify-between items-start'>
 								<div>
 									{labels?.length !== 0 && labels?.map(item => {
 										return <div key={item.label_id}
