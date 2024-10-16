@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import DOMPurify from 'dompurify';
 
+import './index.scss';
 import { useAppSelector } from '../../../hooks';
 
 export const TextSeo = () => {
@@ -11,7 +12,7 @@ export const TextSeo = () => {
 		const sanitizedHtml = DOMPurify.sanitize(htmlString);
 		return (
 			<div
-				className="container mx-auto max-w-7xl mt-20 mb-24 px-2"
+				className="seo-text container mx-auto max-w-7xl mt-20 mb-24 px-2"
 				dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
 			/>
 		);
