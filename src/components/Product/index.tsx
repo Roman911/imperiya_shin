@@ -129,14 +129,15 @@ export const ProductComponent: FC<ProductComponentProps> = (
 							</div>
 							<div className='mt-7 md:mt-11'>
 								<div className='flex items-end'>
-									<div className='mr-2.5 text-xl font-medium'>{t('from')}</div>
+									<div className='mr-2.5 text-xl font-medium'>{t('price')}</div>
 									<div className='text-4xl font-bold mr-2.5'>{min_price}</div>
 									<div className='text-xl font-medium'>грн/шт.</div>
 								</div>
-								{section !== Section.Battery && <div className='mt-3 text-gray-500'>
-									{t('from')}
-									<span className='font-bold'> {min_price * 4} ₴ </span>
-									за 4 шт.
+								{section === Section.Tires && <div className='mt-3 text-gray-500'>
+									{lang === Language.UA ? '* ціна вказана за одну шину без диску' : '* цена указана за одну шину без диска'}
+								</div>}
+								{section === Section.Disks && <div className='mt-3 text-gray-500'>
+									{lang === Language.UA ? '* ціна вказана за один диск без шини' : '* цена указана за один диск без шины'}
 								</div>}
 							</div>
 							<div className='offers mt-7'>

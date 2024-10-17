@@ -16,4 +16,5 @@ export const ROUTES = {
 	tyreDiskSizeCalc: 'ru?/tyre-disk-size-calc/',
 	search: 'ru?/search/',
 	page: 'ru?/page/*',
+	flushCache: 'ru?/api/flush-cache',
 };

@@ -7,10 +7,9 @@ import { CloseButton } from '../Lib';
 import { ItemWrapper } from './ItemWrapper';
 import { batteryParams, disksParams, tiresParams } from './params';
 import type { Product } from '../../models/products';
-import { Section } from '../../models/filter';
 
 interface ComparisonProps {
-	defaultTab: Section
+	defaultTab: string
 	tires: Product[]
 	cargo: Product[]
 	disks: Product[]

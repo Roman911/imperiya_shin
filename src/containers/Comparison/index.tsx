@@ -10,7 +10,6 @@ import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { NoResult, Spinner, Title } from '../../components/Lib';
 import { ComparisonComponent } from '../../components/Comparison';
 import { Language } from '../../models/language';
-import { Section } from '../../models/filter';
 import { Support } from '../Layout/Support';
 
 export const Comparison = () => {
@@ -54,7 +53,7 @@ export const Comparison = () => {
 		<Title title='comparison' />
 		{comparisonItems.length > 0 ? <Spinner height='h-40' show={ isLoading } >
 			<ComparisonComponent
-				defaultTab={ tires.length > 0 ? Section.Tires : disks.length > 0 ? Section.Disks : Section.Battery }
+				defaultTab={ tires.length > 0 ? 'tires' : cargo.length > 0 ? 'cargo' : disks.length > 0 ? 'disks' : 'battery' }
 				tires={ tires }
 				cargo={ cargo }
 				disks={ disks }
