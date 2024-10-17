@@ -22,6 +22,7 @@ const icons = {
 	8: BusIcon,
 	9: CargoIcon,
 };
+const cargo = ['3','4','5','6','9','10','11'];
 
 interface ProductCardProps {
 	item: Product
@@ -39,6 +40,7 @@ export const ProductCardComponent: FC<ProductCardProps> = ({ item, isBookmarks, 
 	const { lang } = useAppSelector(state => state.langReducer);
 	const cartStorage = useMemo(() => getFromStorage('reducerCart'), []);
 	const section = item.vehicle_type ? Section.Tires : item.diameter ? Section.Disks : Section.Battery;
+	const sectionNew = section === Section.Tires ? cargo.includes(item.vehicle_type) ? 'cargo' : 'tires' : section;
 
 	const seasonIcon = season === '1' ? 'sun' : season === '2' ? 'snow' : season === '3' ? 'all-season' : undefined;
 	const vehicle_type_number = vehicle_type as unknown as keyof typeof icons;
@@ -48,8 +50,8 @@ export const ProductCardComponent: FC<ProductCardProps> = ({ item, isBookmarks, 
 	const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 		if(!cartStorage?.find((item: { id: number, quantity: number }) => item.id === best_offer.id)) {
-			const cart = [ ...cartStorage, { id: best_offer.id, section, quantity: 1 }];
-			dispatch(addCart({ id: best_offer.id, quantity: 1, section }));
+			const cart = [ ...cartStorage, { id: best_offer.id, section: sectionNew, quantity: 1 }];
+			dispatch(addCart({ id: best_offer.id, quantity: 1, section: sectionNew }));
 			addToStorage('reducerCart', cart);
 		}
 		navigate( lang === Language.UA ?'/cart' : '/ru/cart');

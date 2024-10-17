@@ -22,6 +22,7 @@ import { FilterAlt } from '../Catalog/FilterAlt';
 import { OthersProducts } from '../../components/Product/OthersProduct';
 import {FilterBtn} from "../../components/Catalog/FilterByCar/FilterBtn";
 
+const cargo = ['3','4','5','6','9','10','11'];
 const scrollToTop = () => {
 	window.scrollTo({
 		top: 0,
@@ -41,6 +42,8 @@ export const Product = () => {
 	const { data, isLoading } = baseDataAPI.useFetchProductQuery(match![1]);
 	const t = useAppTranslation();
 	const section = /dia/.test(location.pathname) ? Section.Disks : /ah/.test(location.pathname) ? Section.Battery : Section.Tires;
+	const vehicleType = data?.data.offer_group.vehicle_type ?? ''; // Fallback to empty string if undefined
+	const sectionNew = section === Section.Tires ? cargo.includes(vehicleType) ? 'cargo' : 'tires' : section;
 	const offer = data?.data.offers.find(item => item.offer_id === offerId);
 	const id: string[] = [];
 	const pushIfExists = (key: string, value: string | number | undefined) => {
@@ -68,9 +71,9 @@ export const Product = () => {
 		if (typeof matchValue === 'number' && !isNaN(matchValue)) {
 			const updatedStorage = storage.filter((item: { id: number, section: Section }) => item.id !== matchValue);
 			const deleteElement = updatedStorage.length === 4 ? updatedStorage.slice(1,3) : updatedStorage;
-			addToStorage('reducerRecentlyViewed', [...deleteElement, {id: matchValue, section}]);
+			addToStorage('reducerRecentlyViewed', [...deleteElement, {id: matchValue, section: sectionNew}]);
 		}
-	}, [match, section]);
+	}, [match, sectionNew]);
 
 	useEffect(() => {
 		if(data) {
@@ -127,10 +130,11 @@ export const Product = () => {
 		setQuantity(numericValue < Number(offer?.quantity) ? numericValue : Number(offer?.quantity));
 	}
 
+
 	const onSubmit = () => {
 		const cartStorage = getFromStorage('reducerCart');
-		const cart = [ ...cartStorage, { id: offerId, section, quantity }];
-		dispatch(addCart({ id: offerId, section, quantity }));
+		const cart = [ ...cartStorage, { id: offerId, section: sectionNew, quantity }];
+		dispatch(addCart({ id: offerId, section: sectionNew, quantity }));
 		addToStorage('reducerCart', cart);
 	}
 
@@ -162,7 +166,7 @@ export const Product = () => {
 					handleClick={handleClick}
 					setQuantity={setQuantity}
 					onSubmit={onSubmit}
-					section={section}
+					section={sectionNew}
 				/>
 			</div>
 		</LayoutWrapper>

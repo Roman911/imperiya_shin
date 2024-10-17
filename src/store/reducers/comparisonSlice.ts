@@ -1,11 +1,9 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Section } from '../../models/filter';
-
 interface Item {
 	id: number
-	section: Section
+	section: string
 }
 
 export interface ComparisonState {

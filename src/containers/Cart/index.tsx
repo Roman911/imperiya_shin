@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
 import { addToStorage, getFromStorage, removeFromStorage } from '../../lib';
-import { useAppDispatch, useAppGetProductsByOffer, useAppSelector, useAppTranslation } from '../../hooks';
+import { useAppDispatch, useAppGetProducts, useAppSelector, useAppTranslation } from '../../hooks';
 import { removeCart, setQuantity } from '../../store/reducers/cartSlice';
 import { LayoutWrapper } from '../../components/Layout';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
@@ -16,12 +16,12 @@ export const Cart = () => {
 	const { lang } = useAppSelector(state => state.langReducer);
 	const { cartItems } = useAppSelector(state => state.cartReducer);
 	const path = [{ id: 1, title: t('cart', true), url: '/' }];
-	const { tires, disks, battery, isLoading} = useAppGetProductsByOffer(cartItems);
+	const { tires, cargo, disks, battery, isLoading} = useAppGetProducts(cartItems, true);
 	const data = {
 		result: true,
 		data: {
 			total_count: 5,
-			products: [...tires,...disks,...battery]
+			products: [...tires,...cargo,...disks,...battery]
 		}
 	};
 

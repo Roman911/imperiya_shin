@@ -34,7 +34,7 @@ interface ProductComponentProps {
 	isLoading: boolean
 	offerId: number
 	quantity: number
-	section: Section
+	section: string
 	onChange: (e: { target: HTMLInputElement }) => void
 	handleClick: (id: number) => void
 	onSubmit: () => void

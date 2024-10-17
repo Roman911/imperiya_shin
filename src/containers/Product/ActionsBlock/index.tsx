@@ -5,10 +5,9 @@ import { addToStorage, getFromStorage, removeFromStorage } from '../../../lib';
 import { addBookmarks, removeBookmarks } from '../../../store/reducers/bookmarksSlice';
 import { addComparison, removeComparison } from '../../../store/reducers/comparisonSlice';
 import { ActionsBlockComponent } from '../../../components/Product/ActionsBlock';
-import { Section } from '../../../models/filter';
 
 // Helper function to update local storage
-const updateStorage = (storageKey: string, id: number, section: Section, shouldRemove: boolean) => {
+const updateStorage = (storageKey: string, id: number, section: string, shouldRemove: boolean) => {
 	if (shouldRemove) {
 		removeFromStorage(storageKey, id);
 	} else {
@@ -20,7 +19,7 @@ const updateStorage = (storageKey: string, id: number, section: Section, shouldR
 interface ActionsBlockProps {
 	id: number
 	className: string
-	section: Section
+	section: string
 	handleModalOpen: (type: 'QuickOrder' | 'OnlineInstallment' | 'DeliveryCalculation' | 'Callback' | 'AddAsk') => void
 }
 

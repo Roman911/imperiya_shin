@@ -1,11 +1,10 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { Section } from '../../models/filter';
 
 interface CreateItem {
 	id: number
 	quantity: number
-	section: Section
+	section: string
 }
 
 export interface CartState {

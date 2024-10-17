@@ -9,7 +9,7 @@ import { SerializedError } from '@reduxjs/toolkit';
 
 import { config } from '../../config';
 import { baseDataAPI } from '../../services/baseDataService';
-import { useAppDispatch, useAppGetProductsByOffer, useAppSelector, useAppTranslation } from '../../hooks';
+import { useAppDispatch, useAppGetProducts, useAppSelector, useAppTranslation } from '../../hooks';
 import { reset } from '../../store/reducers/cartSlice';
 import { OrderComponent } from '../../components/Order';
 import { Title } from '../../components/Lib';
@@ -55,7 +55,7 @@ export const Order = () => {
 	const { cartItems } = useAppSelector(state => state.cartReducer);
 	const { city, wirehouse } = useAppSelector(state => state.orderReducer);
 	const t = useAppTranslation();
-	const { tires, disks, battery, isLoading} = useAppGetProductsByOffer(cartItems);
+	const { tires, cargo, disks, battery, isLoading} = useAppGetProducts(cartItems, true);
 	const { data: dataOrdersParam } = baseDataAPI.useFetchOrdersParamQuery('');
 	const [ createOrder ] = baseDataAPI.useCreateOrderMutation();
 
@@ -63,7 +63,7 @@ export const Order = () => {
 		result: true,
 		data: {
 			total_count: 5,
-			products: [...tires,...disks,...battery]
+			products: [...tires,...cargo,...disks,...battery]
 		}
 	}
 

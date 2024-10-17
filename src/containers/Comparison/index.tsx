@@ -19,7 +19,7 @@ export const Comparison = () => {
 	const { lang } = useAppSelector(state => state.langReducer);
 	const noDataText = lang === Language.UA ? 'Ви ще не додали в обране жодного товару' : 'Вы еще не добавили в избранное ни одного товара';
 	const { comparisonItems } = useAppSelector(state => state.comparisonReducer);
-	const { tires, disks, battery, isLoading} = useAppGetProducts(comparisonItems);
+	const { tires, cargo, disks, battery, isLoading} = useAppGetProducts(comparisonItems);
 
 	const path = [
 		{
@@ -39,7 +39,7 @@ export const Comparison = () => {
 		resetStorage('reducerComparison');
 	}
 
-	const onClick = (offerId: number, section: Section) => {
+	const onClick = (offerId: number, section: string) => {
 		const cartStorage = getFromStorage('reducerCart');
 		const cart = [ ...cartStorage, { id: offerId, section, quantity: 1 }];
 		dispatch(addCart({ id: offerId, section, quantity: 1 }));
@@ -56,6 +56,7 @@ export const Comparison = () => {
 			<ComparisonComponent
 				defaultTab={ tires.length > 0 ? Section.Tires : disks.length > 0 ? Section.Disks : Section.Battery }
 				tires={ tires }
+				cargo={ cargo }
 				disks={ disks }
 				battery={ battery }
 				resetEverything={ resetEverything }

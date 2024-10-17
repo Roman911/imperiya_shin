@@ -6,14 +6,13 @@ import { useAppTranslation } from '../../../hooks';
 import { CloseButton } from '../../Lib';
 import { Characteristics } from '../Characteristics';
 import { CartIcon } from '../../Lib/Icons';
-import { Section } from '../../../models/filter';
 
 interface ItemWrapperProps {
 	characteristics: Product[]
-	tab: Section
-	name: 'tires' | 'disks' | 'battery'
+	tab: string
+	name: 'tires' | 'cargo' | 'disks' | 'battery'
 	handleClick: (id: number) => void
-	onClick: (offerId: number, section: Section) => void
+	onClick: (offerId: number, section: string) => void
 	params: string[]
 }
 

@@ -9,7 +9,9 @@ import type { Product } from '../../../models/products';
 import { ProductCardComponent } from '../../../components/ProductCard'
 import { Section } from '../../../models/filter';
 
-const toggleStorageItem = (storageKey: string, id: number, section: Section, isInStorage: boolean) => {
+const cargo = ['3','4','5','6','9','10','11'];
+
+const toggleStorageItem = (storageKey: string, id: number, section: string, isInStorage: boolean) => {
 	if (isInStorage) {
 		removeFromStorage(storageKey, id);
 	} else {
@@ -29,18 +31,19 @@ export const ProductCard: FC<ProductCardProps> = ({ item }) => {
 	const isBookmarks = bookmarksItems.some(i => i.id === item.group);
 	const isComparison = comparisonItems.some(i => i.id === item.group);
 	const section = item.vehicle_type ? Section.Tires : item.diameter ? Section.Disks : Section.Battery;
+	const sectionNew = section === Section.Tires ? cargo.includes(item.vehicle_type) ? 'cargo' : 'tires' : section;
 
 	const handleToggle = (
 		event: MouseEvent<HTMLButtonElement>,
 		id: number,
 		isItem: boolean,
-		addAction: ({ id, section }: { id: number, section: Section }) => { type: string, payload: { id: number, section: Section }}, // Ensure actions return objects
+		addAction: ({ id, section }: { id: number, section: string }) => { type: string, payload: { id: number, section: string }}, // Ensure actions return objects
 		removeAction: ( id: number ) => { type: string, payload: number },
 		storageKey: string
 	) => {
 		event.preventDefault();
-		dispatch(isItem ? removeAction(id) : addAction({ id, section }));
-		toggleStorageItem(storageKey, id, section, isItem);
+		dispatch(isItem ? removeAction(id) : addAction({ id, section: sectionNew }));
+		toggleStorageItem(storageKey, id, sectionNew, isItem);
 	};
 
 	return <ProductCardComponent

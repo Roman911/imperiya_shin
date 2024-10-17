@@ -19,7 +19,7 @@ interface ItemProps {
 }
 
 interface OtherModelSizeProps {
-	section: Section
+	section: string
 	brand: number | undefined
 	model: number | undefined
 	diameter: string | undefined
