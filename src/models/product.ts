@@ -54,6 +54,12 @@ interface OfferGroup {
 	silent: boolean
 	et: string
 	dia: string
+	jemnistm: string
+	puskovii_strum: string
+	napruga: string
+	dovzina: string
+	sirina: string
+	visota: string
 }
 
 interface Model {

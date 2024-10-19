@@ -46,7 +46,7 @@ export const FilterActiveComponent: FC<FilterActiveProps> = (
 
 	return <div
 		className={
-		classNames('mb-4 flex-wrap justify-end gap-x-2 gap-y-3 lg:gap-4 text-end lg:bg-transparent p-4 lg:p-0', className, { 'bg-blue-50':  searchParams && Object.keys(searchParams).length !== 0})}
+		classNames('mb-3 flex-wrap justify-end gap-x-2 gap-y-3 lg:gap-4 text-end lg:bg-transparent p-4 lg:p-0', className, { 'bg-blue-50':  searchParams && Object.keys(searchParams).length !== 0})}
 	>
 		{searchParams && Object.keys(searchParams || {}).filter(item => searchParams && searchParams[item as keyof IFilter]).map(item => {
 			const label = searchParams[item as keyof IFilter];

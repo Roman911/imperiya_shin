@@ -23,7 +23,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ path }) => {
 		dispatch(resetFilter());
 	}
 
-	return <nav className='py-2.5'>
+	return <nav className='breadcrumbs'>
 		<ol className='flex overflow-auto max-w-full whitespace-nowrap'>
 			<li className='text-sm'>
 				<Link onClick={() => handleClick()} to="/"><HomeIcon className='fill-[#575C66]'/></Link>

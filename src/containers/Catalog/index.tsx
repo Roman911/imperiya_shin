@@ -106,7 +106,7 @@ export const Catalog = () => {
 		{
 			id: 7,
 			title: `${title}`,
-			url: Object.keys(urlParams).length !== 0 && `/catalog/${section}/`,
+			url: Object.keys(urlParams).length > 1 && `/catalog/${section}/`,
 		},
 	];
 
@@ -129,8 +129,8 @@ export const Catalog = () => {
 				</Helmet>
 		}
 		<Breadcrumbs path={path}/>
-		<Title title={ title } />
-		<div className='py-5 lg:flex'>
+		<Title isMain={ true } title={ title } className='mt-3 text-lg font-medium px-0 md:px-3 mb-3 md:mb-1' />
+		<div className='md:pt-4 pb-5 lg:flex'>
 			<FilterAlt isOpenFilter={ isOpenFilter } closeFilter={ closeFilter } />
 			<CatalogContent openFilter={ openFilter } />
 		</div>

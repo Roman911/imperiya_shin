@@ -22,5 +22,6 @@ export const ImgGallery: FC<ImageGalleryProps> = ({ images }) => {
 		showPlayButton={ false }
 		ref={ imageGalleryRef }
 		onClick={ onClickHandler }
+		showThumbnails={ images.length > 1 }
 	/>
 };

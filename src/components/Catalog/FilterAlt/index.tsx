@@ -126,7 +126,7 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 
 	return <div className={
 		classNames('fixed lg:static top-0 left-0 right-0 bottom-0 bg-[#070B14]/60 lg:bg-transparent z-20 lg:block',
-			{'hidden': !isOpenFilter, 'lg:pt-12': section === Section.Battery || isProduct })
+			{'hidden': !isOpenFilter })
 	}>
 		<button onClick={ () => closeFilter() } className='absolute top-5 right-5 lg:hidden'>
 			<CloseIcon className='fill-[#B9B9BA] w-7 h-7' />
@@ -137,8 +137,8 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 				{renderTab(Section.Disks)}
 			</div>}
 			<div
-				className='relative h-[calc(100%-50px)] pb-32 lg:pb-4 px-4 pt-4 lg:pt-7 bg-white border border-gray-200 overflow-y-auto md:overflow-y-visible'>
-				<SubmitFloat element={element} btnTitle={t('to apply', true)} setElement={setElement} offset={isProduct ? 304 : 384} />
+				className='relative h-[calc(100%-50px)] pb-32 lg:pb-4 px-4 pt-4 bg-white border border-gray-200 overflow-y-auto md:overflow-y-visible'>
+				<SubmitFloat element={element} btnTitle={t('to apply', true)} setElement={setElement} offset={section === Section.Battery ? 274 : isProduct ? 238 : 322} />
 				<FilterActive className='flex lg:hidden'/>
 				{section !== Section.Battery && <div className='flex lg:justify-between gap-x-5'>
 					<button

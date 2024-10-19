@@ -32,7 +32,7 @@ export const FilterByCar: FC<FilterByCarProps> = ({ openFilter, handleClick }) =
 		handleClick(param1, param2);
 	}
 
-	return <div className='flex justify-between lg:justify-end items-center lg:items-start mb-4'>
+	return <div className='flex justify-between lg:justify-end items-center lg:items-start mb-3'>
 		{subsection === 'byParams' && section === Section.Tires && <div className='hidden lg:flex gap-x-3 xl:gap-x-6 mr-3 xl:mr-8'>
 			<TypeCarLinks section='catalog' />
 		</div>}

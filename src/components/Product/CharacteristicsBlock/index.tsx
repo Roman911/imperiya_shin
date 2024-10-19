@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { useAppDispatch, useAppSelector, useAppTranslation } from '../../../hooks';
 import { addBrandAlias, addModelAlias, reset } from '../../../store/reducers/brandAliasSlice';
-import { ChevronDownIcon, InfoIcon } from '../../Lib/Icons';
+import { ChevronDownIcon } from '../../Lib/Icons';
 import { TooltipWithIcon } from '../../Lib';
 import { Link, SeasonTransform, VehicleTypeTransform } from '../../../lib';
 import { Comments } from '../Comments';
@@ -92,7 +92,8 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 					<div
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
 						<TooltipWithIcon
-							label={ lang === Language.UA ? `Ширина шини в ${section === 'tires' ? 'міліметрах' : 'дюймах'}` : `Ширина шины в ${section === 'tires' ? 'міліметрах' : 'дюймах'}` }
+							label={ lang === Language.UA ? `Ширина ${section === 'tires' ? 'шини в міліметрах' : 'диска в дюймах'}` :
+								`Ширина ${section === 'tires' ? 'шины в миллиметрах' : 'диска в дюймах'}` }
 						/>
 						<span className='ml-2.5'>
 							{ t('width', true) }
@@ -123,8 +124,8 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
 						<TooltipWithIcon
 							label={lang === Language.UA ?
-								'Внутрішній діаметр шини в дюймах' :
-								'Внутренний диаметр шины в дюймах'}
+								`${section === 'tires' ? 'Внутрішній діаметр шини' : 'Діаметр диска'} в дюймах` :
+								`${section === 'tires' ? 'Внутренний диаметр шины' : 'Диаметр диска'} в дюймах`}
 						/>
 						<span className='ml-2.5'>
 							{ t('diameter', true) }
@@ -153,7 +154,6 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 				{data?.data.offer_group.speed_index && <div className='flex my-4 text-sm font-medium'>
 					<div
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
-						<InfoIcon className='fill-[#7D92B2] mr-2.5 mb-0.5'/>
 						{t('speed index', true)}
 					</div>
 					<Link to={link(`/si-${data?.data.offer_group.speed_index}`)}
@@ -164,13 +164,39 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 				{data?.data.offer_group.load_index && <div className='flex my-4 text-sm font-medium'>
 					<div
 						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
-						<InfoIcon className='fill-[#7D92B2] mr-2.5 mb-0.5'/>
 						{t('load index', true)}
 					</div>
 					<Link to={link(`/li-${data?.data.offer_group.load_index}`)}
 								className='text-blue-500 max-w-max w-full hover:underline'>
 						{lang === Language.UA ? data?.data.offer_group.load_index : data?.data.offer_group.load_index_ru}
 					</Link>
+				</div>}
+				{data?.data.offer_group.jemnistm && <div className='flex my-4 text-sm font-medium'>
+					<div
+						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
+						{t('capacity', true)}
+					</div>
+					<div className='max-w-max w-full'>
+						{data?.data.offer_group.jemnistm} Ah
+					</div>
+				</div>}
+				{data?.data.offer_group.puskovii_strum && <div className='flex my-4 text-sm font-medium'>
+					<div
+						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
+						{t('starting current', true)}
+					</div>
+					<div className='max-w-max w-full'>
+						{data?.data.offer_group.puskovii_strum} A
+					</div>
+				</div>}
+				{data?.data.offer_group.napruga && <div className='flex my-4 text-sm font-medium'>
+					<div
+						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
+						{t('high-voltage', true)}
+					</div>
+					<div className='max-w-max w-full'>
+						{data?.data.offer_group.napruga} V
+					</div>
 				</div>}
 			</div>
 			<div className='flex-1'>
@@ -238,6 +264,33 @@ export const CharacteristicsBlock: FC<CharacteristicsBlockProps> = ({ data }) =>
 						className='text-blue-500 max-w-max w-full hover:underline'>
 						{`${data?.data.offer_group.width}/${data?.data.offer_group.height} R${data?.data.offer_group.diameter}`}
 					</Link>
+				</div>}
+				{data?.data.offer_group.dovzina && <div className='flex my-4 text-sm font-medium'>
+					<div
+						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
+						{t('length', true)}
+					</div>
+					<div className='max-w-max w-full'>
+						{data?.data.offer_group.dovzina} мм
+					</div>
+				</div>}
+				{data?.data.offer_group.sirina && <div className='flex my-4 text-sm font-medium'>
+					<div
+						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
+						{t('width', true)}
+					</div>
+					<div className='max-w-max w-full'>
+						{data?.data.offer_group.sirina} мм
+					</div>
+				</div>}
+				{data?.data.offer_group.visota && <div className='flex my-4 text-sm font-medium'>
+					<div
+						className='w-full flex items-center text-[#575C66] after:flex-1 after:min-w-6 after:border-b after:border-dashed after:border-[#AEB6C2] after:h-px after:mt-3 after:mx-2'>
+						{t('height', true)}
+					</div>
+					<div className='max-w-max w-full'>
+						{data?.data.offer_group.visota} мм
+					</div>
 				</div>}
 			</div>
 		</div>}

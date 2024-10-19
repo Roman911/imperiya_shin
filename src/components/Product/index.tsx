@@ -88,12 +88,12 @@ export const ProductComponent: FC<ProductComponentProps> = (
 
 	const averageScore = review && review.length > 0 ? commentsAvgRateSum / review.length : undefined;
 
-	return <section className='product-page flex flex-col 2xl:flex-row justify-between gap-1 2xl:gap-x-6 mt-10'>
+	return <section className='product-page flex flex-col 2xl:flex-row justify-between gap-1 2xl:gap-x-6 mt-4 md:mt-0'>
 		<div className='max-w-[900px] flex-1 pr-3 xl:pr-5'>
 			<Spinner height='h-96' show={ isLoading }>
 				{data?.result &&
 					<div className='flex flex-col md:flex-row items-center md:items-start md:border-b border-[#DEE2EB]'>
-						<div className='gallery w-64 relative mb-7 pt-10 pb-5'>
+						<div className={ classNames('gallery relative mb-7 pt-10 pb-5', { 'w-64': images.length > 1, 'w-72': images.length <= 1 }) }>
 							<div className='-mt-10 mb-2 w-full flex justify-between items-start'>
 								<div>
 									{labels?.length !== 0 && labels?.map(item => {
@@ -115,7 +115,7 @@ export const ProductComponent: FC<ProductComponentProps> = (
 								<ImgGallery images={ images } /> }
 						</div>
 						<ActionsBlock className='flex md:hidden' id={ id } handleModalOpen={ handleModalOpen } section={ section } />
-						<div className='flex-1 md:ml-6 xl:ml-20'>
+						<div className='flex-1 md:ml-6 xl:ml-10'>
 							<h1 className='text-2xl font-bold mt-8 md:mt-0'>{ full_name }</h1>
 							<div className='flex justify-between flex-col xl:flex-row xl:items-center mt-5'>
 								<div className='mb-4 xl:mb-0'>
@@ -140,7 +140,7 @@ export const ProductComponent: FC<ProductComponentProps> = (
 									{lang === Language.UA ? '* ціна вказана за один диск без шини' : '* цена указана за один диск без шины'}
 								</div>}
 							</div>
-							<div className='offers mt-7'>
+							<div className='offers mt-7 mb-5'>
 								{offers.map(item => {
 									return <div key={item.offer_id} onClick={() => handleClick(item.offer_id)}
 															className='offers__item cursor-pointer grid md:grid-cols-9 gap-1 md:gap-4 items-center mt-3 py-1.5 md:py-0 px-2 md:px-0 bg-white md:bg-transparent border md:border-0 rounded-full'>
