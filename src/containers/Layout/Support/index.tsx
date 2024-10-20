@@ -32,7 +32,7 @@ export const Support = () => {
 		await createCallback({
 			phone: telephone,
 			product_id: '1',
-			quantity: 1,
+			quantity: '1',
 		}).then((response: { data?: { result: boolean }; error?: FetchBaseQueryError | SerializedError }) => {
 			if(response?.data?.result) {
 				methods.reset();
