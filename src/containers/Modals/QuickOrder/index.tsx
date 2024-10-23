@@ -70,7 +70,7 @@ export const QuickOrder: FC<QuickOrderProps> = ({ offerId, quantity, offerItem, 
 			if(response?.data?.result) {
 				methods.reset();
 				setModalActive(false);
-				navigate('/order/successful');
+				navigate('/order/successful/quick');
 			} else if(response.error) {
 				console.error('An error occurred:', response.error);
 			}

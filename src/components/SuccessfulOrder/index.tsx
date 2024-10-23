@@ -1,8 +1,14 @@
+import { FC } from 'react';
+
 import { useAppSelector } from '../../hooks';
 import { Link } from '../../lib';
 import { Language } from '../../models/language';
 
-export const SuccessfulOrderComponent = () => {
+interface SuccessfulOrderProps {
+	quickOrder: boolean
+}
+
+export const SuccessfulOrderComponent: FC<SuccessfulOrderProps> = ({ quickOrder }) => {
 	const { lang } = useAppSelector(state => state.langReducer);
 
 	return <div className='mt-8 mb-16 text-center py-5 px-4'>
@@ -17,11 +23,11 @@ export const SuccessfulOrderComponent = () => {
 						d="M10 4.5a5.5 5.5 0 105.5 5.5.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 0010 4.5z"
 						clipRule="evenodd"></path>
 		</svg>
-		<p className='mb-8 mt-4 font-bold text-xl'>
-			{ lang === Language.UA ? 'Найближчим часом з Вами зв\'яжеться менеджер' : 'В ближайшее время с Вами свяжется менеджер' }
-		</p>
+		{ quickOrder && <p className='mb-8 mt-4 font-bold text-xl'>
+			{lang === Language.UA ? 'Найближчим часом з Вами зв\'яжеться менеджер' : 'В ближайшее время с Вами свяжется менеджер'}
+		</p> }
 		<Link to={`/`} className='pl-2 pr-2 text-blue-500 hover:underline '>
-			{ lang === Language.UA ? 'Повернутися на головну' : 'Вернуться на главную' }
+			{lang === Language.UA ? 'Повернутися на головну' : 'Вернуться на главную'}
 		</Link>
 	</div>
 };

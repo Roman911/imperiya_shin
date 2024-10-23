@@ -45,7 +45,7 @@ export const Filter: FC<FilterProps> = ({ additionalFilter, additionalSection })
 			filterConfigs.push({
 				label: t('diameter', true),
 				name: 'radius',
-				focusValue: 'R14',
+				focusValue: 'R13',
 				options: data?.tyre_diameter?.map(item => ({ value: item.value, label: `R${item.value}`, p: item.p }))
 			});
 
@@ -72,7 +72,7 @@ export const Filter: FC<FilterProps> = ({ additionalFilter, additionalSection })
 			filterConfigs.push({
 				label: t('diameter', true),
 				name: 'diameter',
-				focusValue: 'R14',
+				focusValue: 'R13',
 				options: data?.disc_diameter?.map(item => ({ value: item.value, label: `R${item.value}`, p: item.p }))
 			});
 

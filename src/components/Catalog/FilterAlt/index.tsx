@@ -185,7 +185,7 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 							t('diameter', true),
 							'gray',
 							fildterData?.tyre_diameter?.map(item => ({value: item.value, label: `R${item.value}`, p: item.p})),
-							'R14',
+							'R13',
 							filter?.radius,
 							true,
 						)}
@@ -205,7 +205,7 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 							t('diameter', true),
 							'gray',
 							data?.disc_diameter?.map(item => ({value: item.value, label: `R${item.value}`, p: item.p})),
-							false,
+							'R13',
 							filter?.radius,
 							true,
 						)}
