@@ -64,7 +64,7 @@ export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 	}
 
 	return (
-		<div className='flex-1 -mt-12'>
+		<div className='flex-1 lg:-mt-12'>
 			<FilterByCar openFilter={ openFilter } handleClick={ handleClick } />
 			<SelectionByCar />
 			<FilterActive className='hidden lg:flex'/>
