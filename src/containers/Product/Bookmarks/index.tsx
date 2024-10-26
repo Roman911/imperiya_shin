@@ -6,7 +6,7 @@ export const Bookmarks = () => {
 	const t = useAppTranslation();
 	const { bookmarksItems } = useAppSelector(state => state.bookmarksReducer);
 
-	const { products, isLoading} = useAppGetProducts(bookmarksItems);
+	const { products, isLoading} = useAppGetProducts(bookmarksItems, 'reducerBookmarks');
 
 	if(bookmarksItems.length === 0) return null;
 

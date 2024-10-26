@@ -13,7 +13,7 @@ export const Bookmarks = () => {
 	const t = useAppTranslation();
 	const noDataText = lang === Language.UA ? 'Ви ще не додали в обране жодного товару' : 'Вы еще не добавили в избранное ни одного товара';
 	const { bookmarksItems } = useAppSelector(state => state.bookmarksReducer);
-	const { products, isLoading} = useAppGetProducts(bookmarksItems);
+	const { products, isLoading} = useAppGetProducts(bookmarksItems, 'reducerBookmarks');
 
 	const path = [
 		{

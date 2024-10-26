@@ -18,7 +18,7 @@ export const Comparison = () => {
 	const { lang } = useAppSelector(state => state.langReducer);
 	const noDataText = lang === Language.UA ? 'Ви ще не додали в обране жодного товару' : 'Вы еще не добавили в избранное ни одного товара';
 	const { comparisonItems } = useAppSelector(state => state.comparisonReducer);
-	const { tires, cargo, disks, battery, isLoading} = useAppGetProducts(comparisonItems);
+	const { tires, cargo, disks, battery, isLoading} = useAppGetProducts(comparisonItems, 'reducerComparison');
 
 	const path = [
 		{

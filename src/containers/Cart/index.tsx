@@ -16,7 +16,7 @@ export const Cart = () => {
 	const { lang } = useAppSelector(state => state.langReducer);
 	const { cartItems } = useAppSelector(state => state.cartReducer);
 	const path = [{ id: 1, title: t('cart', true), url: '/' }];
-	const { tires, cargo, disks, battery, isLoading} = useAppGetProducts(cartItems, true);
+	const { tires, cargo, disks, battery, isLoading} = useAppGetProducts(cartItems, 'reducerCart', true);
 	const data = {
 		result: true,
 		data: {

@@ -10,7 +10,7 @@ export const RecentlyViewed = () => {
 	const storage = useMemo(() => {
 		return getFromStorage('reducerRecentlyViewed');
 	}, []);
-	const { products, isLoading} = useAppGetProducts(storage);
+	const { products, isLoading} = useAppGetProducts(storage, 'recentlyViewed');
 
 	if(storage.length === 0) return null;
 
