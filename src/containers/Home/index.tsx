@@ -17,7 +17,7 @@ import { Language } from '../../models/language';
 export const Home = () => {
 	const { lang } = useAppSelector(state => state.langReducer);
 	const { settings } = useAppSelector(state => state.settingsReducer);
-	const { data, isLoading } = baseDataAPI.useFetchProductsQuery({ id: '?vehicle_type=1' });
+	const { data, isLoading } = baseDataAPI.useFetchProductsQuery({ id: '?order[value]=featured' });
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
