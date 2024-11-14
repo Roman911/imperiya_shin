@@ -20,7 +20,8 @@ import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { Section } from '../../models/filter';
 import { FilterAlt } from '../Catalog/FilterAlt';
 import { OthersProducts } from '../../components/Product/OthersProduct';
-import {FilterBtn} from "../../components/Catalog/FilterByCar/FilterBtn";
+import { FilterBtn } from '../../components/Catalog/FilterByCar/FilterBtn';
+import { trackAddToCart, trackProductView } from '../../event';
 
 const cargo = ['3','4','5','6','9','10','11'];
 const scrollToTop = () => {
@@ -63,6 +64,10 @@ export const Product = () => {
 		pushIfExists('height', data?.data.offer_group.height);
 		pushIfExists('radius', data?.data.offer_group.diameter);
 	}
+
+	useEffect(() => {
+		trackProductView(data?.data, t(section, true));
+	}, [data?.data, section, t]);
 
 	useEffect(() => {
 		const storage = getFromStorage('reducerRecentlyViewed');
@@ -132,6 +137,7 @@ export const Product = () => {
 
 
 	const onSubmit = () => {
+		trackAddToCart(data?.data, t(section, true), quantity);
 		const cartStorage = getFromStorage('reducerCart');
 		const cart = [ ...cartStorage, { id: offerId, section: sectionNew, quantity }];
 		dispatch(addCart({ id: offerId, section: sectionNew, quantity }));

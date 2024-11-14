@@ -11,6 +11,7 @@ import { Language } from '../../models/language';
 import { CountryInfo, Rating } from '../Lib';
 import type { Product } from '../../models/products';
 import { Section } from '../../models/filter';
+import { trackAddToCart } from '../../event';
 
 import noPhoto from '../../assets/no-photo.jpg';
 import noPhotoRu from '../../assets/no-photo-ru.jpg';
@@ -49,6 +50,7 @@ export const ProductCardComponent: FC<ProductCardProps> = ({ item, isBookmarks, 
 
 	const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
+		trackAddToCart(item, t(section, true), 1);
 		if(!cartStorage?.find((item: { id: number, quantity: number }) => item.id === best_offer.id)) {
 			const cart = [ ...cartStorage, { id: best_offer.id, section: sectionNew, quantity: 1 }];
 			dispatch(addCart({ id: best_offer.id, quantity: 1, section: sectionNew }));

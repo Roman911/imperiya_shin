@@ -25,7 +25,7 @@ export const NpDocumentPrice: FC<NpDocumentPriceProps> = ({ offer_id, quantity }
 		</h3>
 		<h3 className="text-base font-semibold leading-6 text-gray-900 mt-3">
 			{ lang === Language.UA ? 'З післяплатою: ' : 'С наложенным платежом: ' }
-			{ Math.round(data?.[0].Cost * config.deliveryCalculation.postpaid.cof * 100) / 100 + config.deliveryCalculation.postpaid.const } грн
+			{ Math.round(data?.[0].Cost * config.deliveryCalculation.postpaid.cof * 100) / 100 + config.deliveryCalculation.postpaid.const } грн + 2% { lang === Language.UA ? 'від вартості товару' : 'от стоимости товара' }
 		</h3>
 	</Spinner>
 };
