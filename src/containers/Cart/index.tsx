@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { addToStorage, getFromStorage, removeFromStorage } from '../../lib';
@@ -8,6 +9,13 @@ import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { NoResult, Spinner, Title } from '../../components/Lib';
 import { CartComponent } from '../../components/Cart';
 import { Language } from '../../models/language';
+
+const scrollToTop = () => {
+	window.scrollTo({
+		top: 0,
+		behavior: "smooth"
+	});
+};
 
 export const Cart = () => {
 	const t = useAppTranslation();
@@ -24,6 +32,10 @@ export const Cart = () => {
 			products: [...tires,...cargo,...disks,...battery]
 		}
 	};
+
+	useEffect(() => {
+		scrollToTop();
+	}, []);
 
 	const removeProduct = (id: number) => {
 		removeFromStorage('reducerCart', id);

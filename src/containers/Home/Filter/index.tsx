@@ -109,12 +109,12 @@ export const Filter: FC<FilterProps> = ({ additionalFilter, additionalSection })
 
 			if(!additionalFilter) {
 				filterConfigs.push({
-					label: 'ET ' + t('from'), name: 'et_from',
+					label: 'ET ' + t('from'), name: 'etMin',
 					options: data?.et?.map(item => ({ value: item.value, label: item.value, p: item.p }))
 				});
 
 				filterConfigs.push({
-					label: 'ET ' + t('to'), name: 'et_to',
+					label: 'ET ' + t('to'), name: 'etMax',
 					options: data?.et?.map(item => ({ value: item.value, label: item.value, p: item.p }))
 				});
 			}

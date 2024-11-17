@@ -17,7 +17,7 @@ interface CatalogContentProps {
 export const CatalogContent: FC<CatalogContentProps> = ({ openFilter }) => {
 	const [ paginateCount, setPaginateCount ] = useState(0);
 	const [ getParams, setGetParams ] = useState('');
-	const [ sort, setSort ] = useState('');
+	const [ sort, setSort ] = useState('&order[value]=popular&order[asc]=0');
 	const [ moreCount, setMoreCount ] = useState(1);
 	const [ itemsProduct, setItemsProduct ] = useState(config.catalog.itemsProduct);
 	const { lang } = useAppSelector(state => state.langReducer);

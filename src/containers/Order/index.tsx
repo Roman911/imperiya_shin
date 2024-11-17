@@ -17,6 +17,13 @@ import { LayoutWrapper } from '../../components/Layout';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { trackBeginCheckout, trackPurchase } from '../../event';
 
+const scrollToTop = () => {
+	window.scrollTo({
+		top: 0,
+		behavior: "smooth"
+	});
+};
+
 const schema = yup.object().shape({
 	firstname: yup.string().required('Це поле обовʼязкове.'),
 	lastname: yup.string().required('Це поле обовʼязкове.'),
@@ -67,6 +74,10 @@ export const Order = () => {
 			products: [...tires, ...cargo, ...disks, ...battery],
 		},
 	}), [battery, cargo, disks, tires]);
+
+	useEffect(() => {
+		scrollToTop();
+	}, []);
 
 	useEffect(() => {
 		trackBeginCheckout(newData, cartItems);

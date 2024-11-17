@@ -9,7 +9,7 @@ import { ImgGallery } from './ImageGallery';
 import { CharacteristicsBlock } from './CharacteristicsBlock';
 import { countryCodeTransform, Link, SeasonTransform, VehicleTypeTransform } from '../../lib';
 import { CountryInfo, Quantity, Rating, Spinner } from '../Lib';
-import { CartIcon, MarkerIcon, BusIcon, CargoIcon, CarIcon, MotorcyclesIcon, SpecialEquipmentIcon, SuvIcon } from "../Lib/Icons";
+import { CartIcon, BusIcon, CargoIcon, CarIcon, MotorcyclesIcon, SpecialEquipmentIcon, SuvIcon } from "../Lib/Icons";
 import truckIcon from '../../assets/icons/truck-icon.svg';
 import { Language } from '../../models/language';
 import { Section } from '../../models/filter';
@@ -143,7 +143,7 @@ export const ProductComponent: FC<ProductComponentProps> = (
 							<div className='offers mt-7 mb-5'>
 								{offers.map(item => {
 									return <div key={item.offer_id} onClick={() => handleClick(item.offer_id)}
-															className='offers__item cursor-pointer grid md:grid-cols-9 gap-1 md:gap-4 items-center mt-3 py-1.5 md:py-0 px-2 md:px-0 bg-white md:bg-transparent border md:border-0 rounded-full'>
+															className='offers__item cursor-pointer grid md:grid-cols-7 gap-1 md:gap-4 items-center mt-3 py-1.5 md:py-0 px-2 md:px-0 bg-white md:bg-transparent border md:border-0 rounded-full'>
 										<div className='input flex flex-row md:col-span-2 relative'>
 											<input type="checkbox" onChange={() => handleClick(item.offer_id)} checked={item.offer_id === offerId} className='appearance-none h-6 w-6 bg-white rounded-full border border-zinc-400 hover:border-blue-500 checked:border-blue-500 transition-all duration-200 peer'/>
 											<div className='h-4 w-4 absolute inset-1 rounded-full peer-checked:border-blue-500 peer-checked:bg-blue-500'/>
@@ -151,10 +151,6 @@ export const ProductComponent: FC<ProductComponentProps> = (
 										</div>
 										<div className='country md:col-span-3'>
 											<CountryInfo country={ lang === Language.UA ? item.country : item.country_ru } countryCode={ countryCodeTransform(item.country) } year={ item.year } mobileHidden={ true } />
-										</div>
-										<div className='storage md:col-span-2 text-sm content-center flex items-center gap-x-1 md:gap-x-2'>
-											<MarkerIcon className='fill-gray-400 w-3' />
-											{ lang === Language.UA ? item.posts.city : item.posts.city_ru }
 										</div>
 										<div className='price md:col-span-2 md:text-sm font-bold content-center'>
 											{ item.price } грн

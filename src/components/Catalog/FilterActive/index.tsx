@@ -106,6 +106,10 @@ export const FilterActiveComponent: FC<FilterActiveProps> = (
 				return renderItem(item as keyof IFilter, 'Шип');
 			}
 
+			if(item === 'only_off_road') {
+				return renderItem(item as keyof IFilter, 'Off-Road 4x4');
+			}
+
 			if(item === 'typedisk') {
 				if (searchParams[item] === '1') {
 					return renderItem(item as keyof IFilter, t('steel', true) || null);

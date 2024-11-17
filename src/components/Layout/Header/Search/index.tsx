@@ -31,9 +31,9 @@ export const SearchComponent: FC<SearchProps> = ({ data, placeholder, isOpen, va
 				className="w-full flex bg-transparent pl-4 text-[15px] text-gray-500 font-medium outline-0"
 				placeholder={placeholder}
 			/>
-			<button type="submit" className="btn primary rounded-l-none rounded-r-sm w-16 h-9 -my-0.5 -mr-0.5">
+			<Link className={classNames('btn primary rounded-l-none rounded-r-sm w-16 h-9 -my-0.5 -mr-0.5', {'pointer-events-none': !isOpen})} onClick={ handleClickAllProduct } to={`/search`}>
 				<SearchIcon className='fill-white'/>
-			</button>
+			</Link>
 		</div>
 		<div className={classNames('absolute top-12 right-0 z-20 py-6 px-8 md:px-10 bg-zinc-700 text-white rounded-lg w-full lg:max-w-[460px]', {'hidden': !isOpen})}>
 			<CloseButton handleClick={ handleClick } />

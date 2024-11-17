@@ -1,9 +1,11 @@
 import { useEffect, useState, useRef, ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { baseDataAPI } from '../../../../services/baseDataService';
-import { useAppDispatch } from '../../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../../hooks';
 import { setSearch } from '../../../../store/reducers/searchSlice';
 import { SearchComponent } from '../../../../components/Layout/Header/Search';
+import { Language } from '../../../../models/language';
 
 const placeHolderExamples = [
 	'235/45 R18 RunFlat',
@@ -19,7 +21,9 @@ const placeHolderExamples = [
 
 export const Search = () => {
 	const [placeholder, setPlaceholder] = useState('');
+	const navigate = useNavigate();
 	const [value, setValue] = useState('');
+	const { lang } = useAppSelector(state => state.langReducer);
 	const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0);
 	const { data } = baseDataAPI.useFetchProductsQuery({ id: `?name=${value}` })
 	const currentLetter = useRef(0);
@@ -64,6 +68,21 @@ export const Search = () => {
 		dispatch(setSearch(value));
 		handleClick();
 	}
+
+	useEffect(() => {
+		const handleKeyPress = (e: { key: string; }) => {
+			if (e.key === 'Enter' && value.length > 2) {
+				handleClickAllProduct();
+				navigate(`${lang === Language.UA ? '' : '/ru'}/search`);
+			}
+		};
+
+		window.addEventListener('keypress', handleKeyPress);
+
+		return () => {
+			window.removeEventListener('keypress', handleKeyPress);
+		};
+	}, [value]);
 
 	return <SearchComponent
 		placeholder={ placeholder }

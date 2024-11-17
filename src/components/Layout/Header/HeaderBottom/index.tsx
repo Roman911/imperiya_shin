@@ -17,6 +17,7 @@ export const HeaderBottom = () => {
 	const t = useAppTranslation();
 
 	const closeFilter = () => {
+		dispatch(resetFilter());
 		setOpen(false);
 	}
 
