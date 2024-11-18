@@ -29,15 +29,6 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
 		if(cartStorage.length !== 0) dispatch(addCartFromStorage(cartStorage));
 	}, [bookmarksStorage, cartStorage, comparisonStorage, dispatch]);
 
-	useEffect(() => {
-		if (settings?.[0].body_html) {
-			const script = document.createElement('noscript');
-			script.innerHTML = '<iframe src="https://www.googletagmanager.com/gtag/js?id=G-MPBS7BE0VP"\n' +
-				'height="0" width="0" style="display:none;visibility:hidden"></iframe>';
-			document.body.appendChild(script);
-		}
-	}, [settings]);
-
 	return <>
 		<Header />
 		{ children || <Outlet /> }

@@ -2,9 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux';
 import { HelmetProvider } from 'react-helmet-async';
+import TagManager from 'react-gtm-module';
 
-import { App } from './router'
-import { setupStore } from './store/store'
+import { App } from './router';
+import { setupStore } from './store/store';
+
+const tagManagerArgs = {
+  gtmId: 'G-MPBS7BE0VP'
+};
+
+TagManager.initialize(tagManagerArgs);
 
 const store = setupStore();
 

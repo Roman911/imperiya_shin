@@ -22,22 +22,21 @@ export const SelectFromTo: FC<SelectFromTo> = ({ nameMin, nameMax,  from, to, ti
 	const t = useAppTranslation();
 
 	const onChange = (param: string, value: string) => {
-		const onlyNumbers = value.replace( minus ? /[^\d-]/g : /\D/g, '');
-		setMinMax({...minMax, [param]: onlyNumbers});
-	}
+		const onlyNumbers = value.replace(minus ? /[^\d-]/g : /\D/g, '');
+		const updatedMinMax = { ...minMax, [param]: onlyNumbers };
+		setMinMax(updatedMinMax);
+
+		const updateParams = (key: string, val: string) => {
+			dispatch(setParams({ [key]: val.length > 0 ? val : null })); // Simplify conditional logic
+		};
+
+		// Update parameters dynamically using the updated values
+		updateParams(nameMin, updatedMinMax.min);
+		updateParams(nameMax, updatedMinMax.max);
+	};
 
 	const handleClick = () => {
 		closeFilter();
-		const updateParams = (key: string, value: string) => {
-			if (value.length > 0) {
-				dispatch(setParams({ [key]: value })); // Use computed property name for dynamic key
-			} else {
-				dispatch(setParams({ [key]: null }));
-			}
-		};
-
-		updateParams(nameMin, minMax.min);
-		updateParams(nameMax, minMax.max);
 		handleSubmit();
 	};
 

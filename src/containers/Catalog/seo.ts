@@ -71,10 +71,16 @@ export const parseUrl = (url: string): ParsedResult => {
 	const result: ParsedResult = {};
 
 	url.split('/').forEach(item => {
-		const [name, value] = item.split('-');
-		const paramName = paramTrans[name as keyof typeof paramTrans];
-		if (paramName) {
-			result[paramName] = value || '';
+		if (!item) return; // Skip empty items
+
+		const [name, ...rest] = item.split('-'); // Handle potential multiple `-`
+		const value = rest.join('-'); // Rejoin the rest of the parts for the value
+
+		if (name) { // Ensure 'name' exists
+			const paramName = paramTrans[name as keyof typeof paramTrans];
+			if (paramName) {
+				result[paramName] = value || ''; // Use an empty string if 'value' is undefined
+			}
 		}
 	});
 
