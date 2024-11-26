@@ -30,25 +30,22 @@ export const Layout = ({ children }: { children?: ReactNode }) => {
 	}, [bookmarksStorage, cartStorage, comparisonStorage, dispatch]);
 
 	useEffect(() => {
-		const script1 = document.createElement('script');
-		script1.src = "https://www.googletagmanager.com/gtag/js?id=G-MPBS7BE0VP";
-		script1.async = true;
-		document.body.appendChild(script1);
+		if (settings?.[0].body_html) {
+			const script1 = document.createElement('script');
+			script1.src = settings?.[0].head_html;
+			script1.async = true;
+			document.body.appendChild(script1);
 
-		const script2 = document.createElement('script');
-		script2.innerHTML = `
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-MPBS7BE0VP');
-    `;
-		document.body.appendChild(script2);
+			const script2 = document.createElement('script');
+			script2.innerHTML = settings?.[0].body_html;
+			document.body.appendChild(script2);
 
-		return () => {
-			document.body.removeChild(script1);
-			document.body.removeChild(script2);
-		};
-	}, []);
+			return () => {
+				document.body.removeChild(script1);
+				document.body.removeChild(script2);
+			};
+		}
+	}, [settings]);
 
 	return <>
 		<Header/>
