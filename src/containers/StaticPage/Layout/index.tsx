@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC, memo, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 import { Helmet } from 'react-helmet-async';
 
@@ -32,6 +32,13 @@ interface StaticPageProps {
 	lang: Language
 }
 
+const scrollToTop = () => {
+	window.scrollTo({
+		top: 0,
+		behavior: "smooth"
+	});
+};
+
 export const LayoutStaticPage: FC<StaticPageProps> = ({ title, data, isLoading, lang }) => {
 	const path = [
 		{
@@ -40,6 +47,10 @@ export const LayoutStaticPage: FC<StaticPageProps> = ({ title, data, isLoading, 
 			url: '/'
 		}
 	];
+
+	useEffect(() => {
+		scrollToTop();
+	}, []);
 
 	const HtmlContent = memo(({ htmlString }: { htmlString: string }) => {
 		const sanitizedHtml = DOMPurify.sanitize(htmlString);

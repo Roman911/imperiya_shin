@@ -50,16 +50,16 @@ export const InfoBlock: FC<InfoBlockProps> = ({ handleModalOpen }) => {
 					<span className='underline'>{t('refund', true)}</span>
 				</Link>
 			</div>
-			<div className='mt-5 text-sm  leading-9 whitespace-pre-wrap border-b border-gray-200 pb-4'>
+			<div className='mt-5 text-sm whitespace-pre-wrap border-b border-gray-200 pb-4 leading-6'>
 				<h5 className='text-lg font-bold'>{lang === Language.UA ? 'Контакти' : 'Контакты'}</h5>
 				{settings[lang].config_address && <HtmlContent htmlString={settings[lang].config_address}/>}
 				<Contacts isInfoBlock={ true } />
 				<div className='flex items-center'>
-					<img src={calendarIcon} alt=""/>
+					<img className='mr-2' src={calendarIcon} alt=""/>
 					{settings[lang].config_open && <HtmlContent htmlString={settings[lang].config_open}/>}
 				</div>
 			</div>
-			<div className='mt-5 text-sm mb-4 leading-9 whitespace-pre-wrap'>
+			<div className='mt-5 text-sm mb-4 leading-6 whitespace-pre-wrap'>
 				<h5 className='text-lg font-bold'>
 					{lang === Language.UA ? 'Доставка по Україні' : 'Доставка по Украине'}
 				</h5>

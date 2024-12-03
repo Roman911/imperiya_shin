@@ -22,6 +22,10 @@
 	input {
 		outline: none;
 	}
+
+	pre {
+		@apply whitespace-pre-wrap
+	}
 }
 
 @layer components {
