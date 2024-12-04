@@ -124,41 +124,42 @@ export const Order = () => {
 	const onSubmit: SubmitHandler<FormProps> = async (data) => {
 		const { firstname, lastname, surname, email, telephone, comment, address } = data;
 		setLoadingBtn(true);
-		await createOrder({
-			fast: 0,
-			firstname,
-			lastname,
-			surname,
-			email,
-			telephone,
-			total,
-			comment: comment || 'null',
-			payment_method: paymentMethod,
-			shipping_method: shippingMethod,
-			payment_address_1: wirehouse.label || 'null',
-			payment_address_2: address || 'null',
-			payment_city: city.label,
-			ref_wirehouse: wirehouse.value,
-			ref_city: city.value,
-			products,
-		}).then((response: { data?: { result: boolean, linkpay: string, order_id: number }; error?: FetchBaseQueryError | SerializedError }) => {
-			const data = response?.data;
-			if (data) {
-				if(data?.linkpay?.length > 0) {
-					window.open(data?.linkpay, "_blank");
-				}
-				if(data?.result) {
-					trackPurchase(newData, cartItems, data?.order_id);
-					methods.reset();
-					dispatch(reset());
-					navigate('/order/successful');
-				}
-			} else if (response.error) {
-				console.error('An error occurred:', response.error);
-			}
-		}).finally(() => {
-			setLoadingBtn(false);
-		});
+		window.open('https://rozetka.com.ua/ua/', "_blank");
+		// await createOrder({
+		// 	fast: 0,
+		// 	firstname,
+		// 	lastname,
+		// 	surname,
+		// 	email,
+		// 	telephone,
+		// 	total,
+		// 	comment: comment || 'null',
+		// 	payment_method: paymentMethod,
+		// 	shipping_method: shippingMethod,
+		// 	payment_address_1: wirehouse.label || 'null',
+		// 	payment_address_2: address || 'null',
+		// 	payment_city: city.label,
+		// 	ref_wirehouse: wirehouse.value,
+		// 	ref_city: city.value,
+		// 	products,
+		// }).then((response: { data?: { result: boolean, linkpay: string, order_id: number }; error?: FetchBaseQueryError | SerializedError }) => {
+		// 	const data = response?.data;
+		// 	if (data) {
+		// 		if(data?.linkpay?.length > 0) {
+		// 			window.open(data?.linkpay, "_blank");
+		// 		}
+		// 		if(data?.result) {
+		// 			trackPurchase(newData, cartItems, data?.order_id);
+		// 			methods.reset();
+		// 			dispatch(reset());
+		// 			navigate('/order/successful');
+		// 		}
+		// 	} else if (response.error) {
+		// 		console.error('An error occurred:', response.error);
+		// 	}
+		// }).finally(() => {
+		// 	setLoadingBtn(false);
+		// });
 	}
 
 	const onChange = (name: string, value: number | string | undefined) => {
