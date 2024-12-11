@@ -67,11 +67,11 @@ export const ProductCardComponent: FC<ProductCardProps> = ({ item, isBookmarks, 
 					{ Icon && <Icon className={classNames('fill-[#575C66]', {'stroke-[#575C66]': vehicle_type === '2'}) }/> }
 				</div>
 				<div className='absolute right-0 flex flex-col'>
-					<button onClick={event => addToDefense(event, group)}>
+					<button aria-label='Add to favorites' onClick={event => addToDefense(event, group)}>
 						<HeartIcon
 							className={classNames('stroke-[#8D8E90] hover:stroke-blue-500', {'stroke-blue-500 fill-blue-500': isBookmarks})}/>
 					</button>
-					<button onClick={event => addToComparison(event, group)}>
+					<button aria-label='Add to comparison' onClick={event => addToComparison(event, group)}>
 						<LibraIcon
 							className={classNames('mt-5 fill-[#8D8E90] hover:fill-blue-500', {'fill-blue-500': isComparison})}/>
 					</button>
@@ -102,7 +102,7 @@ export const ProductCardComponent: FC<ProductCardProps> = ({ item, isBookmarks, 
 						<div>за 4 шт.</div>
 					</div>}
 				</div>
-				<button onClick={(event) => handleClick(event)} className='btn primary small'>
+				<button aria-label='Add to cart' onClick={(event) => handleClick(event)} className='btn primary small'>
 					<CartIcon className='stroke-white'/>
 				</button>
 			</div>

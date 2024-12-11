@@ -110,6 +110,7 @@ export const MySelect: FC<SelectProps> = ({ name, label, options = [], focusValu
 		onChange={ handleChange }
 		className='MyDropdown'
 		classNamePrefix='MyDropdown'
+		aria-labelledby={ name }
 		noOptionsMessage={ () => lang === Language.UA ? 'Збігів не знайдено' : 'Совпадений не найдено' }
 	/>
 };

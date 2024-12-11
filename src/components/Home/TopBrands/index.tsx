@@ -1,14 +1,14 @@
 import { useAppTranslation } from '../../../hooks';
 import { Link } from '../../../lib';
 
-import img01 from '../../../assets/top_brands/01.png';
-import img02 from '../../../assets/top_brands/02.png';
-import img03 from '../../../assets/top_brands/03.png';
-import img04 from '../../../assets/top_brands/04.png';
-import img05 from '../../../assets/top_brands/05.png';
-import img06 from '../../../assets/top_brands/06.png';
-import img07 from '../../../assets/top_brands/07.png';
-import img08 from '../../../assets/top_brands/08.png';
+import img01 from '../../../assets/top_brands/08.webp';
+import img02 from '../../../assets/top_brands/08.webp';
+import img03 from '../../../assets/top_brands/08.webp';
+import img04 from '../../../assets/top_brands/08.webp';
+import img05 from '../../../assets/top_brands/08.webp';
+import img06 from '../../../assets/top_brands/08.webp';
+import img07 from '../../../assets/top_brands/08.webp';
+import img08 from '../../../assets/top_brands/08.webp';
 
 export const TopBrands = () => {
 	const t = useAppTranslation();

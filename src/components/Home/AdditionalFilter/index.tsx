@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import { useAppTranslation } from '../../../hooks';
 import { Section } from '../../../models/filter';
 
-import tire from '../../../assets/additional-filter-tire.png';
-import disk from '../../../assets/additional-filter-disk.png';
+import tire from '../../../assets/additional-filter-disk.webp';
+import disk from '../../../assets/additional-filter-disk.webp';
 
 interface AdditionalFilterProps {
 	children: ReactNode;
