@@ -6,9 +6,9 @@ import { Link } from '../../../lib';
 import { CalculatorIcon, HeartIcon, LibraIcon, MailIcon, PhoneCircuitIcon, ShareIcon } from '../../Lib/Icons';
 import {useAppSelector, useClickOutside} from '../../../hooks';
 
-import vodafoneLogo from '../../../assets/vodafone-logo.png';
-import kievstarLogo from '../../../assets/kievstar-logo.png';
-import lifecellLogo from '../../../assets/life-logo.png';
+import vodafoneLogo from '../../../assets/vodafone-logo.webp';
+import kievstarLogo from '../../../assets/kievstar-logo.webp';
+import lifecellLogo from '../../../assets/life-logo.webp';
 
 import { PhoneLogo } from '../../../models/config';
 

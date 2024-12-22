@@ -53,10 +53,12 @@ export const LayoutStaticPage: FC<StaticPageProps> = ({ title, data, isLoading, 
 	}, []);
 
 	const HtmlContent = memo(({ htmlString }: { htmlString: string }) => {
-		const sanitizedHtml = DOMPurify.sanitize(htmlString);
-		return (
-			<div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />
-		);
+		const sanitizedHtml = DOMPurify.sanitize(htmlString, {
+			ADD_TAGS: ['iframe'],
+			ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'loading', 'referrerpolicy']
+		});
+
+		return <div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />;
 	});
 
 	return <LayoutWrapper>

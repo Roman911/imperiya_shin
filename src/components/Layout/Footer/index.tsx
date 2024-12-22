@@ -7,9 +7,9 @@ import { useAppSelector, useAppTranslation } from '../../../hooks';
 import { EmailIcon, FacebookIcon, TelegramIcon, ViberIcon } from '../../Lib/Icons';
 import { linksCatalog } from './linksCatalog';
 
-import kievstarLogo from '../../../assets/kievstar-logo.png';
-import lifecellLogo from '../../../assets/life-logo.png';
-import vodafoneLogo from '../../../assets/vodafone-logo.png';
+import kievstarLogo from '../../../assets/kievstar-logo.webp';
+import lifecellLogo from '../../../assets/life-logo.webp';
+import vodafoneLogo from '../../../assets/vodafone-logo.webp';
 
 import { PhoneLogo } from '../../../models/config';
 import {memo} from "react";

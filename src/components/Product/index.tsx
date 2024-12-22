@@ -16,8 +16,8 @@ import { Section } from '../../models/filter';
 import { OtherModelSize } from '../../containers/Product/OtherModelSize';
 import type { ProductProps } from '../../models/product';
 
-import noPhoto from '../../assets/no-photo.jpg';
-import noPhotoRu from '../../assets/no-photo-ru.jpg';
+import noPhoto from '../../assets/no-photo.webp';
+import noPhotoRu from '../../assets/no-photo-ru.webp';
 import warningIcon from '../../assets/warning-icon.svg';
 
 const Icons = {

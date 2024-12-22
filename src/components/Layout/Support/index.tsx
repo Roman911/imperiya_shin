@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../../hooks';
 import { PhoneMaskInput } from '../../Lib';
 
-import imgSupport from '../../../assets/home-support.png';
+import imgSupport from '../../../assets/home-support.webp';
 
 export const SupportComponent = () => {
 	const { lang } = useAppSelector(state => state.langReducer);

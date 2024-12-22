@@ -13,8 +13,8 @@ import type { Product } from '../../models/products';
 import { Section } from '../../models/filter';
 import { trackAddToCart } from '../../event';
 
-import noPhoto from '../../assets/no-photo.jpg';
-import noPhotoRu from '../../assets/no-photo-ru.jpg';
+import noPhoto from '../../assets/no-photo.webp';
+import noPhotoRu from '../../assets/no-photo-ru.webp';
 
 const icons = {
 	1: CarIcon,

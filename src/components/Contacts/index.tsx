@@ -3,9 +3,9 @@ import classNames from 'classnames';
 
 import { ChevronDownIcon, PhoneIcon } from '../Lib/Icons';
 
-import vodafoneLogo from '../../assets/vodafone-logo.png';
-import kievstarLogo from '../../assets/kievstar-logo.png';
-import lifecellLogo from '../../assets/life-logo.png';
+import vodafoneLogo from '../../assets/vodafone-logo.webp';
+import kievstarLogo from '../../assets/kievstar-logo.webp';
+import lifecellLogo from '../../assets/life-logo.webp';
 
 import { PhoneLogo } from '../../models/config';
 
