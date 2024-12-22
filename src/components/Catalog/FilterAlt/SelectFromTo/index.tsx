@@ -22,7 +22,7 @@ export const SelectFromTo: FC<SelectFromTo> = ({ nameMin, nameMax,  from, to, ti
 	const t = useAppTranslation();
 
 	const onChange = (param: string, value: string) => {
-		const onlyNumbers = value.replace(minus ? /[^\d-]/g : /\D/g, '');
+		const onlyNumbers = value.replace(minus ? /[^\d-,]/g : /[^\d,]/g, '');
 		const updatedMinMax = { ...minMax, [param]: onlyNumbers };
 		setMinMax(updatedMinMax);
 
