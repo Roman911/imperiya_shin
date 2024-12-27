@@ -5,7 +5,7 @@ export const linksCatalog = [
 	},
 	{
 		link: '/catalog/disks',
-		title: 'discs',
+		title: 'disks',
 	},
 	{
 		link: '/catalog/tires/vt-3',
@@ -15,8 +15,8 @@ export const linksCatalog = [
 		link: '/catalog/tires/vt-7',
 		title: 'motorcycle tires',
 	},
-	{
-		link: '/catalog/battery',
-		title: 'accumulators',
-	},
+	// {
+	// 	link: '/catalog/battery',
+	// 	title: 'accumulators',
+	// },
 ];
