@@ -48,11 +48,11 @@ export const CartComponent: FC<CarProps> = ({ data, cartItems, removeProduct, se
 				const quantity = cartItems?.find(i => i.id === item.best_offer.id)?.quantity || 1;
 
 				return <CartItem
-					key={ item.group }
+					key={ item.sku }
 					id={ item.best_offer.id }
 					pageUrl={ item.page_url }
 					quantity={ quantity }
-					group={ item.group }
+					sku={ item.sku }
 					default_photo={ item.default_photo }
 					full_name={ item.full_name }
 					price={ item.best_offer.price }

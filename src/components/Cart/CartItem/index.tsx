@@ -12,7 +12,7 @@ interface CartItemProps {
 	default_photo: string
 	full_name: string
 	price: string
-	group: number
+	sku: number
 	country: string
 	country_ru: string
 	year: number
@@ -29,7 +29,7 @@ export const CartItem: FC<CartItemProps> = (
 		default_photo,
 		full_name,
 		price,
-		group,
+		sku,
 		country,
 		country_ru,
 		year,
@@ -57,7 +57,7 @@ export const CartItem: FC<CartItemProps> = (
 					{ full_name }
 				</Link>
 				<div className='font-bold text-xl mt-2'>{ price } ₴/шт.</div>
-				<div className='text-sm text-gray-500 mt-1'>Арт: { group }</div>
+				<div className='text-sm text-gray-500 mt-1'>Арт: { sku }</div>
 				<div className='country mt-2 md:col-span-4'>
 					<CountryInfo
 						country={ country }
