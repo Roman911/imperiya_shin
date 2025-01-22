@@ -6,8 +6,6 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
-
-import { config } from '../../config';
 import { baseDataAPI } from '../../services/baseDataService';
 import { useAppDispatch, useAppGetProducts, useAppSelector, useAppTranslation } from '../../hooks';
 import { reset } from '../../store/reducers/cartSlice';
@@ -62,6 +60,7 @@ export const Order = () => {
 	const [paymentMethod, setPaymentMethod] = useState<number | string | undefined>(1);
 	const { cartItems } = useAppSelector(state => state.cartReducer);
 	const { city, wirehouse } = useAppSelector(state => state.orderReducer);
+	const { settings } = useAppSelector(state => state.settingsReducer);
 	const t = useAppTranslation();
 	const { tires, cargo, disks, battery, isLoading} = useAppGetProducts(cartItems, 'reducerCart', true);
 	const { data: dataOrdersParam } = baseDataAPI.useFetchOrdersParamQuery('');
@@ -172,7 +171,8 @@ export const Order = () => {
 
 	return <LayoutWrapper>
 		<Helmet>
-			<title>{ t('placing an order', true) } | { config.domain }</title>
+			<title>{ t('placing an order', true) } | { settings?.ua.meta_title || '' }</title>
+			<meta name='description' content={ `${t('placing an order', true)} | ${settings?.ua.meta_description} || ''` }/>
 		</Helmet>
 		<div className='max-w-5xl mx-auto'>
 			<Breadcrumbs path={ path }/>

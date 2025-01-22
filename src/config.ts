@@ -1,7 +1,7 @@
 import { Config } from './models/config';
 
 export const config: Config = {
-	domain: 'imperiya-shin.ua',
+	domain: 'https://imperiashyn.com.ua/',
 	startYear: 2008,
 	social: {
 		links: [
