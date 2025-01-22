@@ -18,7 +18,7 @@ import type { ProductProps } from '../../models/product';
 
 import noPhoto from '../../assets/no-photo.webp';
 import noPhotoRu from '../../assets/no-photo-ru.webp';
-import warningIcon from '../../assets/warning-icon.svg';
+// import warningIcon from '../../assets/warning-icon.svg';
 
 const Icons = {
 	light: CarIcon,
@@ -185,19 +185,19 @@ export const ProductComponent: FC<ProductComponentProps> = (
 					</button>
 				</div>
 			</div>
-			{section !== Section.Battery && <div className='my-10 p-8 bg-[#FDFEFF] border border-gray-200 rounded-sm'>
-				<div className='flex items-center gap-2'>
-					<img src={warningIcon} alt=""/>
-					<h4 className='text-lg font-bold'>
-						{lang === Language.UA ? 'Зверніть увагу!' : 'Обратите внимание!'}
-					</h4>
-				</div>
-				{lang === Language.UA ?
-					<p className='text-sm mt-5'>При покупці <strong>менше 4-х одиниць</strong> товару вартість може бути вище
-						зазначеної. Бувають випадки, коли у нас немає можливості продати менше 4-х одиниць товару.</p> :
-					<p className='text-sm mt-5'>При покупке <strong>менее 4-х единиц</strong> товара стоимость может быть выше
-						указанной. Бывают случаи, когда у нас нет возможности продать менее 4 единиц товара.</p>}
-			</div>}
+			{/*{section !== Section.Battery && <div className='my-10 p-8 bg-[#FDFEFF] border border-gray-200 rounded-sm'>*/}
+			{/*	<div className='flex items-center gap-2'>*/}
+			{/*		<img src={warningIcon} alt=""/>*/}
+			{/*		<h4 className='text-lg font-bold'>*/}
+			{/*			{lang === Language.UA ? 'Зверніть увагу!' : 'Обратите внимание!'}*/}
+			{/*		</h4>*/}
+			{/*	</div>*/}
+			{/*	{lang === Language.UA ?*/}
+			{/*		<p className='text-sm mt-5'>При покупці <strong>менше 4-х одиниць</strong> товару вартість може бути вище*/}
+			{/*			зазначеної. Бувають випадки, коли у нас немає можливості продати менше 4-х одиниць товару.</p> :*/}
+			{/*		<p className='text-sm mt-5'>При покупке <strong>менее 4-х единиц</strong> товара стоимость может быть выше*/}
+			{/*			указанной. Бывают случаи, когда у нас нет возможности продать менее 4 единиц товара.</p>}*/}
+			{/*</div>}*/}
 			<CharacteristicsBlock data={data}/>
 			{ section !== Section.Battery &&
 				<OtherModelSize section={ section } diameter={ data?.data.offer_group.diameter } brand={ data?.data.brand.id } model={ data?.data.model.id } vehicle_type={ data?.data.offer_group.vehicle_type } />
