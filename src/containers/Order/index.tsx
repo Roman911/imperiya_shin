@@ -121,7 +121,6 @@ export const Order = () => {
 	];
 
 	const onSubmit: SubmitHandler<FormProps> = async (data) => {
-		const newWindow = window.open("", "_blank");
 		const { firstname, lastname, surname, email, telephone, comment, address } = data;
 		setLoadingBtn(true);
 		await createOrder({
@@ -145,7 +144,7 @@ export const Order = () => {
 			const data = response?.data;
 			if (data) {
 				if(data?.linkpay?.length > 0) {
-					if(newWindow) newWindow.location.href = data?.linkpay;
+					window.open(data.linkpay, "_blank");
 				}
 				if(data?.result) {
 					trackPurchase(newData, cartItems, data?.order_id);
