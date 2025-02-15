@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { FormProvider, useForm, SubmitHandler } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
@@ -55,14 +55,14 @@ const defaultValues = {
 export const Order = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const [loadingBtn, setLoadingBtn] = useState(false);
-	const [shippingMethod, setShippingMethod] = useState<number | string | undefined>(1);
-	const [paymentMethod, setPaymentMethod] = useState<number | string | undefined>(1);
+	const [ loadingBtn, setLoadingBtn ] = useState(false);
+	const [ shippingMethod, setShippingMethod ] = useState<number | string | undefined>(1);
+	const [ paymentMethod, setPaymentMethod ] = useState<number | string | undefined>(1);
 	const { cartItems } = useAppSelector(state => state.cartReducer);
 	const { city, wirehouse } = useAppSelector(state => state.orderReducer);
 	const { settings } = useAppSelector(state => state.settingsReducer);
 	const t = useAppTranslation();
-	const { tires, cargo, disks, battery, isLoading} = useAppGetProducts(cartItems, 'reducerCart', true);
+	const { tires, cargo, disks, battery, isLoading } = useAppGetProducts(cartItems, 'reducerCart', true);
 	const { data: dataOrdersParam } = baseDataAPI.useFetchOrdersParamQuery('');
 	const [ createOrder ] = baseDataAPI.useCreateOrderMutation();
 
@@ -70,9 +70,9 @@ export const Order = () => {
 		result: true,
 		data: {
 			total_count: 5,
-			products: [...tires, ...cargo, ...disks, ...battery],
+			products: [ ...tires, ...cargo, ...disks, ...battery ],
 		},
-	}), [battery, cargo, disks, tires]);
+	}), [ battery, cargo, disks, tires ]);
 
 	useEffect(() => {
 		scrollToTop();
@@ -80,7 +80,7 @@ export const Order = () => {
 
 	useEffect(() => {
 		trackBeginCheckout(newData, cartItems);
-	}, [cartItems, newData]);
+	}, [ cartItems, newData ]);
 
 	const products = newData?.data.products?.map((item) => {
 		return {
@@ -120,7 +120,7 @@ export const Order = () => {
 		},
 	];
 
-	const onSubmit: SubmitHandler<FormProps> = async (data) => {
+	const onSubmit: SubmitHandler<FormProps> = async(data) => {
 		const { firstname, lastname, surname, email, telephone, comment, address } = data;
 		setLoadingBtn(true);
 		await createOrder({
@@ -140,9 +140,12 @@ export const Order = () => {
 			ref_wirehouse: wirehouse.value,
 			ref_city: city.value,
 			products,
-		}).then((response: { data?: { result: boolean, linkpay: string, order_id: number }; error?: FetchBaseQueryError | SerializedError }) => {
+		}).then((response: {
+			data?: { result: boolean, linkpay: string, order_id: number };
+			error?: FetchBaseQueryError | SerializedError
+		}) => {
 			const data = response?.data;
-			if (data) {
+			if(data) {
 				if(data?.linkpay?.length > 0) {
 					window.open(data.linkpay, "_blank");
 				}
@@ -152,7 +155,7 @@ export const Order = () => {
 					dispatch(reset());
 					navigate('/order/successful');
 				}
-			} else if (response.error) {
+			} else if(response.error) {
 				console.error('An error occurred:', response.error);
 			}
 		}).finally(() => {
@@ -161,9 +164,9 @@ export const Order = () => {
 	}
 
 	const onChange = (name: string, value: number | string | undefined) => {
-		if(name === 'shipping_method'){
+		if(name === 'shipping_method') {
 			setShippingMethod(value);
-		} else if(name === 'payment_method'){
+		} else if(name === 'payment_method') {
 			setPaymentMethod(value);
 		}
 	}
@@ -171,7 +174,8 @@ export const Order = () => {
 	return <LayoutWrapper>
 		<Helmet>
 			<title>{ t('placing an order', true) } | { settings?.ua.meta_title || '' }</title>
-			<meta name='description' content={ `${t('placing an order', true)} | ${settings?.ua.meta_description} || ''` }/>
+			<meta name='description'
+						content={ `${ t('placing an order', true) } | ${ settings?.ua.meta_description } || ''` }/>
 		</Helmet>
 		<div className='max-w-5xl mx-auto'>
 			<Breadcrumbs path={ path }/>
@@ -187,6 +191,7 @@ export const Order = () => {
 						shippingMethod={ shippingMethod }
 						dataOrdersParam={ dataOrdersParam }
 						showNpWarehouses={ city.value?.length > 0 }
+						paymentMethod={ paymentMethod }
 					/>
 				</form>
 			</FormProvider>

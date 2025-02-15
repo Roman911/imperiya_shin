@@ -5,6 +5,7 @@ interface ItemProps {
 	status: number
 	code: string
 	sort_order: number
+	descr: string
 }
 
 interface DeliverysProps extends ItemProps {
