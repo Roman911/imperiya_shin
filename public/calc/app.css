@@ -552,7 +552,13 @@ body,#content{
 	padding-bottom: 15px;
 	display:block;
 }
-table, iframe {
+form {
+    table {
+        width: 100%;
+    }
+}
+
+iframe {
     width: 100%;
 }
 table select {
