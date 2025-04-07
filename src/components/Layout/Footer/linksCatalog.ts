@@ -3,10 +3,10 @@ export const linksCatalog = [
 		link: '/catalog/tires',
 		title: 'tires',
 	},
-	{
-		link: '/catalog/disks',
-		title: 'disks',
-	},
+	// {
+	// 	link: '/catalog/disks',
+	// 	title: 'disks',
+	// },
 	{
 		link: '/catalog/tires/vt-3',
 		title: 'cargo tires',

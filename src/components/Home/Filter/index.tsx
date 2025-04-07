@@ -53,7 +53,7 @@ export const FilterComponent: FC<IFilterProps> = ({ data, section, onChange, onS
 		<div className={classNames({ 'container mx-auto py-6 lg:py-16 xl:py-24 px-4': !additionalFilter })}>
 			<div className={classNames('mt-2 md:mt-11 mb-8 flex justify-center gap-x-2.5 text-blue-300', { 'hidden': additionalFilter })}>
 				<Tab name={Section.Tires} section={section} isOpen={isOpen} handleClick={handleClick} label={t('tires')}/>
-				<Tab name={Section.Disks} section={section} isOpen={isOpen} handleClick={handleClick} label={t('disks')}/>
+				{/*<Tab name={Section.Disks} section={section} isOpen={isOpen} handleClick={handleClick} label={t('disks')}/>*/}
 				<Tab name={Section.Car} section={section} isOpen={isOpen} handleClick={handleClick} label={t('by car')}/>
 			</div>
 			<div className="">{ renderFilter() }</div>

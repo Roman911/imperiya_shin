@@ -40,13 +40,13 @@ export const HeaderBottom = () => {
 					<ChevronDownIcon className='stroke-white transition' />
 				</span>
 			</button>
-			<button onClick={event => handleClick(event, 'disks')} type="button"
-							className={classNames('inline-flex items-center gap-x-1.5 group transition hover:bg-blue-600 py-4 px-8', {'bg-blue-600': open && section === 'disks'})}>
-				<span>Автодиски</span>
-				<span className={classNames('transition', {'rotate-180': open && section === 'disks'})}>
-					<ChevronDownIcon className='stroke-white transition' />
-				</span>
-			</button>
+			{/*<button onClick={event => handleClick(event, 'disks')} type="button"*/}
+			{/*				className={classNames('inline-flex items-center gap-x-1.5 group transition hover:bg-blue-600 py-4 px-8', {'bg-blue-600': open && section === 'disks'})}>*/}
+			{/*	<span>Автодиски</span>*/}
+			{/*	<span className={classNames('transition', {'rotate-180': open && section === 'disks'})}>*/}
+			{/*		<ChevronDownIcon className='stroke-white transition' />*/}
+			{/*	</span>*/}
+			{/*</button>*/}
 			{links.map((item, index) => {
 				return <Link key={ index } onClick={ () => dispatch(resetFilter()) } className='py-4 px-8 hover:bg-blue-600' to={ item.url }>
 					{ t(item.title, true) }
