@@ -134,7 +134,7 @@ export const FilterAltComponent: FC<FilterAltProps> = (
 		<div className='filter h-screen lg:h-auto w-[calc(100%-70px)] lg:w-64 mr-6 lg:pt-0 bg-white lg:bg-transparent'>
 			{section !== Section.Battery && !isProduct && <div className='relative z-10 filter-tabs grid grid-cols-2 gap-2.5 -mb-[1px]'>
 				{renderTab(Section.Tires)}
-				{/*{renderTab(Section.Disks)}*/}
+				{renderTab(Section.Disks)}
 			</div>}
 			<div
 				className='relative h-[calc(100%-50px)] pb-32 lg:pb-4 px-4 pt-4 bg-white border border-gray-200 overflow-y-auto md:overflow-y-visible'>
